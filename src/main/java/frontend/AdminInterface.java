@@ -73,9 +73,17 @@ public class AdminInterface extends Application {
         Button mngDataBtn = new Button("Manage Data");
 
 
-        eventsBtn.setOnAction(e->){
+        eventsBtn.setOnAction(e->{
+            showEvent.show();
+        });
 
-        };
+        usersBtn.setOnAction(e->{
+            showUsers.show();
+        });
+        mngDataBtn.setOnAction(e->{
+            managerooms.show();
+        });
+
         grid.add(greeting,1,1);
         grid.add(eventsBtn, 0,4);
         grid.add(usersBtn, 0,5);
