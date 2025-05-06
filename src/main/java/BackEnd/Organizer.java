@@ -210,6 +210,9 @@ public class Organizer extends User {
         System.out.println("Wallet Details: " + balance);
     }
 
+    public Wallet getBalance() {
+        return balance;
+    }
 
     @Override
     public String getID(){
