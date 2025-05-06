@@ -66,6 +66,13 @@ public class Database {
         }
         return null;
     }
+    public static Category findCat(String catName){
+        Object[] E = readAll(new Category());
+        for(Object o:E) {
+            if(((Category)o).getCatName().equals(catName)) return (Category) o;
+        }
+        return null;
+    }
     public static void scanInput(File source) {
         Scanner in;
         try{
@@ -84,7 +91,7 @@ public class Database {
                     create(new Room(in.next(),in.nextInt(),in.nextDouble(),in.next()));
                     break;
                 case "Attendee":
-                    create(new Attendee(in.next(),in.next(),in.next(),new DateTime(in.next()),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextInt(),in.next(),in.nextDouble()));
+                    create(new Attendee(in.next(),in.next(),in.next(),new DateTime(in.next()),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextInt(),in.next(),in.nextDouble(),in.next(),in.next(),in.next()));
                     break;
                 case "Organizer":
                     create(new Organizer(in.next(),in.next(),in.next(),new DateTime(in.next()),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextDouble()));
