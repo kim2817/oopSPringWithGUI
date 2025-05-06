@@ -29,14 +29,19 @@ public class OraganizerUI extends Application {
 }
 
 class OrganizerUI {
-    Scene show(String ) {
+    Scene show(String name , double balance , String ID) {
+
         AnchorPane layout = new AnchorPane();
         layout.setPadding(new Insets(10));
+        Label Dname = new Label("Hello Mr/Ms " + name);
+        AnchorPane.setTopAnchor(Dname,10.0);
+        AnchorPane.setLeftAnchor(Dname, 10.0);
+        layout.getChildren().add(Dname);
 
 
 
         Scene s = new Scene(layout , 500,500);
 
-    return new Scene(layout , 500,500);
+    return s;
     }
 }
