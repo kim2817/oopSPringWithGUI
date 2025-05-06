@@ -39,8 +39,13 @@ public class LoginWindow {
         loginBtn.setOnAction(e -> {
             String user = fieldUser.getText();
             String pass = fieldPass.getText();
+             //int role = login(user,pass);
+//            switch(role){
+//                // 1 not found, 2 attendee, 3 organizer, 4 admin
+//            }
             System.out.println("Logging in. . .");
         });
+
 
         grid.setPadding(new Insets(20));
 
