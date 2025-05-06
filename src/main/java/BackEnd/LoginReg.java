@@ -97,7 +97,7 @@ public class LoginReg {
     }
 
     public static void main(String[] args){
-        Database.scanInput(new File("DataToInput.txt"));
+        Database.scanInput(new File("DataToInput.txt.txt"));
         System.out.println("The space button is forbidden. Don't use it.");
         screen1();
     }

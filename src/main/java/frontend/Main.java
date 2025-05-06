@@ -3,6 +3,7 @@ package frontend;
 import BackEnd.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -11,8 +12,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 import static BackEnd.Gender.FEMALE;
-import static BackEnd.Gender.MALE;
 import static javafx.application.Application.launch;
 
 public class Main extends Application{
@@ -26,8 +28,7 @@ public class Main extends Application{
         Database.create(new Category("plays"));
         Database.create(new Category("workshops"));
         Database.create(new Event("champions", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
-
-
+        Database.scanInput(new File("DataToInput.txt"));
         launch(args);
 
     }
