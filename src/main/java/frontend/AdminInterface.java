@@ -21,7 +21,9 @@ import javafx.util.Duration;
 
 
 public class AdminInterface{
-    public void show(Admin q){
+    public static void show(Admin q){
+
+
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));
