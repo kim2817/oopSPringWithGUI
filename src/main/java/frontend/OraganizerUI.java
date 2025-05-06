@@ -1,5 +1,6 @@
 package frontend;
 
+import BackEnd.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -29,14 +30,26 @@ public class OraganizerUI extends Application {
 }
 
 class OrganizerUI {
-    Scene show(String name , double balance , String ID) {
+    Label lbl(String s , double top , double left){
 
+        Label Dname = new Label(s);
+        AnchorPane.setTopAnchor(Dname,top);
+        AnchorPane.setLeftAnchor(Dname, left);
+
+
+
+        return Dname;
+    }
+
+    Scene show() {
+        String name = "dasddsa";
         AnchorPane layout = new AnchorPane();
         layout.setPadding(new Insets(10));
-        Label Dname = new Label("Hello Mr/Ms " + name);
-        AnchorPane.setTopAnchor(Dname,10.0);
-        AnchorPane.setLeftAnchor(Dname, 10.0);
-        layout.getChildren().add(Dname);
+
+
+        layout.getChildren().add(lbl("Test",100.0,100.0));
+
+
 
 
 
