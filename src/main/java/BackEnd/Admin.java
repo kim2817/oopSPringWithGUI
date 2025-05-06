@@ -64,7 +64,7 @@ public class Admin extends User{
         if(found!=null){
             return found.toString();
         }
-        return "";
+        return "Not found";
     }
 
     public void viewOrganizers(){

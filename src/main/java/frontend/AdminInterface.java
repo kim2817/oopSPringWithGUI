@@ -2,17 +2,14 @@ package frontend;
 
 import BackEnd.Admin;
 import javafx.animation.TranslateTransition;
-import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,8 +18,10 @@ import javafx.util.Duration;
 
 
 public class AdminInterface{
-    public static void show(Admin q){
+    public static Admin tempAdmin;
 
+    public static void show(Admin q){
+        tempAdmin = q;
 
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
@@ -66,6 +65,7 @@ public class AdminInterface{
         });
         logout.setOnAction(e->{
             stage.close();
+            tempAdmin = null;
             LoginWindow.show(); //should be replaced with main.Start
         });
 
@@ -88,6 +88,7 @@ public class AdminInterface{
 
 
         eventsBtn.setOnAction(e->{
+            stage.close();
             showEvent.show();
         });
 
@@ -114,4 +115,82 @@ public class AdminInterface{
     }
 
 
+    public static class showEvent {
+        public static void show(){
+            Stage stage = new Stage();
+            Button searchBtn = new Button("Search");
+            Label resultLabel = new Label();
+            TextField search = new TextField();
+
+            Button backBtn = new Button("Back");
+            stage.show();
+            HBox Hpane = new HBox(10, search, searchBtn);
+            Hpane.setAlignment(Pos.TOP_CENTER);
+            Hpane.setSpacing(5);
+
+            Text answer = new Text();
+            searchBtn.setOnAction(e->{
+                if (search.getText() == null){
+//                    System.out.println();
+                }
+                else{
+                    answer.setText((Admin.searchEvents(search.getText())));
+                    answer.setLayoutX(400);
+                    answer.setLayoutY(200);
+                }
+
+            });
+            VBox Vpane = new VBox(10, answer, backBtn);
+            Vpane.setAlignment(Pos.BOTTOM_LEFT);
+            VBox root = new VBox(Hpane,Vpane);
+            Scene scene = new Scene(root,800, 300);
+            stage.setScene(scene);
+
+            backBtn.setOnAction(e ->{
+                stage.close();
+                AdminInterface.show(tempAdmin);
+            });
+
+
+
+        }
+    }
+
+    public static class showUsers {
+        public static void show(){
+            Stage stage = new Stage();
+            Pane pane = new Pane();
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    public static class managerooms{
+        public static void show(){
+            Stage stage = new Stage();
+            FlowPane pane = new FlowPane();
+            pane.setHgap(100);
+            Scene scene = new Scene(pane, 300, 300);
+            ToggleGroup group = new ToggleGroup();
+            RadioButton roomChoice = new RadioButton("Room");
+            RadioButton catChoice = new RadioButton("Category");
+            Text text = new Text("Please choose room or catgeory");
+            Button backBtn = new Button("Back");
+            pane.getChildren().add(backBtn);
+
+
+
+            pane.setPadding(new Insets(20));
+            pane.getChildren().addAll(roomChoice, catChoice, text);
+            stage.setScene(scene);
+            stage.show();
+
+            roomChoice.setToggleGroup(group);
+            catChoice.setToggleGroup(group);
+
+        }
+
+
+    }
 }
