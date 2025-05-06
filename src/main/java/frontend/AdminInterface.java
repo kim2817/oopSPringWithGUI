@@ -19,10 +19,11 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.awt.*;
 
 public class AdminInterface{
-    public void show(Admin q){
+    public static void show(Admin q){
+
+
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));

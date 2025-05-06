@@ -197,7 +197,7 @@ public class RegisterWindow {
 
             }
             else{
-                registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText());
+                registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText(), CatsCombo1.getValue(),CatsCombo2.getValue(),CatsCombo3.getValue());
             }
             Stage currentStage = (Stage) registerBtn.getScene().getWindow();
             currentStage.close();
