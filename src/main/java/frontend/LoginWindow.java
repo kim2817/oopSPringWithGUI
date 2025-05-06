@@ -44,29 +44,26 @@ public class LoginWindow {
         cancelBtn.setOnAction(e -> stage.close());
 
         loginBtn.setOnAction(e -> {
-            User Person = null;
+            User Person;
             String user = fieldUser.getText();
             String pass = fieldPass.getText();
-             int role = login(user,pass, Person);
-            switch(role){
-                case 1:
-                    System.out.println("no account");
-                    break;
-                case 2:
-                    System.out.println("attendee dashboard");
-                    AttendeeGUI.show((Attendee)Person);
-                    break;
-                case 3:
-                    System.out.println("organizer dashboard");
-                    OrganizerUI.show((Organizer)Person);
+             User role = login(user,pass);
+             if(role != null) {
+                 if (role instanceof Attendee) {
+                     System.out.println("attendee dashboard");
+                     AttendeeGUI.show((Attendee) role);
+                 }
+                 if (role instanceof Admin) {
+                     System.out.println("admin dashboard");
+                     AdminInterface.show((Admin) role);
+                 }
+                 if (role instanceof Organizer) {
+                     System.out.println("organizer dashboard");
+                     OrganizerUI.show((Organizer) role);
+                 }
+             }
 
-                    break;
-                case 4:
-                    System.out.println("admin dashboard");
-                    AdminInterface.show((Admin)Person);
-                    break;
                 // 1 not found, 2 attendee, 3 organizer, 4 admin
-            }
             System.out.println("Logging in. . .");
         });
 

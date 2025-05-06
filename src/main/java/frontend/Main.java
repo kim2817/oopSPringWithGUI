@@ -25,6 +25,7 @@ public class Main extends Application{
         Database.create(new Category("standup comedy"));
         Database.create(new Category("plays"));
         Database.create(new Category("workshops"));
+
         launch(args);
 
     }
