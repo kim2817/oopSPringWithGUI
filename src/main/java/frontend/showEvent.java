@@ -1,5 +1,6 @@
 package frontend;
-
+import BackEnd.Admin;
+import BackEnd.Admin;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -25,6 +26,11 @@ public class showEvent {
         Scene scene = new Scene(pane,800, 300);
         stage.setScene(scene);
         stage.show();
+
+        search.setOnAction(e->{
+            Admin.searchEvents(search.getText());
+        });
+
 
     }
 }
