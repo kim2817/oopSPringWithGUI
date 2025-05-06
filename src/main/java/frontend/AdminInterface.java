@@ -1,5 +1,6 @@
 package frontend;
 
+import BackEnd.Admin;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -21,7 +22,8 @@ import javafx.util.Duration;
 import java.awt.*;
 
 public class AdminInterface{
-    public void show(Stage stage){
+    public void show(Admin q){
+        Stage stage = new Stage();
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));
 
