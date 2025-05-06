@@ -15,8 +15,8 @@ public class Admin extends User{
     //Constructors//
     public Admin(){}
 
-    public Admin(String email, String username, String contactNo, String password,
-                 DateTime dateOfBirth, String address, Gender gen, String role, String workingHours) {
+    public Admin(String email, String username, String password,
+                 DateTime dateOfBirth, Gender gen, String role, String workingHours) {
         this.email = email;
         this.username = username;
         this.password = password;
