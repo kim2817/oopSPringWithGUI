@@ -58,7 +58,7 @@ public class LoginWindow {
                     break;
                 case 3:
                     System.out.println("organizer dashboard");
-                    //OrganizerUI.show((Organizer)Person);
+                    OrganizerUI.show((Organizer)Person);
 
                     break;
                 case 4:
