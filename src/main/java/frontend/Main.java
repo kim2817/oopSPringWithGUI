@@ -46,7 +46,9 @@ public class Main extends Application{
             RegisterWindow.show();
         });
 
-        StackPane root = new StackPane(new HBox(20, loginButton, registerButton));
+        //StackPane root = new StackPane(new HBox(20, loginButton, registerButton));
+        HBox root = new HBox(20, loginButton, registerButton);
+        root.setAlignment(Pos.CENTER);
         Scene scene = new Scene(root, 300, 200, lilac);
 
         Stage login = new Stage();
