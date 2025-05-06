@@ -1,6 +1,6 @@
 package BackEnd;
-
 import java.util.Arrays;
+
 import java.util.Scanner;
 
 
@@ -19,10 +19,8 @@ public class Admin extends User{
                  DateTime dateOfBirth, String address, Gender gen, String role, String workingHours) {
         this.email = email;
         this.username = username;
-        this.contactNo = contactNo;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
         this.gen = gen;
         this.ID = "a" + System.nanoTime();
         this.workingHours = workingHours;
@@ -53,10 +51,10 @@ public class Admin extends User{
     //Methods
 
     public void addRooms(Room o, String roomName, int roomCapacity, double rentPrice){
-    Database.create(o);
-    o.setRoomName(roomName);
-    o.setRoomCapacity(roomCapacity);
-    o.setRentPrice(rentPrice);
+        Database.create(o);
+        o.setRoomName(roomName);
+        o.setRoomCapacity(roomCapacity);
+        o.setRentPrice(rentPrice);
 
     }
 
@@ -88,7 +86,6 @@ public class Admin extends User{
 
 
     // CRUD
-
 
     public void adminInterface(){
         int choice;
@@ -195,7 +192,6 @@ public class Admin extends User{
                 ", username='" + this.username + '\'' +
                 ", role='" + getRole() + '\'' +
                 ", workingHours='" + getWorkingHours() + '\'' +
-                ", contactNo='" + this.contactNo + '\'' +
                 '}';
     }
 
