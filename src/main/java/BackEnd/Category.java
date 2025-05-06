@@ -21,6 +21,7 @@ public class Category implements HasID {
     // no-arg constructor
     public Category() {
         this.catID = "C" + System.nanoTime();
+        totCats++;
     }
 
     // Arg constructor
@@ -37,16 +38,13 @@ public class Category implements HasID {
     public String getCatName() {
         return catName;
     }
-
     public ArrayList<Event> getEvents() {
         return events;
     }
 
-
     public void setCatName(String catName) {
         this.catName = catName;
     }
-
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
     }
