@@ -14,17 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
 
-public class OraganizerUI extends Application {
-    @Override
-    public void start(Stage primaryStage) {
-        // Get the scene from another class
-        OrganizerUI.show(new Organizer());
-    }
 
-    public static void main(String[] args) {
-        launch();
-    }
-}
 
 class OrganizerUI {
     static Label lbl(String s , double top , double left){
@@ -80,4 +70,76 @@ class OrganizerUI {
             LoginWindow.show();
         });
     }
+}
+
+class ViewEventsUI {
+
+
+
+}
+
+class MyEventsUI {
+
+
+
+}
+
+class CreateNewEventUI {
+
+
+
+}
+
+class RentRoomUI {
+
+
+
+}
+
+class RentRoomDetailsUI {
+
+
+
+}
+
+class RentRoomConfirmationUI {
+
+
+
+}
+
+class ManageOrganizedEventUI {
+
+
+
+}
+
+class EditEventDetailsUI {
+
+
+
+}
+
+class DeleteEventConfirmationUI {
+
+
+
+}
+
+class EventSearchResultUI {
+
+
+
+}
+
+class EventFilterResultUI {
+
+
+
+}
+
+class ViewEventDetailsUI {
+
+
+
 }
