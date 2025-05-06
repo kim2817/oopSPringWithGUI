@@ -79,9 +79,6 @@ public class AdminInterface{
         greeting.setFont(Font.font("Arial"));
         Line line = new Line();
 
-//        line.setStartX(0);
-//        line.setEndX(2000);
-//        line.setStroke(Color.BLACK);
         Button eventsBtn = new Button("Events");
         Button usersBtn = new Button("Users");
         Button mngDataBtn = new Button("Manage Data");
@@ -93,9 +90,11 @@ public class AdminInterface{
         });
 
         usersBtn.setOnAction(e->{
+            stage.close();
             showUsers.show();
         });
         mngDataBtn.setOnAction(e->{
+            stage.close();
             managerooms.show();
         });
 
@@ -109,8 +108,8 @@ public class AdminInterface{
         ScrollPane scrollPane = new ScrollPane(grid);
         scrollPane.setFitToWidth(true);
 
-        Scene scene1 = new Scene(scrollPane, 500, 700);
         grid.setPadding(new Insets(20));
+        Scene scene1 = new Scene(scrollPane, 500, 700);
 
     }
 
@@ -129,18 +128,17 @@ public class AdminInterface{
             Hpane.setSpacing(5);
 
             Text answer = new Text();
+            HBox tempHbox = new HBox(answer);
+            tempHbox.setAlignment(Pos.CENTER);
             searchBtn.setOnAction(e->{
-                if (search.getText() == null){
-//                    System.out.println();
-                }
-                else{
+
                     answer.setText((Admin.searchEvents(search.getText())));
-                    answer.setLayoutX(400);
-                    answer.setLayoutY(200);
-                }
+//                answer.setLayoutY(200);
+//                answer.setLayoutX(400);
+
 
             });
-            VBox Vpane = new VBox(10, answer, backBtn);
+            VBox Vpane = new VBox(10, tempHbox, backBtn);
             Vpane.setAlignment(Pos.BOTTOM_LEFT);
             VBox root = new VBox(Hpane,Vpane);
             Scene scene = new Scene(root,800, 300);
@@ -152,7 +150,10 @@ public class AdminInterface{
             });
 
 
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
 
+            Vpane.setPadding(new Insets(20));
         }
     }
 
@@ -169,25 +170,72 @@ public class AdminInterface{
     public static class managerooms{
         public static void show(){
             Stage stage = new Stage();
-            FlowPane pane = new FlowPane();
-            pane.setHgap(100);
-            Scene scene = new Scene(pane, 300, 300);
             ToggleGroup group = new ToggleGroup();
             RadioButton roomChoice = new RadioButton("Room");
+                Button createRoom = new Button("Create Room");
+                Button readRoom = new Button("List Rooms");
+                Button updateRoom = new Button("Update Rooms");
+                Button deleteRoom = new Button("Delete Room");
+
             RadioButton catChoice = new RadioButton("Category");
+                Button createCat = new Button("Create Category");
+                Button readCat = new Button("List Category");
+                Button updateCat = new Button("Update Category");
+                Button deleteCat = new Button("Delete Category");
+            HBox Hpane1 = new HBox(10, roomChoice, catChoice);
+            Hpane1.setAlignment(Pos.CENTER);
             Text text = new Text("Please choose room or catgeory");
             Button backBtn = new Button("Back");
-            pane.getChildren().add(backBtn);
+            HBox Hpane2 = new HBox(10, backBtn);
+            Hpane2.setAlignment(Pos.BOTTOM_LEFT);
+
+            backBtn.setOnAction(e ->{
+                stage.close();
+                AdminInterface.show(tempAdmin);
+            });
+
+            HBox roomCRUD = new HBox(10, createRoom, readRoom, updateRoom, deleteRoom);
+            roomCRUD.setAlignment(Pos.CENTER);
+            HBox catCRUD = new HBox(10, createCat, readCat, updateCat, deleteCat);
+            catCRUD.setAlignment(Pos.CENTER);
+
+            VBox Vpane = new VBox(20, Hpane1,roomCRUD, catCRUD, Hpane2);
+            Vpane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(Vpane, 500, 200);
+            roomChoice.setToggleGroup(group);
+            catChoice.setToggleGroup(group);
+
+            catCRUD.setVisible(false);
+            catCRUD.setManaged(false);
+
+            group.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+                if (newToggle != null) {
+                    RadioButton chose = (RadioButton) newToggle;
+                    boolean isCat = chose == catChoice;
+
+                    if(isCat) {
+                        roomCRUD.setVisible(false);
+                        roomCRUD.setManaged(false);
+                        catCRUD.setVisible(true);
+                        catCRUD.setManaged(true);
+                    }
+                    else{
+                        roomCRUD.setVisible(true);
+                        roomCRUD.setManaged(true);
+                        catCRUD.setVisible(false);
+                        catCRUD.setManaged(false);
+                    }
+                }
 
 
+            });
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
 
-            pane.setPadding(new Insets(20));
-            pane.getChildren().addAll(roomChoice, catChoice, text);
+            Vpane.setPadding(new Insets(20));
             stage.setScene(scene);
             stage.show();
 
-            roomChoice.setToggleGroup(group);
-            catChoice.setToggleGroup(group);
 
         }
 
