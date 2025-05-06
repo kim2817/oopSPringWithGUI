@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.awt.*;
 
 public class AdminInterface{
     public void show(Admin q){
@@ -74,7 +73,7 @@ public class AdminInterface{
         sidebar.setTranslateX(-250);
         Scene scene = new Scene(grid, 600, 400);
 
-        Text greeting = new Text("Hello Mr/Mrs: Admin");
+        Text greeting = new Text("Hello Mr/Mrs: " + q.getUsername());
         greeting.setFont(Font.font("Arial"));
         Line line = new Line();
 
