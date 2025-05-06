@@ -18,7 +18,7 @@ public class Entrance {
         Database.create(new Attendee(email, username, password, new DateTime(DOB),gen, Integer.parseInt(age),
                 address,Double.parseDouble(walletBalance)));
     }
-
+//edit to commit
     public static int login(String username, String password, User obj){
 
         User curUser = Database.findUser(username, password);
