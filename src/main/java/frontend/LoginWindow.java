@@ -1,5 +1,7 @@
 package frontend;
+import BackEnd.Admin;
 import BackEnd.Attendee;
+import BackEnd.Organizer;
 import BackEnd.User;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -56,9 +58,12 @@ public class LoginWindow {
                     break;
                 case 3:
                     System.out.println("organizer dashboard");
+                    OrganizerUI.show((Organizer)Person);
+
                     break;
                 case 4:
                     System.out.println("admin dashboard");
+                    AdminInterface.show((Admin)Person);
                     break;
                 // 1 not found, 2 attendee, 3 organizer, 4 admin
             }

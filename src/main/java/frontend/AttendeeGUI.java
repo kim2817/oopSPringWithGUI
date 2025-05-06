@@ -18,8 +18,8 @@ public class AttendeeGUI {
         profileIcon.setFitWidth(40);
         profileIcon.setFitHeight(40);
 
-        Label greeting = new Label("Hello Mr/Ms " + username + ",");
-        Label balanceLabel = new Label("Balance: $" );
+        Label greeting = new Label("Hello Mr/Ms " + attendee.getUsername() + ",");
+        Label balanceLabel = new Label("Balance: $" + attendee.getBalance());
 
 
 
