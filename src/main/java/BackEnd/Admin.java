@@ -58,21 +58,12 @@ public class Admin extends User{
 
     }
 
-    public void viewEvents(){
-        Scanner input = new Scanner(System.in);
-        Object[] E = Database.readAll(new Event());
-        Event[] options = new Event[E.length];
-        for(int i=0;i<E.length;i++){
-            options[i] = (Event)E[i];
+    public String searchEvents(String EventName){
+        Event found= Database.findEvent(EventName);
+        if(found!=null){
+            return found.toString();
         }
-        System.out.println("Please choose a category to view for details: ");
-        for (int i=0;i< options.length;i++){
-            System.out.println("(" + (i+1) + ")" + "Event name: " + options[i].getEventName() + "   Event ID: " + options[i].getID());
-        }
-        System.out.println(Arrays.toString(Database.readAll(options[input.nextInt()])));
-
-
-        input.close();
+        return "";
     }
 
     public void viewOrganizers(){

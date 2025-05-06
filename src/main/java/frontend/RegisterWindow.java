@@ -189,6 +189,16 @@ public class RegisterWindow {
             } else {
                 messageLabel.setText("Password is valid!");
             }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDob = dobPicker.getValue().format(formatter);
+
+            if(Organizer.isSelected()){
+                registerOrganizer(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
+
+            }
+            else{
+                registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText());
+            }
             Stage currentStage = (Stage) registerBtn.getScene().getWindow();
             currentStage.close();
             LoginWindow.show();
@@ -199,16 +209,7 @@ public class RegisterWindow {
             stage.close();
         });
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedDob = dobPicker.getValue().format(formatter);
 
-        if(Organizer.isSelected()){
-            registerOrganizer(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
-
-        }
-        else{
-            registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText());
-        }
 
 
         ScrollPane scrollPane = new ScrollPane(grid);

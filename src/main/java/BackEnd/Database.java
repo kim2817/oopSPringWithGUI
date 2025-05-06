@@ -59,6 +59,13 @@ public class Database {
         }
         return null;
     }
+    public static Event findEvent(String eventName){
+        Object[] E = readAll(new Event());
+        for(Object o:E) {
+            if(((Event)o).getEventName().equals(eventName)) return (Event) o;
+        }
+        return null;
+    }
     public static void scanInput(File source) {
         Scanner in;
         try{

@@ -40,10 +40,23 @@ public class LoginWindow {
         cancelBtn.setOnAction(e -> stage.close());
 
         loginBtn.setOnAction(e -> {
+            String ID= "";
             String user = fieldUser.getText();
             String pass = fieldPass.getText();
-             int role = login(user,pass);
+             int role = login(user,pass,ID);
             switch(role){
+                case 1:
+                    System.out.println("no account");
+                    break;
+                case 2:
+                    System.out.println("attendee dashboard");
+                    break;
+                case 3:
+                    System.out.println("organizer dashboard");
+                    break;
+                case 4:
+                    System.out.println("admin dashboard");
+                    break;
                 // 1 not found, 2 attendee, 3 organizer, 4 admin
             }
             System.out.println("Logging in. . .");
