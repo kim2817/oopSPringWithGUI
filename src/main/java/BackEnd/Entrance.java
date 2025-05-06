@@ -20,28 +20,8 @@ public class Entrance {
                 address,Double.parseDouble(walletBalance),interest1, interest2, interest3));
     }
 
-    public static int login(String username, String password, User obj){
-
+    public static User login(String username, String password){
         User curUser = Database.findUser(username, password);
-        int ret=1;
-        if(curUser instanceof Attendee) ret=2;
-        if(curUser instanceof Organizer) ret=3;
-        if(curUser instanceof Admin) ret=4;
-        switch (ret) {
-            case 1:
-                return 1;
-            case 2:
-                obj= (Attendee) curUser;
-                return 2;
-            case 3:
-                obj= (Organizer) curUser;
-                return 3;
-            case 4:
-                obj= (Admin) curUser;
-                return 2;
-            default :
-                return -1;
-        }
-
+        return curUser;
     }
 }
