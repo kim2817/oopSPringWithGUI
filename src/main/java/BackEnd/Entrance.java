@@ -19,10 +19,10 @@ public class Entrance {
                 address,Double.parseDouble(walletBalance)));
     }
 
-    public static int login(String username, String password, String ID){
+    public static int login(String username, String password, User obj){
 
         User curUser = Database.findUser(username, password);
-        int ret=0;
+        int ret=1;
         if(curUser instanceof Attendee) ret=2;
         if(curUser instanceof Organizer) ret=3;
         if(curUser instanceof Admin) ret=4;
@@ -30,13 +30,13 @@ public class Entrance {
             case 1:
                 return 1;
             case 2:
-                ID= curUser.getID();
+                obj= (Attendee) curUser;
                 return 2;
             case 3:
-                ID= curUser.getID();
+                obj= (Organizer) curUser;
                 return 3;
             case 4:
-                ID= curUser.getID();
+                obj= (Admin) curUser;
                 return 2;
             default :
                 return -1;
