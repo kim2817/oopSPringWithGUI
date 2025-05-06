@@ -75,7 +75,7 @@ public class AdminInterface{
         sidebar.setTranslateX(-250);
         Scene scene = new Scene(grid, 600, 400);
 
-        Text greeting = new Text("Hello Mr/Mrs: Admin");
+        Text greeting = new Text("Hello Mr/Mrs: " + q.getUsername());
         greeting.setFont(Font.font("Arial"));
         Line line = new Line();
 
