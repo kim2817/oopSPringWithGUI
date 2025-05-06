@@ -59,6 +59,13 @@ public class Database {
         }
         return null;
     }
+    public static Event findEvent(String eventName){
+        Object[] E = readAll(new Event());
+        for(Object o:E) {
+            if(((Event)o).getEventName().equals(eventName)) return (Event) o;
+        }
+        return null;
+    }
     public static void scanInput(File source) {
         Scanner in;
         try{
@@ -77,10 +84,10 @@ public class Database {
                     create(new Room(in.next(),in.nextInt(),in.nextDouble(),in.next()));
                     break;
                 case "Attendee":
-                    create(new Attendee(in.next(),in.next(),in.next(),in.next(),new DateTime(in.next()),in.next(),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextInt(),in.next(),in.nextDouble()));
+                    create(new Attendee(in.next(),in.next(),in.next(),new DateTime(in.next()),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextInt(),in.next(),in.nextDouble()));
                     break;
                 case "Organizer":
-                    create(new Organizer(in.next(),in.next(),in.next(),in.next(),new DateTime(in.next()),in.next(),in.nextDouble(),(in.nextBoolean()? Gender.MALE : Gender.FEMALE)));
+                    create(new Organizer(in.next(),in.next(),in.next(),new DateTime(in.next()),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextDouble()));
                     break;
                 case "Admin":
                     create(new Admin(in.next(),in.next(),in.next(),in.next(),new DateTime(in.next()),in.next(),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.next(),in.next()));

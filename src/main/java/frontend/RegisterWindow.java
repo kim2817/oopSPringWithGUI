@@ -1,5 +1,6 @@
 package frontend;
 
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,14 +10,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.format.DateTimeFormatter;
+
+import static BackEnd.Entrance.registerAttendee;
+import static BackEnd.Entrance.registerOrganizer;
+
 public class RegisterWindow {
     public static void show(){
+        //stage
         Stage stage = new Stage();
         stage.setTitle("Eventra Registration");
 
+        //icon
         Image icon = new Image("img.png");
         stage.getIcons().add(icon);
 
+        //role radiobutton
         Label role = new Label("Role");
         RadioButton Organizer = new RadioButton("Organizer");
         RadioButton Attendee = new RadioButton("Attendee");
@@ -27,18 +36,28 @@ public class RegisterWindow {
 
         HBox roleGaps = new HBox(10, role, Organizer, Attendee);
 
+        //username
         Label usernameLabel = new Label("Username:");
         TextField usernameField = new TextField();
 
+        //email
         Label emailLabel = new Label("Email:");
         TextField emailField = new TextField();
 
+        //password
         Label passwordLabel = new Label("Password:");
         PasswordField passwordField = new PasswordField();
 
+        //confirm password
         Label confirmLabel = new Label("Confirm Password:");
         PasswordField confirmField = new PasswordField();
 
+        Label messageLabel = new Label();
+
+
+
+
+        //gender radiobutton
         Label genderLabel = new Label("Gender:");
         RadioButton male = new RadioButton("Male");
         RadioButton female = new RadioButton("Female");
@@ -47,19 +66,22 @@ public class RegisterWindow {
         female.setToggleGroup(genderChoice);
         HBox genderBox = new HBox(10, male, female);
 
+        //date of birth
         Label dobLabel = new Label("Date of Birth:");
         DatePicker dobPicker = new DatePicker();
 
+        //enter balance
         Label balanceLabel = new Label("Wallet Balance:");
         TextField balanceField = new TextField();
 
         //attendee fields only!!!!!!! -------------------------------------
-        Label citylabel = new Label("City:");
+        Label citylabel = new Label("Address:");
         TextField cityField = new TextField();
 
         Label agelabel = new Label("Age:");
         TextField ageField = new TextField();
 
+        //intrests
         ComboBox<String> CatsCombo1 = new ComboBox<>();
         CatsCombo1.setPromptText("Select Interest 1");
         CatsCombo1.getItems().addAll(Categories.listAllCategories());
@@ -72,15 +94,19 @@ public class RegisterWindow {
         CatsCombo3.setPromptText("Select interest 3 ");
         CatsCombo3.getItems().addAll(Categories.listAllCategories());
 
+        //collecting all attendee only data
         VBox attendeeExtraBox = new VBox(10);
         attendeeExtraBox.getChildren().addAll(
                 citylabel, cityField,
                 agelabel, ageField,
                 CatsCombo1, CatsCombo2, CatsCombo3
         );
+
+
         attendeeExtraBox.setVisible(false);
         attendeeExtraBox.setManaged(false);
 
+        // to show extra field when attendee only
         Roles.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             if (newToggle != null) {
                 RadioButton chose = (RadioButton) newToggle;
@@ -90,6 +116,8 @@ public class RegisterWindow {
                 attendeeExtraBox.setManaged(isAttendee);
             }
         });
+
+        //Alligning stuff
         GridPane grid = new GridPane();
         grid.setVgap(10);
         grid.setHgap(10);
@@ -121,20 +149,68 @@ public class RegisterWindow {
 
         grid.add(attendeeExtraBox, 0, 8, 3, 1);
 
+
         Button registerBtn = new Button("Register");
         Button cancelBtn = new Button("Cancel");
 
-        grid.add(registerBtn, 1, 9);
-        grid.add(cancelBtn, 2, 9);
+        grid.add(messageLabel, 0, 8, 3, 1);
 
+        grid.add(registerBtn, 1, 10);
+        grid.add(cancelBtn, 2, 10);
+
+
+        registerBtn.setDisable(true); // initially disabled
+
+
+
+        registerBtn.disableProperty().bind(
+                Bindings.createBooleanBinding(() ->
+                                passwordField.getText().isEmpty()
+                                        || confirmField.getText().isEmpty()
+                                        || usernameField.getText().isEmpty() || emailField.getText().isEmpty()
+                        || (!male.isSelected() && !female.isSelected()) || (!Attendee.isSelected() && !Organizer.isSelected())
+                        || (dobPicker.getValue() == null) || balanceField.getText().isEmpty(),
+                        passwordField.textProperty(),
+                        confirmField.textProperty(),Roles.selectedToggleProperty()
+                        ,usernameField.textProperty(), emailField.textProperty(), balanceField.textProperty(),dobPicker.valueProperty(),genderChoice.selectedToggleProperty()
+
+                )
+        );
 
         registerBtn.setOnAction(e -> {
-            System.out.println("Collecting data . . .");
+            String password = passwordField.getText();
+            String confirm = confirmField.getText();
+
+
+            if (!password.equals(confirm)) {
+                messageLabel.setText("Passwords do not match.");
+            } else if (password.length() < 8) {
+                messageLabel.setText("Password must be at least 8 characters.");
+            } else {
+                messageLabel.setText("Password is valid!");
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDob = dobPicker.getValue().format(formatter);
+
+            if(Organizer.isSelected()){
+                registerOrganizer(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
+
+            }
+            else{
+                registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText());
+            }
+            Stage currentStage = (Stage) registerBtn.getScene().getWindow();
+            currentStage.close();
+            LoginWindow.show();
+
         });
 
         cancelBtn.setOnAction(e -> {
             stage.close();
         });
+
+
+
 
         ScrollPane scrollPane = new ScrollPane(grid);
         scrollPane.setFitToWidth(true);
@@ -142,6 +218,7 @@ public class RegisterWindow {
         grid.setPadding(new Insets(20));
 
         Scene scene = new Scene(scrollPane, 500, 700);
+
 
         stage.setScene(scene);
         stage.show();
