@@ -16,13 +16,13 @@ public class Event implements HasID {
     private int eventAttendees=0;
 
 
-//Constructors
+    //Constructors
     //no arg constructor
     public Event(){this.eventID= "E"+System.nanoTime();}
 
     //argument constructor
     public Event(String eventName, Category eventCat, Room eventRoom, Organizer eventOrg ,
-                      double ticketPrice, DateTime eventDate){
+                 double ticketPrice, DateTime eventDate){
 
         //a unique username is set using nano time
         this.eventID= "E"+System.nanoTime();
@@ -179,7 +179,15 @@ public class Event implements HasID {
         System.out.println(Database.read(this.eventID));
     }
 
+    public String AttendeeToString(){
+        String s;
+        s="\nEvent name: "+ eventName + "\nEvent Category:"+ eventCat.getCatName() +
+                "\nEvent Room:"+ eventRoom.getRoomName() + "\nTicket Price:"+
+                ticketPrice + "\nNumber of tickets remaining:"+ (int)(eventRoomCap-eventAttendees) +
+                " \nEvent Date(dd/mm/yyyy):" + eventDate.getDay()+"/"+eventDate.getMonth()+"/"+ eventDate.getYear() + "\n\n";
 
+        return s;
+    }
     @Override
     public String toString(){
         String s;

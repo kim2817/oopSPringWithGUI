@@ -7,25 +7,20 @@ import java.util.Scanner;
 public class Organizer extends User {
     private Wallet balance;
     public Organizer(){
-    ID = "O" + System.nanoTime();
+        ID = "O" + System.nanoTime();
     }
-    public Organizer(String email, String username, String contactNo, String password, DateTime dateOfBirth, String address, double walletBalance, Gender gen) {
-        
+    public Organizer(String email, String username, String password, DateTime dateOfBirth, Gender gen, double walletBalance) {
+
         this.email = email;
         this.username = username;
-        this.contactNo = contactNo;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
         this.balance = new Wallet(walletBalance);
         this.gen = gen;
         ID = "O" + System.nanoTime();
     }
-    public String getContactInfo() {
-        return contactNo;
-    }
     public void viewCurrentEvents() {
-         System.out.println(Arrays.toString(Database.readAll(new Event())));
+        System.out.println(Arrays.toString(Database.readAll(new Event())));
     }
 
     public void manageEventDetails() {
@@ -158,11 +153,10 @@ public class Organizer extends User {
     }
 
     public void organizerInterface(){
-    Scanner cin = new Scanner(System.in);
-    System.out.println("Organizer Dashboard\n" +
-            "Username: "+ this.username +
-            "\nEmail: " + this.email +
-            "\nContact Info:" + this.contactNo);
+        Scanner cin = new Scanner(System.in);
+        System.out.println("Organizer Dashboard\n" +
+                "Username: "+ this.username +
+                "\nEmail: " + this.email );
 
         System.out.println("Choose a function\n" +
                 "List All Events (1)\n"
@@ -227,7 +221,6 @@ public class Organizer extends User {
         return "Organizer{" +
                 "email='" + email + '\'' +
                 ", username='" + username + '\'' +
-                ", contactNo='" + contactNo + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", gen=" + gen + '\'' +
                 ", ID='" + ID + '\'' +

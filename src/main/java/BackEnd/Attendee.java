@@ -1,13 +1,14 @@
 package BackEnd;
-
-import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 public class Attendee extends User implements HasID {
     private String ID;
     private int age;
+    private String address;
     private String city;
     private Wallet balance;
     private Category[] interest = new Category[3];
@@ -17,38 +18,56 @@ public class Attendee extends User implements HasID {
         this.ID = "A" + System.nanoTime();
     }
 
-    public Attendee(String email, String username, String contactNo, String password,
-                    DateTime dateOfBirth, String address, Gender gen,
-                    int age, String city, double walletBalance) {
+    public Attendee(String email, String username,String password, DateTime dateOfBirth, Gender gen,int age,
+                    String address, double walletBalance) {
         this.email = email;
         this.username = username;
-        this.contactNo = contactNo;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.gen = gen;
         this.ID = "A" + System.nanoTime();
         this.age = age;
-        this.city = city;
         this.balance = new Wallet(walletBalance);
     }
 
     public int getAge() {
         return age;
     }
-
     public String getCity() {
         return city;
     }
-
     public double getBalance() {
         return balance.getBalance();
     }
-
     public void attendeeDeposit(double money){
         balance.deposit(money);
     }
+    public String getAddress() {
+        return address;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setBalance(Wallet balance) {
+        this.balance = balance;
+    }
+    public void setInterest(Category[] interest) {
+        this.interest = interest;
+    }
+    public void setBookedEvents(ArrayList<Event> bookedEvents) {
+        this.bookedEvents = bookedEvents;
+    }
 
     public void ShowInterest() {
         System.out.println("Please enter 3 Category:");
@@ -83,7 +102,6 @@ public class Attendee extends User implements HasID {
         }
 
     }
-
     public void showEvents() {
         System.out.println(Arrays.toString(Database.readAll(new Event())));
     }
@@ -105,7 +123,7 @@ public class Attendee extends User implements HasID {
         }
         System.out.println("Please select an event:");
         for (int i = 0; i < options.length; i++) {
-            System.out.println((i + 1) + ") ID: " + options[i]);
+            System.out.println((i + 1) + ")" + options[i].AttendeeToString());
         }
         try{
             int temp = input.nextInt();
@@ -116,7 +134,7 @@ public class Attendee extends User implements HasID {
             int count = input.nextInt();
             buyTickets(count, chosenEvent.getID());
         }catch (Exception ex){
-            System.out.println("Something wrong happened here -_-");
+            System.out.println("Something wrong happened here -_-"+ ex.getMessage());
         }
     }
 
