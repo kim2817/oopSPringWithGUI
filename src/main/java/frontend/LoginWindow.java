@@ -1,4 +1,6 @@
 package frontend;
+import BackEnd.Attendee;
+import BackEnd.User;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -40,16 +42,17 @@ public class LoginWindow {
         cancelBtn.setOnAction(e -> stage.close());
 
         loginBtn.setOnAction(e -> {
-            String ID= "";
+            User Person = null;
             String user = fieldUser.getText();
             String pass = fieldPass.getText();
-             int role = login(user,pass,ID);
+             int role = login(user,pass, Person);
             switch(role){
                 case 1:
                     System.out.println("no account");
                     break;
                 case 2:
                     System.out.println("attendee dashboard");
+                    AttendeeGUI.show((Attendee)Person);
                     break;
                 case 3:
                     System.out.println("organizer dashboard");
