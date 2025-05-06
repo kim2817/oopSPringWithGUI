@@ -127,10 +127,14 @@ public class Category implements HasID {
 
     }
 
-    public static void listAllCategories(){
-        System.out.println(Arrays.toString(Database.readAll(new Category())));
+    public static String[] listAllCategories(){
+        Object[] T = Database.readAll(new Category());
+        String[] catArr = new String[T.length];
+        for(int i=0;i<T.length;i++){
+            catArr[i] = ((Category)T[i]).getCatName();
+        }
+        return catArr;
     }
-
     public void addEvent(Event event) {
         if (events.size() >= 100) {
             throw new ExceedLimit("You have reached the limit of events for a category");

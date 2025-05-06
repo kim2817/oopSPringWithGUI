@@ -1,6 +1,9 @@
 package frontend;
 
+import BackEnd.Category;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -82,17 +85,18 @@ public class RegisterWindow {
         TextField ageField = new TextField();
 
         //intrests
+        ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo1 = new ComboBox<>();
         CatsCombo1.setPromptText("Select Interest 1");
-        CatsCombo1.getItems().addAll(Categories.listAllCategories());
+        CatsCombo1.getItems().addAll(items);
 
         ComboBox<String> CatsCombo2 = new ComboBox<>();
         CatsCombo2.setPromptText("Select interest 2");
-        CatsCombo2.getItems().addAll(Categories.listAllCategories());
+        CatsCombo2.getItems().addAll(items);
 
         ComboBox<String> CatsCombo3 = new ComboBox<>();
         CatsCombo3.setPromptText("Select interest 3 ");
-        CatsCombo3.getItems().addAll(Categories.listAllCategories());
+        CatsCombo3.getItems().addAll(items);
 
         //collecting all attendee only data
         VBox attendeeExtraBox = new VBox(10);

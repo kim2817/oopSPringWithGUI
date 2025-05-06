@@ -25,6 +25,8 @@ public class Main extends Application{
         Database.create(new Category("standup comedy"));
         Database.create(new Category("plays"));
         Database.create(new Category("workshops"));
+        Database.create(new Event("champions", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
+
 
         launch(args);
 
