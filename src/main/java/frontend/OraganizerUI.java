@@ -36,18 +36,24 @@ class OrganizerUI {
         AnchorPane.setTopAnchor(Dname,top);
         AnchorPane.setLeftAnchor(Dname, left);
 
+        return Dname;
+    }
+    TextField fld(double top , double left){
 
+        TextField Dname = new TextField();
+        AnchorPane.setTopAnchor(Dname,top);
+        AnchorPane.setLeftAnchor(Dname, left);
 
         return Dname;
     }
+
 
     Scene show() {
         String name = "dasddsa";
         AnchorPane layout = new AnchorPane();
         layout.setPadding(new Insets(10));
 
-
-        layout.getChildren().add(lbl("Test",100.0,100.0));
+        layout.getChildren().add(lbl(name,10.0,10.0));
 
 
 
