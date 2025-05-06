@@ -15,7 +15,8 @@ public class Entrance {
     public static void registerAttendee(String email, String username, String password,
                                         String DOB,boolean gender,String age, String address, String walletBalance){
         Gender gen= gender?Gender.FEMALE:Gender.MALE;
-        Database.create(new Attendee(email, username, password, new DateTime(DOB),gen, Integer.parseInt(age), address,Double.parseDouble(walletBalance)));
+        Database.create(new Attendee(email, username, password, new DateTime(DOB),gen, Integer.parseInt(age),
+                address,Double.parseDouble(walletBalance)));
     }
 
     public static int login(String username, String password){
