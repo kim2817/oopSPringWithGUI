@@ -20,8 +20,8 @@ import javafx.util.Duration;
 
 import java.awt.*;
 
-public class AdminInterface extends Application {
-    public void start(Stage stage){
+public class AdminInterface{
+    public void show(Stage stage){
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));
 
@@ -108,7 +108,7 @@ public class AdminInterface extends Application {
         Scene scene1 = new Scene(scrollPane, 500, 700);
         grid.setPadding(new Insets(20));
 
-    }//
+    }
 
 
 }
