@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
 
+import static BackEnd.Entrance.registerAttendee;
+import static BackEnd.Entrance.registerOrganizer;
+
 public class RegisterWindow {
     public static void show(){
         //stage
@@ -196,16 +199,16 @@ public class RegisterWindow {
             stage.close();
         });
 
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//        String formattedDob = dobPicker.getValue().format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDob = dobPicker.getValue().format(formatter);
 
-//        if(Organizer.isSelected()){
-//            //registerOrganizer(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
-//
-//        }
-//        else{
-//            //registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText());
-//        }
+        if(Organizer.isSelected()){
+            registerOrganizer(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
+
+        }
+        else{
+            registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText());
+        }
 
 
         ScrollPane scrollPane = new ScrollPane(grid);

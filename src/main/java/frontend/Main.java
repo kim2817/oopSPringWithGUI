@@ -38,7 +38,9 @@ public class Main extends Application{
 
         Image icon = new Image("img.png");
 
+
         root.setPadding(new Insets(20));
+
 
         login.getIcons().add(icon);
         login.setTitle("Eventra login");
