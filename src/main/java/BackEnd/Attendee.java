@@ -19,7 +19,7 @@ public class Attendee extends User implements HasID {
     }
 
     public Attendee(String email, String username,String password, DateTime dateOfBirth, Gender gen,int age,
-                    String address, double walletBalance) {
+                    String address, double walletBalance, String interest1, String interest2, String interest3) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -29,6 +29,10 @@ public class Attendee extends User implements HasID {
         this.ID = "A" + System.nanoTime();
         this.age = age;
         this.balance = new Wallet(walletBalance);
+        interest[0] =Database.findCat(interest1);
+        interest[1] =Database.findCat(interest2);
+        interest[2] =Database.findCat(interest3);
+
     }
 
     public int getAge() {
@@ -69,37 +73,8 @@ public class Attendee extends User implements HasID {
         this.bookedEvents = bookedEvents;
     }
 
-    public void ShowInterest() {
-        System.out.println("Please enter 3 Category:");
-        Scanner input = new Scanner(System.in);
-        Object[] T = Database.readAll(new Category());
-        Category[] options = new Category[T.length];
-        for(int i=0;i<T.length;i++){
-            options[i] = (Category)T[i];
-        }
-        for(int i=0;i<options.length;i++) {
-            System.out.println((i + 1) + ") " + options[i]);
-        }
-        for(int i=0;i<3;i++){
-            int temp = input.nextInt();
-            temp = temp-1;
-            if (temp < 0 || temp >= options.length) {
-                throw new InvalidCategoryindex("CHOOSE THE RIGHT INDEX NEXT TIME");
-            }
+    public void showInterest() {
 
-            interest[i] = (Category) Database.read(options[temp].getID());
-        }
-        ArrayList<Event> tempEvents = new ArrayList<>();
-        for(int  i = 0; i<3 ;i++){
-
-            Event [] tempeventsarray = interest[i].getEvents().toArray(new Event[0]);
-            for(int j =0;j< tempeventsarray.length;j++){
-                tempEvents.add(tempeventsarray[j]);
-            }
-        }
-        for (Event e:tempEvents) {
-            System.out.println(e);
-        }
 
     }
     public void showEvents() {
@@ -184,7 +159,7 @@ public class Attendee extends User implements HasID {
                 this.attendeeDeposit(deposit);
                 break;
             case 4:
-                this.ShowInterest();
+                this.showInterest();
                 break;
             case 5:
                 this.showEvents();
