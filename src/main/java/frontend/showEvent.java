@@ -17,6 +17,7 @@ public class showEvent {
     public static void show(){
         Stage stage = new Stage();
         Label label = new Label("Search: ");
+        Label resultLabel = new Label();
         TextField search = new TextField();
         search.setText("Enter the event name");
         FlowPane pane = new FlowPane();
@@ -28,8 +29,10 @@ public class showEvent {
         stage.show();
 
         search.setOnAction(e->{
-            Admin.searchEvents(search.getText());
+            resultLabel.setText(Admin.searchEvents(search.getText()));
+
         });
+
 
 
     }
