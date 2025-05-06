@@ -30,7 +30,7 @@ public class AdminInterface extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
 
-        VBox sidebar = new VBox();
+        HBox sidebar = new HBox();
         sidebar.setStyle("-fx-background-color: #333; -fx-padding: 10;");
         sidebar.setPrefWidth(200);
         stage.setResizable(false);
@@ -42,7 +42,7 @@ public class AdminInterface extends Application {
         grid.add(sidebar,0,0 );
 
         toggleButton.setOnAction(e ->{
-            double targetX = sidebar.getTranslateX()==-250? 600: -250;
+            double targetX = sidebar.getTranslateX()==0? -250: 0;
 
             TranslateTransition transition = new TranslateTransition(Duration.millis(300), sidebar);
             transition.setToX(targetX);
@@ -53,12 +53,23 @@ public class AdminInterface extends Application {
 
 
 
+
+        //sidebar buttons
         Button accDetails = new Button("View Account");
         Button logout = new Button("Log out");
 
+        accDetails.setOnAction(e->{
+
+        });
+        logout.setOnAction(e->{
+            stage.close();
+            LoginWindow.show(); //should be replaced with main.Start
+        });
+
+
         sidebar.getChildren().addAll(accDetails, logout);
 
-        sidebar.setTranslateX(600);
+        sidebar.setTranslateX(-250);
         Scene scene = new Scene(grid, 600, 400);
 
         Text greeting = new Text("Hello Mr/Mrs: Admin");
