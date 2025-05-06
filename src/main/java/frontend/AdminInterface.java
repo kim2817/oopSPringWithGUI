@@ -1,5 +1,6 @@
 package frontend;
 
+import BackEnd.Admin;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,10 +19,10 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.awt.*;
 
-public class AdminInterface extends Application {
-    public void start(Stage stage){
+public class AdminInterface{
+    public void show(Admin q){
+        Stage stage = new Stage();
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));
 
@@ -72,7 +73,7 @@ public class AdminInterface extends Application {
         sidebar.setTranslateX(-250);
         Scene scene = new Scene(grid, 600, 400);
 
-        Text greeting = new Text("Hello Mr/Mrs: Admin");
+        Text greeting = new Text("Hello Mr/Mrs: " + q.getUsername());
         greeting.setFont(Font.font("Arial"));
         Line line = new Line();
 
