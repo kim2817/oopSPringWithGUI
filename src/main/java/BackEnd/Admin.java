@@ -59,12 +59,9 @@ public class Admin extends User{
 
     }
 
-    public static String searchEvents(String EventName){
-        Event found= Database.findEvent(EventName);
-        if(found!=null){
-            return found.toString();
-        }
-        return "Not found";
+    public static Event searchEvents(String EventName){
+            return Database.findEvent(EventName);
+
     }
 
     public void viewOrganizers(){
