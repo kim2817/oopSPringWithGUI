@@ -83,9 +83,6 @@ public class AttendeeGUI {
                     Button eventButton = new Button (events.get(i).getEventName());
                     SearchResult.getChildren().add(eventButton);
                 }
-
-
-
                 SearchResult.getChildren().add(FoundCond);
             }
             else{
@@ -94,14 +91,8 @@ public class AttendeeGUI {
             }
         });
 
-
         HBox catSearching = new HBox(10,CatsCombo,Catssearch);
-
-
-
-
-
-
+        SearchResult.setAlignment(Pos.CENTER);
 
 
         //intrests
