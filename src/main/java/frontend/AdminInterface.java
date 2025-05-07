@@ -31,20 +31,15 @@ public class AdminInterface {
         stage.getIcons().add(new Image("img.png"));
 
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-
         HBox sidebar = new HBox();
         sidebar.setStyle("-fx-background-color: #333; -fx-padding: 10;");
         sidebar.setPrefWidth(200);
         stage.setResizable(false);
 
         Button toggleButton = new Button("☰");
-
+        toggleButton.setAlignment(Pos.CENTER_RIGHT);
+        HBox fullSidebar = new HBox(sidebar, toggleButton);
         toggleButton.setStyle("-fx-font-size: 16;");
-        grid.add(toggleButton, 0, 1);
-        grid.add(sidebar, 0, 0);
 
         toggleButton.setOnAction(e -> {
             double targetX = sidebar.getTranslateX() == 0 ? -250 : 0;
@@ -77,18 +72,21 @@ public class AdminInterface {
 
 
         sidebar.getChildren().addAll(accDetails, logout);
-
+        sidebar.setPadding(new Insets(5));
         sidebar.setTranslateX(-250);
-        Scene scene = new Scene(grid, 600, 400);
 
-        Text greeting = new Text("Hello Mr/Mrs: " + q.getUsername());
-        greeting.setFont(Font.font("Arial"));
+        Label greeting = new Label("Hello Mr/Mrs: " + q.getUsername());
+        greeting.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         Line line = new Line();
+
+        HBox greetingHbox = new HBox(greeting);
+        greetingHbox.setAlignment(Pos.TOP_LEFT);
 
         Button eventsBtn = new Button("Events");
         Button usersBtn = new Button("Users");
         Button mngDataBtn = new Button("Manage Data");
-
+        HBox buttons = new HBox(10, eventsBtn, usersBtn, mngDataBtn);
+        buttons.setAlignment(Pos.CENTER);
 
         eventsBtn.setOnAction(e -> {
             stage.close();
@@ -104,18 +102,17 @@ public class AdminInterface {
             managerooms.show();
         });
 
-        grid.add(greeting, 1, 1);
-        grid.add(eventsBtn, 0, 4);
-        grid.add(usersBtn, 0, 5);
-        grid.add(mngDataBtn, 0, 6);
-        stage.setScene(scene);
-        stage.show();
-
-        ScrollPane scrollPane = new ScrollPane(grid);
+        ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
 
-        grid.setPadding(new Insets(20));
-        Scene scene1 = new Scene(scrollPane, 500, 700);
+
+        VBox Vpane = new VBox(20,greetingHbox, fullSidebar, toggleButton, buttons);
+
+        Scene scene = new Scene(Vpane, 800, 450);
+        stage.setScene(scene);
+        stage.show();
+        Vpane.setPadding(new Insets(20));
+        Vpane.setAlignment(Pos.TOP_LEFT);
 
     }
 
@@ -161,6 +158,7 @@ public class AdminInterface {
 
     public static class showUsers {
         public static void show() {
+            Button backBtn = new Button("Back");
             Stage stage = new Stage();
             ComboBox<String> usersCombo = new ComboBox<>();
             usersCombo.setPromptText("Select User Type");
@@ -170,12 +168,14 @@ public class AdminInterface {
             Button list = new Button("List");
 
             HBox Hpane1 = new HBox(usersCombo, list);
+            Hpane1.setPadding(new Insets(10));
             Hpane1.setAlignment(Pos.TOP_CENTER);
-            Scene scene = new Scene(Hpane1, 500, 300);
+            VBox Vpane = new VBox(20, Hpane1, backBtn);
+            Scene scene = new Scene(Vpane, 500, 300);
             stage.setScene(scene);
             stage.show();
 
-            Hpane1.setPadding(new Insets(20));
+            //Hpane1.setPadding(new Insets(20));
 
             list.setOnAction(e -> {
                 if (usersCombo.getValue().equals("Oragnizer")) {
@@ -185,7 +185,13 @@ public class AdminInterface {
                 }
             });
 
+            Vpane.setAlignment(Pos.TOP_CENTER);
 
+            backBtn.setOnAction(e -> {
+                stage.close();
+                AdminInterface.show(tempAdmin);
+            });
+            Vpane.setPadding(new Insets(20));
         }
     }
 
@@ -265,7 +271,8 @@ public class AdminInterface {
 
     public static class myAccount {
         public static void show() {
-            Image pfp = new Image("profile.png");
+            Button backBtn = new Button("Back");
+            Image pfp = new Image("pfp.png");
             ImageView pfpView = new ImageView(pfp);
             pfpView.setFitWidth(80);
             pfpView.setFitHeight(80);
@@ -289,7 +296,7 @@ public class AdminInterface {
             VBox detailsVpane = new VBox(details);
             detailsVpane.setPadding(new Insets(10));
 
-            VBox Vpane = new VBox(5,text,seperatorline, imageHpane, detailsVpane);
+            VBox Vpane = new VBox(5,text,seperatorline, imageHpane, detailsVpane, backBtn);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(10));
 
@@ -297,6 +304,11 @@ public class AdminInterface {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
+            backBtn.setOnAction(e -> {
+                stage.close();
+                AdminInterface.show(tempAdmin);
+            });
+
 
         }
     }
