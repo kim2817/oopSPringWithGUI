@@ -1,8 +1,12 @@
 package frontend;
 
 import BackEnd.Admin;
+import BackEnd.Category;
+import BackEnd.Database;
 import BackEnd.Event;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,6 +25,9 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static BackEnd.DateTime.displayTime;
 
 
 public class AdminInterface {
@@ -144,16 +151,59 @@ public class AdminInterface {
                 }
 
             });
+
             VBox Vpane = new VBox(10, tempHbox, backBtn);
             Vpane.setAlignment(Pos.BOTTOM_LEFT);
-            VBox root = new VBox(Hpane, Vpane);
-            Scene scene = new Scene(root, 800, 300);
-            stage.setScene(scene);
+
+            Label or = new Label("OR");
+            ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
+            ComboBox<String> CatsCombo = new ComboBox<>();
+            CatsCombo.setPromptText("Select a Category");
+            CatsCombo.getItems().addAll(items);
+            VBox otherOption = new VBox(20,or,CatsCombo);
+            otherOption.setAlignment(Pos.CENTER);
+
+            final VBox SearchResult = new VBox(10);
+            final Label FoundCond = new Label("");
+            Button Catssearch = new Button("Search");
+
+            Catssearch.setOnAction(e -> {
+                SearchResult.getChildren().clear();
+
+                Category selectedCategory = Database.findCat(CatsCombo.getValue());
+                if(!((selectedCategory.getEvents()).isEmpty())) {
+                    FoundCond.setText("Events in this Category : ");
+                    List<Event> events = selectedCategory.getEvents();
+                    for(int i=0; i< events.size();i++){
+                        Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
+                        SearchResult.getChildren().add(eventButton);
+                    }
+                    SearchResult.getChildren().add(FoundCond);
+                }
+                else{
+                    FoundCond.setText("No events found in this Category");
+                    SearchResult.getChildren().add(FoundCond);
+                }
+            });
+
+            HBox catSearching = new HBox(10,CatsCombo,Catssearch);
+            catSearching.setAlignment(Pos.CENTER);
+            SearchResult.setAlignment(Pos.CENTER);
+
+
 
             backBtn.setOnAction(e -> {
                 stage.close();
                 AdminInterface.show(tempAdmin);
             });
+
+
+            VBox root = new VBox(20, Hpane,otherOption, catSearching, SearchResult, Vpane);
+            Scene scene = new Scene(root, 800, 300);
+            stage.setScene(scene);
+
+
+
 
 
             ScrollPane scrollPane = new ScrollPane(Vpane);
