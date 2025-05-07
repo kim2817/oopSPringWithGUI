@@ -1,4 +1,5 @@
 package BackEnd;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.Scanner;
@@ -59,12 +60,9 @@ public class Admin extends User{
 
     }
 
-    public static String searchEvents(String EventName){
-        Event found= Database.findEvent(EventName);
-        if(found!=null){
-            return found.toString();
-        }
-        return "";
+    public static ArrayList<Event> searchEvents(String EventName){
+            return Database.findEvent(EventName);
+
     }
 
     public void viewOrganizers(){

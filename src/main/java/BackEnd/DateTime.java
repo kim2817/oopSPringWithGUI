@@ -17,19 +17,19 @@ public class DateTime {
         this.time = time;
     }
     public DateTime(String S){
+        S = checkFormat(S);
+        if(S == null){
+            throw new RuntimeException("invalid format");
+        }
         this(Integer.parseInt(S.substring(0,2)),Integer.parseInt(S.substring(3,5)),Integer.parseInt(S.substring(6)));
     }
-    public static boolean checkFormat(String s){
-        if(s.length() != 10) return false;
-        System.out.println("hi");
-        if(s.charAt(2) != '/' || s.charAt(5) != '/') return false;
-        try{
-            new DateTime(s);
-        }
-        catch (RuntimeException e){
-            return false;
-        }
-        return true;
+    public static String checkFormat(String s){
+        if(s.length() < 8) return null;
+        if(s.charAt(1)=='/') s = "0" + s;
+        if(s.charAt(4)=='/') s = s.substring(0,3) + "0" + s.substring(3);
+        if(s.length() != 10) return null;
+        if(s.charAt(2) != '/' || s.charAt(5) != '/') return null;
+        return s;
     }
     // setters & getters
     public int getDay() {

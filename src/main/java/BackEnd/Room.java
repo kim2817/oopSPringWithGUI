@@ -3,13 +3,14 @@ package BackEnd;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Room implements HasID {
+public class Room implements HasID,Runnable {
     private final String roomID;
     private String roomName;
     private int roomCapacity;
     private double rentPrice;
     private String roomLocation;
     private Schedule bookedSlots = new Schedule();
+    private DateTime userslot;
 
     public Room(){
         this("",100,100.00,"");
@@ -39,6 +40,11 @@ public class Room implements HasID {
         return rentPrice;
     }
     // mutators \\
+
+    public void setUserslot(DateTime userslot) {
+        this.userslot = userslot;
+    }
+
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
@@ -86,13 +92,30 @@ public class Room implements HasID {
                 break;
         }
     }
+    public void listavaRooms(DateTime slot){
+        for(Room a: (Room[]) Database.readAll(new Room())){
+            if(a.isAvailable(slot)){
+                System.out.println(a.getRoomName());
+            }
+        }
+    }
     public void delete(Admin admin){
         Database.delete(this);
     }
     static public void listRooms(){
         System.out.println(Arrays.toString(Database.readAll(new Room())));
     }
-
+    @Override
+    public void run() {
+        while (true){
+          try{
+              listavaRooms(userslot);
+              Thread.sleep(50000);
+          }catch (InterruptedException e){
+            System.out.println("thread was intruppted");
+          }
+        }
+    }
     @Override
     public String toString() {
         return "{ID: " + roomID + "; Name: " + roomName + "; Capacity: " + roomCapacity + "; Rent Price: " + rentPrice + "; Location: " + roomLocation + "; Booked Slots: " + bookedSlots + "}";
