@@ -64,7 +64,7 @@ public class DateTime {
     public void setTime(TimeSlot time) {
         this.time = time;
     }
-    public String displayTime(Event event){
+    public static String displayTime(Event event){
         return event.getEventDate().getDay() + "/" + event.getEventDate().getMonth()+ "/"+ event.getEventDate().getYear()+
                 "\n  at time:"+ event.getEventDate().getTime();
     }
