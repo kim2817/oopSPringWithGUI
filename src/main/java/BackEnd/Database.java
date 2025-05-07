@@ -1,9 +1,12 @@
 package BackEnd;
 
+import frontend.showEvent;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Database {
@@ -59,12 +62,14 @@ public class Database {
         }
         return null;
     }
-    public static Event findEvent(String eventName){
-        Object[] E = readAll(new Event());
-        for(Object o:E) {
-            if(((Event)o).getEventName().equals(eventName)) return (Event) o;
+    public static ArrayList<Event> findEvent(String eventName){
+        ArrayList<Event> AllEvents = new ArrayList<>();
+        for(Event e : (Event[]) Database.readAll(new Event())){
+            if(eventName == null || eventName.isEmpty() || e.getEventName().toLowerCase().contains(eventName.toLowerCase()) ){
+                AllEvents.add(e);
+            }
         }
-        return null;
+        return AllEvents;
     }
     public static Category findCat(String catName){
         Object[] E = readAll(new Category());
