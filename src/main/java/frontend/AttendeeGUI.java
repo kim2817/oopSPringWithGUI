@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.util.List;
 
 import static BackEnd.Admin.searchEvents;
+import static BackEnd.DateTime.displayTime;
 
 public class AttendeeGUI {
     public static void show(Attendee attendee) {
@@ -80,7 +81,7 @@ public class AttendeeGUI {
                 FoundCond.setText("Events in this Category : ");
                 List<Event> events = selectedCategory.getEvents();
                 for(int i=0; i< events.size();i++){
-                    Button eventButton = new Button (events.get(i).getEventName() + "\n" + );
+                    Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
                     SearchResult.getChildren().add(eventButton);
                 }
                 SearchResult.getChildren().add(FoundCond);
