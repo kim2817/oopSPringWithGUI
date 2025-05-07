@@ -63,7 +63,7 @@ public class Database {
         return null;
     }
     public static ArrayList<Event> findEvent(String eventName){
-        Object[] T = Database.readAll(new Event());
+        Object[] T = readAll(new Event());
         Event[] options = new Event[T.length];
         for (int i = 0; i < T.length; i++) {
             options[i] = (Event) T[i];
