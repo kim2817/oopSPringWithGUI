@@ -1,6 +1,7 @@
 package frontend;
 
 import BackEnd.Admin;
+import BackEnd.Event;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +19,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 
 public class AdminInterface {
@@ -134,8 +137,12 @@ public class AdminInterface {
             HBox tempHbox = new HBox(answer);
             tempHbox.setAlignment(Pos.CENTER);
             searchBtn.setOnAction(e -> {
+                ArrayList<Event> bwoah = Admin.searchEvents(search.getText());
 
-                answer.setText((Admin.searchEvents(search.getText())));
+                for(Event q: bwoah){
+                    System.out.println(q);
+                }
+
             });
             VBox Vpane = new VBox(10, tempHbox, backBtn);
             Vpane.setAlignment(Pos.BOTTOM_LEFT);
