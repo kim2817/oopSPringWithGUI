@@ -63,8 +63,13 @@ public class Database {
         return null;
     }
     public static ArrayList<Event> findEvent(String eventName){
+        Object[] T = Database.readAll(new Event());
+        Event[] options = new Event[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Event) T[i];
+        }
         ArrayList<Event> AllEvents = new ArrayList<>();
-        for(Event e : (Event[]) Database.readAll(new Event())){
+        for(Event e : options){
             if(eventName == null || eventName.isEmpty() || e.getEventName().toLowerCase().contains(eventName.toLowerCase()) ){
                 AllEvents.add(e);
             }
