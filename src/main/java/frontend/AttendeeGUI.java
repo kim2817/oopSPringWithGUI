@@ -1,19 +1,23 @@
 package frontend;
 
 import BackEnd.Attendee;
+import BackEnd.Category;
+import BackEnd.Database;
+import BackEnd.Event;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 import static BackEnd.Admin.searchEvents;
 
@@ -34,8 +38,8 @@ public class AttendeeGUI {
         VBox userBox = new VBox(5, greeting, balanceLabel);
         userBox.setAlignment(Pos.CENTER_LEFT);
 
-        HBox navBar = new HBox(10, userBox, profileIcon);
-        navBar.setAlignment(Pos.CENTER_RIGHT);
+        HBox navBar = new HBox(10, profileIcon,userBox);
+        navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.setPadding(new Insets(10));
         navBar.setStyle("-fx-background-color: #f0f0f0;");
 
@@ -48,7 +52,6 @@ public class AttendeeGUI {
         VBox searchSection = new VBox(10, searchBox);
         searchSection.setAlignment(Pos.CENTER);
         searchSection.setPadding(new Insets(10));
-        Label resultLabel = new Label();
 
         searchBtn.setOnAction(e->{
 
@@ -56,15 +59,50 @@ public class AttendeeGUI {
 
         });
 
+        //categories searching..
+        Label or = new Label("OR");
+        ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
+        ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.setPromptText("Select a Category");
+        CatsCombo.getItems().addAll(items);
+        VBox otherOption = new VBox(20,or,CatsCombo);
+        otherOption.setAlignment(Pos.CENTER);
+
+        final VBox SearchResult = new VBox(10);
+        final Label FoundCond = new Label("");
+        Button Catssearch = new Button("Search");
+
+        Catssearch.setOnAction(e -> {
+            SearchResult.getChildren().clear();
+
+            Category selectedCategory = Database.findCat(CatsCombo.getValue());
+            if(!((selectedCategory.getEvents()).isEmpty())) {
+                FoundCond.setText("Events in this Category : ");
+                List<Event> events = selectedCategory.getEvents();
+                for(int i=0; i< events.size();i++){
+                    Button eventButton = new Button (events.get(i).getEventName() + "\n" + );
+                    SearchResult.getChildren().add(eventButton);
+                }
+                SearchResult.getChildren().add(FoundCond);
+            }
+            else{
+                FoundCond.setText("No events found in this Category");
+                SearchResult.getChildren().add(FoundCond);
+            }
+        });
+
+        HBox catSearching = new HBox(10,CatsCombo,Catssearch);
+        catSearching.setAlignment(Pos.CENTER);
+        SearchResult.setAlignment(Pos.CENTER);
+
 
         //intrests
         Label intrestsLabel = new Label("Events you may like");
         intrestsLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         //layout
-        VBox root = new VBox(20, navBar, searchSection, intrestsLabel);
+        VBox root = new VBox(20, navBar, searchSection, otherOption,catSearching, SearchResult,intrestsLabel);
         root.setPadding(new Insets(20));
-
 
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);

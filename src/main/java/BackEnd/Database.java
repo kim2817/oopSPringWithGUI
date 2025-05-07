@@ -59,12 +59,19 @@ public class Database {
         }
         return null;
     }
-    public static Event findEvent(String eventName){
-        Object[] E = readAll(new Event());
-        for(Object o:E) {
-            if(((Event)o).getEventName().equals(eventName)) return (Event) o;
+    public static ArrayList<Event> findEvent(String eventName){
+        Object[] T = readAll(new Event());
+        Event[] options = new Event[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Event) T[i];
         }
-        return null;
+        ArrayList<Event> AllEvents = new ArrayList<>();
+        for(Event e : options){
+            if(eventName == null || eventName.isEmpty() || e.getEventName().toLowerCase().contains(eventName.toLowerCase()) ){
+                AllEvents.add(e);
+            }
+        }
+        return AllEvents;
     }
     public static Category findCat(String catName){
         Object[] E = readAll(new Category());
