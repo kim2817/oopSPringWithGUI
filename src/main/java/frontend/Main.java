@@ -11,6 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 import static BackEnd.Gender.FEMALE;
 import static BackEnd.Gender.MALE;
 import static javafx.application.Application.launch;
@@ -18,6 +20,7 @@ import static javafx.application.Application.launch;
 public class Main extends Application{
 
     public static void main(String[] args) {
+        Database.scanInput(new File("DataToInput.txt"));
         Database.create(new Attendee("j", "j", "123", new DateTime("16/02/2008"),FEMALE, Integer.parseInt("17"),
                 "address",Double.parseDouble("50.5"), "standup comedy", "plays","workshops"));
         Database.create(new Organizer("k","k","123",new DateTime("28/11/2007"),FEMALE,Double.parseDouble("550.6")));
