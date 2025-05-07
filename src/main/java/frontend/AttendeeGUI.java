@@ -59,7 +59,7 @@ public class AttendeeGUI {
 
         });
 
-        //categories searching
+        //categories searching..
         Label or = new Label("OR");
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo = new ComboBox<>();
