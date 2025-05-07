@@ -16,7 +16,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
-
+import java.util.List;
 
 
 class OrganizerUI {
@@ -160,7 +160,37 @@ class CreateNewEventUI {
         VBox layouty3 = new VBox(10, layoutx3);
         HBox layoutx4 = new HBox(10);
         VBox layouty4 = new VBox(10, layoutx4);
+        //cat combo\\
+        Label or = new Label("OR");
+        ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
+        ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.setPromptText("Select a Category");
+        CatsCombo.getItems().addAll(items);
+        VBox otherOption = new VBox(20,or,CatsCombo);
+        otherOption.setAlignment(Pos.CENTER);
 
+        final VBox SearchResult = new VBox(10);
+        final Label FoundCond = new Label("");
+        Button Catssearch = new Button("Search");
+
+        Catssearch.setOnAction(e -> {
+            SearchResult.getChildren().clear();
+
+            Category selectedCategory = Database.findCat(CatsCombo.getValue());
+            if(!((selectedCategory.getEvents()).isEmpty())) {
+                FoundCond.setText("Events in this Category : ");
+                List<Event> events = selectedCategory.getEvents();
+                for(int i=0; i< events.size();i++){
+                    Button eventButton = new Button (events.get(i).getEventName() + "\n" );
+                    SearchResult.getChildren().add(eventButton);
+                }
+                SearchResult.getChildren().add(FoundCond);
+            }
+            else{
+                FoundCond.setText("No events found in this Category");
+                SearchResult.getChildren().add(FoundCond);
+            }
+        });
 
 
         VBox layout = new VBox(layoutx1,layoutx2,layouty3,layouty4);
@@ -173,14 +203,13 @@ class CreateNewEventUI {
         layoutx1.getChildren().addAll(new Label("Name     "),nameField);
         layoutx1.setAlignment(Pos.TOP_LEFT);
 
-        TextField catField = new TextField();
-        layoutx2.getChildren().addAll(new Label("Category"),catField);
+        layoutx2.getChildren().addAll(new Label("Category"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
         layoutx2.setAlignment(Pos.TOP_LEFT);
 
         layouty3.getChildren().addAll(layoutx1,layoutx2);
 
         Button rentRoom = new Button("Rent Room");
-        layouty4.getChildren().addAll(rentRoom);
+        layouty4.getChildren().addAll(layouty3,rentRoom);
         layouty4.setAlignment(Pos.BOTTOM_LEFT);
 
         stage.show();

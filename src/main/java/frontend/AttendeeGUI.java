@@ -80,7 +80,7 @@ public class AttendeeGUI {
                 FoundCond.setText("Events in this Category : ");
                 List<Event> events = selectedCategory.getEvents();
                 for(int i=0; i< events.size();i++){
-                    Button eventButton = new Button (events.get(i).getEventName() + "\n" + );
+                    Button eventButton = new Button (events.get(i).getEventName() + "\n" );
                     SearchResult.getChildren().add(eventButton);
                 }
                 SearchResult.getChildren().add(FoundCond);
