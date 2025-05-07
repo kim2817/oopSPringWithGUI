@@ -26,6 +26,10 @@ public class Main extends Application{
         Database.create(new Category("plays"));
         Database.create(new Category("workshops"));
         Database.create(new Event("champions", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
+        Database.create(new Event("weeee", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
+        Database.create(new Event("reeee", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
+        Database.create(new Event("seeeeeee", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
+        Database.create(new Event("noice", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
 
 
         launch(args);
@@ -51,7 +55,6 @@ public class Main extends Application{
         Stage login = new Stage();
 
         Image icon = new Image("img.png");
-
 
         root.setPadding(new Insets(20));
 
