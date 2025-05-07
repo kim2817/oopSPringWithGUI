@@ -95,13 +95,10 @@ public class Room implements HasID,Runnable {
     public void listavaRooms(DateTime slot){
         for(Room a: (Room[]) Database.readAll(new Room())){
             if(a.isAvailable(slot)){
-                System.out.println(a);
+                System.out.println(a.getRoomName());
             }
         }
     }
-
-
-
     public void delete(Admin admin){
         Database.delete(this);
     }
