@@ -4,7 +4,6 @@ import BackEnd.Attendee;
 import BackEnd.Category;
 import BackEnd.Database;
 import BackEnd.Event;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -48,10 +47,21 @@ public class AttendeeGUI {
         sidebar.setStyle("-fx-background-color: #eeeeee;");
         sidebar.setPrefWidth(200);
 
-        Button profileBtn = new Button("My Account");
+        Button myAccBtn = new Button("My Account");
         Button logoutBtn = new Button("Logout");
 
-        sidebar.getChildren().addAll(profileBtn, logoutBtn);
+        logoutBtn.setOnAction(e -> {
+            stage.close();
+            tempAttendee = null;
+            LoginWindow.show();
+        });
+
+        myAccBtn.setOnAction(e -> {
+            stage.close();
+            AttendeeGUI.myAccount.show();
+        });
+
+        sidebar.getChildren().addAll(myAccBtn, logoutBtn);
 
         // 2. Create the toggle button (top left)
         Button toggleBtn = new Button("☰");
@@ -179,13 +189,14 @@ public class AttendeeGUI {
             Label text = new Label("MY ACCOUNT");
             text.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 18));
             text.setPadding(new Insets(20));
+            String interests = tempAttendee.showInterest();
             Label details = new Label("Username: " + tempAttendee.getUsername() + "\n"
                     + "Email: " + tempAttendee.getEmail() + "\n"
                     + "ID: " + tempAttendee.getID() + "\n"
                     + "Age: " + tempAttendee.getAge() + "\n"
-                    + "Date of Birth: " + tempAttendee.getDateOfBirth() + "\n" +
+                    + "Date of Birth: " + tempAttendee.getDateOfBirth().DOBToString() + "\n" +
                     "Address: " + tempAttendee.getAddress() +"\n" +
-                    "Interests: " + "\n");
+                    "Interests: " + "\n" + interests);
             details.setFont(Font.font("Arial", FontWeight.BOLD, 12));
             VBox detailsVpane = new VBox(details);
             detailsVpane.setPadding(new Insets(10));

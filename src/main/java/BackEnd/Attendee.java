@@ -75,7 +75,7 @@ public class Attendee extends User implements HasID {
 
     public String showInterest() {
 
-        return this.interest[0] + "\n" + this.interest[1]+ "\n" + this.interest[3];
+        return (this.interest[0] + "\n" + this.interest[1]+ "\n" + this.interest[2]);
     }
     public void showEvents() {
         System.out.println(Arrays.toString(Database.readAll(new Event())));

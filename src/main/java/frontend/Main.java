@@ -33,7 +33,8 @@ public class Main extends Application{
         Database.create(new Event("reeee", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
         Database.create(new Event("seeeeeee", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
         Database.create(new Event("noice", Database.findCat("plays"),new Room() , (Organizer) Database.findUser("k", "123"),12.5, new DateTime("16/02/2008") ));
-
+        Database.create(new Attendee("j", "j", "123", new DateTime("16/02/2008"),FEMALE, Integer.parseInt("17"),
+                "address",Double.parseDouble("50.5"), "standup comedy", "plays","workshops"));
 
         launch(args);
 
