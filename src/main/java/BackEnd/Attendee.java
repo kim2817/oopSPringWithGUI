@@ -34,7 +34,7 @@ public class Attendee extends User implements HasID {
         interest[2] =Database.findCat(interest3);
 
     }
-    //edit to commit
+
 
     public int getAge() {
         return age;
