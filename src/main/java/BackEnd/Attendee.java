@@ -80,15 +80,18 @@ public class Attendee extends User implements HasID {
     public void showEvents() {
         System.out.println(Arrays.toString(Database.readAll(new Event())));
     }
-    public void showBookedEvents() {
+    public String showBookedEvents() {
         if (bookedEvents.isEmpty()) {
-            System.out.println("No events booked yet.");
+            return "No booked events";
         } else {
+            String s="";
             for (Event e : bookedEvents) {
-                System.out.println(e);
+                s+=e.AttendeeToString()+"\n\n\n";
             }
+            return s;
         }
     }
+    //edit to commit
     public void chooseEvent() {
         Scanner input = new Scanner(System.in);
         Object[] T = Database.readAll(new Event());
