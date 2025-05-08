@@ -49,7 +49,11 @@ public class AttendeeGUI {
 
         Button myAccBtn = new Button("My Account");
         Button logoutBtn = new Button("Logout");
+        Button MyEvent = new Button("My events");
 
+        MyEvent.setOnAction(e->{
+
+        });
         logoutBtn.setOnAction(e -> {
             stage.close();
             tempAttendee = null;
@@ -213,6 +217,24 @@ public class AttendeeGUI {
                 stage.close();
                 AttendeeGUI.show(tempAttendee);
             });
+        }
+        public static class myEvents {
+            public static void show() {
+                Button backBtn = new Button("Back");
+
+                VBox root = new VBox();
+                ScrollPane scrollPane = new ScrollPane(root);
+                scrollPane.setFitToWidth(true);
+
+                Scene scene = new Scene(scrollPane, 600, 800);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+                backBtn.setOnAction(e -> {
+                    stage.close();
+                    AttendeeGUI.show(tempAttendee);
+                });
+            }
         }
     }
 }

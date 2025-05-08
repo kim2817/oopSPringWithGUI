@@ -62,7 +62,6 @@ public class Main extends Application{
 
         root.setPadding(new Insets(20));
 
-
         login.getIcons().add(icon);
         login.setTitle("Eventra login");
         login.setScene(scene);
