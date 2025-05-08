@@ -86,11 +86,12 @@ public class Attendee extends User implements HasID {
         } else {
             String s="";
             for (Event e : bookedEvents) {
-                s+=e+"\n";
+                s+=e.AttendeeToString()+"\n\n\n";
             }
             return s;
         }
     }
+    //edit to commit
     public void chooseEvent() {
         Scanner input = new Scanner(System.in);
         Object[] T = Database.readAll(new Event());
