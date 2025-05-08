@@ -36,61 +36,77 @@ public class AdminInterface {
     public static void show(Admin q) {
         tempAdmin = q;
 
+
+
+        Text greeting = new Text("Welcome Mr/Mrs: " + q.getUsername());
+        greeting.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
+
+        BorderPane sidebarRoot = new BorderPane();
+
+        VBox sidebar = new VBox(10);
+        sidebar.setPadding(new Insets(10));
+        sidebar.setStyle("-fx-background-color: #eeeeee;");
+        sidebar.setPrefWidth(200);
+
+        Button accDetails = new Button("My Account");
+        Button logout = new Button("Logout");
+
+        sidebar.getChildren().addAll(accDetails, logout);
+
+        // 2. Create the toggle button (top left)
+        Button toggleBtn = new Button("☰");
+        toggleBtn.setFocusTraversable(false);
+
+        toggleBtn.setOnAction(e -> {
+            if (sidebarRoot.getLeft() == null) {
+                sidebarRoot.setLeft(sidebar);
+            } else {
+                sidebarRoot.setLeft(null);
+            }
+        });
+
+
+
+
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));
 
+        Image profileImage = new Image("profile.png"); // Replace with your actual image
+        ImageView profileIcon = new ImageView(profileImage);
+        profileIcon.setFitWidth(40);
+        profileIcon.setFitHeight(40);
 
-        HBox sidebar = new HBox();
-        sidebar.setStyle("-fx-background-color: #333; -fx-padding: 10;");
-        sidebar.setPrefWidth(200);
-        stage.setResizable(false);
-
-        Button toggleButton = new Button("☰");
-        toggleButton.setAlignment(Pos.CENTER_RIGHT);
-        HBox fullSidebar = new HBox(sidebar, toggleButton);
-        toggleButton.setStyle("-fx-font-size: 16;");
-
-        toggleButton.setOnAction(e -> {
-            double targetX = sidebar.getTranslateX() == 0 ? -250 : 0;
-
-            TranslateTransition transition = new TranslateTransition(Duration.millis(300), sidebar);
-            transition.setToX(targetX);
-            transition.play();
-
-        });
+        HBox navBar = new HBox(10, profileIcon, greeting);
+        navBar.setAlignment(Pos.CENTER_LEFT);
+        navBar.setPadding(new Insets(10));
+        navBar.setStyle("-fx-background-color: #dddddd;");
 
 
-        //sidebar buttons
-        Button accDetails = new Button("View Account");
-        Button logout = new Button("Log out");
+        HBox topBar = new HBox(10,toggleBtn,navBar);
+        topBar.setAlignment(Pos.TOP_LEFT);
+        topBar.setPadding(new Insets(10));
+        topBar.setStyle("-fx-background-color: #dddddd;");
 
-        accDetails.setOnAction(e -> {
+
+
+
+            accDetails.setOnAction(e -> {
 
 
         });
-        logout.setOnAction(e -> {
+            logout.setOnAction(e -> {
             stage.close();
             tempAdmin = null;
-            LoginWindow.show(); //should be replaced with main.Start
+            LoginWindow.show();
         });
 
-        accDetails.setOnAction(e -> {
+            accDetails.setOnAction(e -> {
             stage.close();
             myAccount.show();
         });
 
-
-        sidebar.getChildren().addAll(accDetails, logout);
-        sidebar.setPadding(new Insets(5));
-        sidebar.setTranslateX(-250);
-
-        Label greeting = new Label("Hello Mr/Mrs: " + q.getUsername());
-        greeting.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        Line line = new Line();
-
-        HBox greetingHbox = new HBox(greeting);
-        greetingHbox.setAlignment(Pos.TOP_LEFT);
 
         Button eventsBtn = new Button("Events");
         Button usersBtn = new Button("Users");
@@ -112,24 +128,39 @@ public class AdminInterface {
             managerooms.show();
         });
 
-        ScrollPane scrollPane = new ScrollPane();
+
+
+        VBox centerContent = new VBox(20, buttons);
+
+        centerContent.setPadding(new Insets(20));
+        centerContent.setAlignment(Pos.CENTER);
+
+
+        VBox root = new VBox(topBar,sidebarRoot,centerContent);
+
+        // 4. Assemble layout
+        sidebarRoot.setTop(topBar);
+        sidebarRoot.setLeft(sidebar); // visible by default
+        sidebarRoot.setCenter(centerContent);
+
+        ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 
-
-        VBox Vpane = new VBox(20,greetingHbox, fullSidebar, toggleButton, buttons);
-
-        Scene scene = new Scene(Vpane, 800, 450);
+        Scene scene = new Scene(scrollPane, 800, 450);
         stage.setScene(scene);
         stage.show();
-        Vpane.setPadding(new Insets(20));
-        Vpane.setAlignment(Pos.TOP_LEFT);
+        centerContent.setPadding(new Insets(20));
+        centerContent.setAlignment(Pos.TOP_LEFT);
 
     }
 
 
     public static class showEvent {
         public static void show() {
+            Image icon = new Image("profile.png");
             Stage stage = new Stage();
+            stage.setTitle("Search events");
+            stage.getIcons().add(icon);
             Button searchBtn = new Button("Search");
             Label resultLabel = new Label();
             TextField search = new TextField();
@@ -215,8 +246,11 @@ public class AdminInterface {
 
     public static class showUsers {
         public static void show() {
-            Button backBtn = new Button("Back");
+            Image icon = new Image("profile.png");
             Stage stage = new Stage();
+            stage.setTitle("Show Users");
+            stage.getIcons().add(icon);
+            Button backBtn = new Button("Back");
             ComboBox<String> usersCombo = new ComboBox<>();
             usersCombo.setPromptText("Select User Type");
             usersCombo.getItems().add(0, "Attendee");
@@ -255,7 +289,10 @@ public class AdminInterface {
 
     public static class managerooms {
         public static void show() {
+            Image icon = new Image("profile.png");
             Stage stage = new Stage();
+            stage.setTitle("Manage rooms");
+            stage.getIcons().add(icon);
             ToggleGroup group = new ToggleGroup();
             RadioButton roomChoice = new RadioButton("Room");
             Button createRoom = new Button("Create Room");
@@ -328,6 +365,10 @@ public class AdminInterface {
 
     public static class myAccount {
         public static void show() {
+            Image icon = new Image("profile.png");
+            Stage stage = new Stage();
+            stage.setTitle("My Account");
+            stage.getIcons().add(icon);
             Button backBtn = new Button("Back");
             Image pfp = new Image("pfp.png");
             ImageView pfpView = new ImageView(pfp);
@@ -343,7 +384,6 @@ public class AdminInterface {
             Label text = new Label("MY ACCOUNT");
             text.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 18));
             text.setPadding(new Insets(20));
-//            text.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-padding: 5;");
             Label details = new Label("Username: " + tempAdmin.getUsername() + "\n"
                     + "Email: " + tempAdmin.getEmail() + "\n"
                     + "ID: " + tempAdmin.getID() + "\n"
@@ -358,7 +398,6 @@ public class AdminInterface {
             Vpane.setPadding(new Insets(10));
 
             Scene scene = new Scene(Vpane, 275, 350);
-            Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
