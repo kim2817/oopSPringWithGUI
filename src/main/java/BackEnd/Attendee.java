@@ -75,18 +75,20 @@ public class Attendee extends User implements HasID {
     }
 
     public String showInterest() {
-        return this.interest[0].getCatName() + "\n" + this.interest[1].getCatName()+ "\n" + this.interest[2].getCatName();
+        return (this.interest[0].getCatName() + "\n" + this.interest[1].getCatName()+ "\n" + this.interest[2].getCatName());
     }
     public void showEvents() {
         System.out.println(Arrays.toString(Database.readAll(new Event())));
     }
-    public void showBookedEvents() {
+    public String showBookedEvents() {
         if (bookedEvents.isEmpty()) {
-            System.out.println("No events booked yet.");
+            return "No booked events";
         } else {
+            String s="";
             for (Event e : bookedEvents) {
-                System.out.println(e);
+                s+=e+"\n";
             }
+            return s;
         }
     }
     public void chooseEvent() {
