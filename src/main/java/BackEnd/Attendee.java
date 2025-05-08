@@ -34,6 +34,7 @@ public class Attendee extends User implements HasID {
         interest[2] =Database.findCat(interest3);
 
     }
+    //edit to commit
 
     public int getAge() {
         return age;
@@ -74,8 +75,7 @@ public class Attendee extends User implements HasID {
     }
 
     public String showInterest() {
-
-        return (this.interest[0] + "\n" + this.interest[1]+ "\n" + this.interest[2]);
+        return this.interest[0].getCatName() + "\n" + this.interest[1].getCatName()+ "\n" + this.interest[3].getCatName();
     }
     public void showEvents() {
         System.out.println(Arrays.toString(Database.readAll(new Event())));
