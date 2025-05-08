@@ -203,7 +203,7 @@ class CreateNewEventUI {
         layoutx1.getChildren().addAll(new Label("Name     "),nameField);
         layoutx1.setAlignment(Pos.TOP_LEFT);
 
-        layoutx2.getChildren().addAll(new Label("Category"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+        layoutx2.getChildren().addAll(new Label("Category"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
         layoutx2.setAlignment(Pos.TOP_LEFT);
 
         layouty3.getChildren().addAll(layoutx1,layoutx2);
