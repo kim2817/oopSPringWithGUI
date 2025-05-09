@@ -36,6 +36,7 @@ public class EventDetailsAdmin implements Runnable{
 //                    AdminInterface.rooms.setText(q.toString());
                     System.out.println(q.toString() + " \n\n");
                     res.append(q.toString());
+                    res.append("\n\n");
                 }
                 Platform.runLater(()->AdminInterface.rooms.setText(res.toString()));
 
