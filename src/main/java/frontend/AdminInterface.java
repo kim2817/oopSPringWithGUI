@@ -408,6 +408,15 @@ public class AdminInterface {
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
 
+
+            createRoom.setOnAction(e->{
+                stage.close();
+                EventDetailsAdmin.excutor.shutdownNow();
+                RunRoomChecker.executor.shutdownNow();
+                createRooms.show();
+            });
+
+
             tempback.setOnAction(e -> {
                 stage.close();
                 AdminInterface.show(tempAdmin);
@@ -419,6 +428,7 @@ public class AdminInterface {
             Scene scene = new Scene(Vpane, 600, 400);
             stage.setScene(scene);
             stage.show();
+
 
         }
     }
@@ -449,15 +459,39 @@ public class AdminInterface {
 
 
             Scene scene = new Scene(Vpane, 600, 400);
-            stage.setScene(scene);
+            stage.setScene(scene);;
             stage.show();
         }
+
+
     }
-public static class createRoom{
+    public static class createRooms{
         public static void show(){
             Stage stage = new Stage();
+            stage.setTitle("Create Room");
+            Label title = new Label("CREATE ROOM");
+            HBox titleHpane = new HBox(10, title);
+            titleHpane.setAlignment(Pos.CENTER);
 
+            TextField roomName = new TextField("Name:");
+            roomName.setMaxWidth(200);
+            TextField roomCapacity = new TextField("faf");
+            roomCapacity.setMaxWidth(250);
+            TextField rentPrice = new TextField("faf");
+            rentPrice.setMaxWidth(150);
+            VBox Vfield = new VBox(20, roomName, roomCapacity, rentPrice);
+            Vfield.setAlignment(Pos.CENTER);
+            Button backBtn = new Button("Back");
+            VBox Vpane = new VBox(20, titleHpane,Vfield);
+            Vpane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(Vpane, 600, 300);
+            stage.setScene(scene);
+            stage.show();
 
+            tempback.setOnAction(e -> {
+                stage.close();
+                catCRUD.show();
+            });
         }
-}
+    }
 }
