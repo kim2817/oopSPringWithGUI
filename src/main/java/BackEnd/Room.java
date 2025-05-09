@@ -20,7 +20,7 @@ public class Room implements HasID,Runnable {
         this.roomCapacity = roomCapacity;
         this.rentPrice = rentPrice;
     }
-//commit to push
+
     // accessors \\
     public String getID() {
         return roomID;
@@ -56,7 +56,20 @@ public class Room implements HasID,Runnable {
         bookedSlots.add(slot,event);
     }
     // CRUD \\
-
+    public static void createRoom(User user){
+        if(!(user instanceof Admin)) return;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Creating Room");
+        System.out.print("Room Name: ");
+        String roomName = in.next();
+        System.out.print("Capacity: ");
+        int capacity = in.nextInt();
+        System.out.print("Rent Price: ");
+        double rentPrice = in.nextDouble();
+        System.out.print("Location: ");
+        String location = in.next();
+        Database.create(new Room(roomName,capacity,rentPrice));
+    }
     public void update(Admin admin){
         String[] options = new String[]{"Name","Capacity","Rent Price"};
         Scanner in = new Scanner(System.in);
