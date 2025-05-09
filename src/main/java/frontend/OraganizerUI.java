@@ -364,10 +364,7 @@ class RentRoomUI {
         HBox layoutx4 = new HBox(10);
         VBox layouty4 = new VBox(10);
 
-        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),layoutx3,layoutx4);
-        Scene s = new Scene(layout , 800,450);
-        layout.setPadding(new Insets(20));
-        stage.setScene(s);
+
 
         DatePicker date = new DatePicker();
         layoutx1.getChildren().addAll(new Label("Date   "),date,new Label("\n\n"));
@@ -388,7 +385,12 @@ class RentRoomUI {
 
 
         Button rentRoom = new Button("Rent Room");
-        Button Back = new Button("Back");
+        Button back = new Button("Back");
+        back.setOnAction(e->{
+            stage.close();
+            CreateNewEventUI.show(u);
+
+        });
 
         rentRoom.setOnAction(e->{LocalDate dateValue = date.getValue();
             int day = dateValue.getDayOfMonth();
@@ -401,6 +403,10 @@ class RentRoomUI {
 
 
         });
+        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),back,layoutx3,layoutx4);
+        Scene s = new Scene(layout , 800,450);
+        layout.setPadding(new Insets(20));
+        stage.setScene(s);
 
 
         stage.show();
