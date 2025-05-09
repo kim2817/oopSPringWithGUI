@@ -141,7 +141,8 @@ public class AttendeeGUI {
                 for(int i=0; i< events.size();i++){
                     Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
                     eventButton.setOnAction(ee -> {
-                        FoundCond.setText(eventButton.getText());
+                        String eventName = eventButton.getText().substring(0,eventButton.getText().indexOf("\n"));
+                        EventDetails.show(Database.findEvent(eventName).getFirst());
                     });
                     SearchResult.getChildren().add(eventButton);
                 }
