@@ -1,5 +1,6 @@
 package BackEnd;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -27,7 +28,23 @@ public class Organizer extends User {
     public void delete(){
         Database.delete(this);
     }
+    public Event[] listOrganizedEvents() {
 
+        Object[] T = Database.readAll((new Event()));
+        Event[] eventArray = new Event[T.length];
+        for (int i = 0; i < T.length; i++) {
+            eventArray[i] = (Event) T[i];
+        }
+        int numberOfFiltered = 1;
+        Event[] eventArrayFiltered = new Event[1000];
+        for (int i = 0; i < (Database.readAll((new Room()))).length; i++) {
+            if (eventArray[i].getEventOrg() == this) {
+                eventArrayFiltered[numberOfFiltered - 1] = eventArray[i];
+                numberOfFiltered++;
+            }
+        }
+        return eventArrayFiltered;
+    }
     public Room[] getAvailableRooms(DateTime slot) {
         Object[] T = Database.readAll((new Room()));
         Room[] roomArray = new Room[T.length];
@@ -43,6 +60,23 @@ public class Organizer extends User {
             }
         }
         return roomArrayFiltered;
+    }
+    public ArrayList<Event> getOrganizedEvents(){
+        return getOrganizedEvents(null);
+    }
+    public ArrayList<Event> getOrganizedEvents(Category category){
+        System.out.println(category);
+        Object[] T = Database.readAll((new Event()));
+        if(category != null) T = category.getEvents().toArray();
+        Event[] eventArray = new Event[T.length];
+        for(int i=0;i<T.length;i++){
+            eventArray[i] = (Event)T[i];
+        }
+        ArrayList<Event> eventArrayFiltered = new ArrayList<>();
+        for(Event event:eventArray){
+            if(event.getEventOrg() == this) eventArrayFiltered.add(event);
+        }
+        return eventArrayFiltered;
     }
 
     public Wallet getBalance() {
