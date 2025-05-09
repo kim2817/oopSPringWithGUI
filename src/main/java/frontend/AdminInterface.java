@@ -408,4 +408,66 @@ public class AdminInterface {
 
         }
     }
+
+    public static class roomCRUD {
+
+            Stage stage = new Stage();
+
+            class createRoom {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("Create room");
+                }
+            }
+            class readRoom {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("List rooms");
+                }
+            }
+            class updateRoom {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("Update room");
+                }
+            }
+            class deleteRoom {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("Delete room");
+                }
+
+        }
+
+        public static class catCRUD {
+            class createCat {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("Create Category");
+                }
+            }
+
+            class readCat {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("List Category");
+                }
+            }
+
+            class updateCat {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("Update Category");
+                }
+            }
+
+            class deleteCat {
+                public static void show() {
+                    Stage stage = new Stage();
+                    stage.setTitle("Delete Category");
+                }
+            }
+
+        }
+    }
 }

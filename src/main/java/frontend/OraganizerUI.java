@@ -209,10 +209,10 @@ class CreateNewEventUI {
         layouty4.getChildren().addAll(layouty3,rentRoom);
         layouty4.setAlignment(Pos.BOTTOM_LEFT);
 
-        Category selectedCategory = Database.findCat(CatsCombo.getValue());
         String name = nameField.getText();
 
         rentRoom.setOnAction(e->{
+            Category selectedCategory = Database.findCat(CatsCombo.getValue());
             System.out.println(selectedCategory);
 //            stage.close();
 //            RentRoomUI.show(name,selectedCategory,u);
