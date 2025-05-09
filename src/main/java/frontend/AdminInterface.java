@@ -213,12 +213,12 @@ public class AdminInterface {
 
 
             VBox root = new VBox(20, Hpane, tempHbox, otherOption, catSearching, SearchResult, backBtn);
-            Scene scene = new Scene(root, 800, 300);
+            ScrollPane scrollPane = new ScrollPane(root);
+            scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 800, 300);
             stage.setScene(scene);
 
 
-            ScrollPane scrollPane = new ScrollPane(root);
-            scrollPane.setFitToWidth(true);
 
             root.setPadding(new Insets(20));
 
