@@ -47,11 +47,6 @@ public class EventDetailsAdmin implements Runnable{
 
         }
     }
-    public static void shutdown() {
-        if (excutor != null && !excutor.isShutdown()) {
-            excutor.shutdownNow();
-        }
-    }
     public static void displayrooms(){
         if(excutor == null||excutor.isShutdown()) {
             excutor = Executors.newFixedThreadPool(3);
