@@ -93,7 +93,7 @@ public class Event implements HasID {
                 "\nEvent Room:"+ eventRoom.getRoomName() + "\nTicket Price:"+
                 ticketPrice + "\nNumber of tickets remaining:"+ (int)(eventRoomCap-eventAttendees) +
                 " \nEvent Date(dd/mm/yyyy):" + eventDate.getDay()+"/"+eventDate.getMonth()+"/"+ eventDate.getYear() +
-                "Event time slot"+ eventDate.getTime() +"\n\n";
+                "\nEvent time slot"+ eventDate.getTime() +"\n\n";
 
         return s;
     }

@@ -24,6 +24,7 @@ public class CategoryDetailsAdmin implements Runnable {
 //                    AdminInterface.rooms.setText(q.toString());
                     System.out.println(q.toString() + " \n\n");
                     res.append(q.toString());
+                    res.append("\n\n");
                 }
                 Platform.runLater(()->AdminInterface.categories.setText(res.toString()));
 
