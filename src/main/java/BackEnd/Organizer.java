@@ -21,25 +21,13 @@ public class Organizer extends User {
     public void create(){
         Database.create(this);
     }
-
-
-    public Event[] listOrganizedEvents(){
-
-        Object[] T = Database.readAll((new Event()));
-        Event[] eventArray = new Event[T.length];
-        for(int i=0;i<T.length;i++){
-            eventArray[i] = (Event)T[i];
-        }
-        int numberOfFiltered = 1;
-        Event[] eventArrayFiltered = new Event[1000];
-        for (int i = 0; i < (Database.readAll((new Room()))).length; i++) {
-            if (eventArray[i].getEventOrg() == this) {
-                eventArrayFiltered[numberOfFiltered - 1] = eventArray[i];
-                numberOfFiltered++;
-            }
-        }
-       return eventArrayFiltered;
+    public void update(){
+        Database.update(this);
     }
+    public void delete(){
+        Database.delete(this);
+    }
+
     public Room[] getAvailableRooms(DateTime slot) {
         Object[] T = Database.readAll((new Room()));
         Room[] roomArray = new Room[T.length];
@@ -60,9 +48,6 @@ public class Organizer extends User {
     public Wallet getBalance() {
         return balance;
     }
-
-    //rentroom
-    //event stats ???
 
     @Override
     public String toString() {
