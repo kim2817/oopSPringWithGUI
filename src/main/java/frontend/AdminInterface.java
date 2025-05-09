@@ -352,7 +352,7 @@ public class AdminInterface {
             stage.setTitle("My Account");
             stage.getIcons().add(icon);
             Button backBtn = new Button("Back");
-            Image pfp = new Image("pfp.png");
+            Image pfp = new Image("profile.png");
             ImageView pfpView = new ImageView(pfp);
             pfpView.setFitWidth(80);
             pfpView.setFitHeight(80);
