@@ -8,19 +8,17 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
 class OrganizerUI {
-    static Organizer sessionOrg;
+   static Organizer sessionOrg;
     static Label lbl(String s , double top , double left){
 
         Label Dname = new Label(s);
@@ -49,7 +47,6 @@ class OrganizerUI {
 
     public static void show(Organizer u) {
         sessionOrg = u;
-
         Stage stage = new Stage();
         HBox layoutx1 = new HBox(10);
         VBox layouty1 = new VBox(10, layoutx1);
@@ -192,7 +189,6 @@ class CreateNewEventUI {
             }
         });
 
-
         VBox layout = new VBox(layoutx1,layoutx2,layouty3,layouty4);
         Scene s = new Scene(layout , 800,450);
         stage.setScene(s);
@@ -206,11 +202,21 @@ class CreateNewEventUI {
         layoutx2.getChildren().addAll(new Label("Category"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
         layoutx2.setAlignment(Pos.TOP_LEFT);
 
-        layouty3.getChildren().addAll(layoutx1,layoutx2);
+        layouty3.getChildren().addAll(new Label("Create New Event"),layoutx1,layoutx2);
 
         Button rentRoom = new Button("Rent Room");
+
         layouty4.getChildren().addAll(layouty3,rentRoom);
         layouty4.setAlignment(Pos.BOTTOM_LEFT);
+
+        String name = nameField.getText();
+
+        rentRoom.setOnAction(e->{
+            Category selectedCategory = Database.findCat(CatsCombo.getValue());
+            System.out.println(selectedCategory);
+//            stage.close();
+//            RentRoomUI.show(name,selectedCategory,u);
+        });
 
         stage.show();
 
@@ -224,55 +230,99 @@ class CreateNewEventUI {
 }
 
 class RentRoomUI {
-    public static void show(){
+    public static void show(String n, Category C, Organizer u){
+
+
         Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
+        VBox layouty1 = new VBox(10);
+        HBox layoutx1 = new HBox(10);
+        VBox layouty2 = new VBox(10);
+        HBox layoutx2 = new HBox(10);
+        HBox layoutx3 = new HBox(10);
+        VBox layouty3 = new VBox(10);
+        HBox layoutx4 = new HBox(10);
+        VBox layouty4 = new VBox(10);
+
+        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),layoutx3,layoutx4);
         Scene s = new Scene(layout , 800,450);
+        layout.setPadding(new Insets(20));
         stage.setScene(s);
 
+        DatePicker date = new DatePicker();
+        layoutx1.getChildren().addAll(new Label("Date   "),date,new Label("\n\n"));
+        layoutx1.setAlignment(Pos.TOP_LEFT);
+
+
+        TimeSlot[]  times = {TimeSlot.translate(0),TimeSlot.translate(1),TimeSlot.translate(2)};
+        ComboBox timeSlot = new ComboBox(FXCollections.observableArrayList(times));
+
+        layoutx2.getChildren().addAll(new Label("Time   "),timeSlot);
+        layoutx2.setAlignment(Pos.TOP_LEFT);
+
+
+        LocalDate dateValue = date.getValue();
+        int day = dateValue.getDayOfMonth();
+        int month = dateValue.getMonthValue();
+        int year = dateValue.getYear();
 
 
 
 
+
+        stage.show();
     }
 
 
 }
 
 class RentRoomDetailsUI {
-    public static void show(){
+    public static void show(Room room,String eventName,LocalDate date,TimeSlot timeSlot,Organizer u){
+
+        int day = date.getDayOfMonth();
+        int month = date.getMonthValue();
+        int year = date.getYear();
+
         Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
+        VBox layouty1 = new VBox(10);
+        HBox layoutx1 = new HBox(10);
+        VBox layouty2 = new VBox(10);
+        HBox layoutx2 = new HBox(10);
+        HBox layoutx3 = new HBox(10);
+        VBox layouty3 = new VBox(10);
+        HBox layoutx4 = new HBox(10);
+        VBox layouty4 = new VBox(10);
+
+        HBox layout = new HBox(10,layouty1,layouty2,layouty3,layouty4);
         Scene s = new Scene(layout , 800,450);
+        layout.setPadding(new Insets(20));
         stage.setScene(s);
 
+        layouty1.getChildren().addAll(
+                new Label("Room Name  "+room.getRoomName()),
+                new Label("Event Name  "+eventName),
+                new Label("Date  "+day + "/"+month+"/"+year + "In The "+timeSlot.toString(timeSlot)),
+                new Label("Room Capacity  "+room.getRoomCapacity()),
+                new Label("Price  "+room.getRentPrice()),
+                new Label("New Balance:  "+(u.getBalance().getBalance()-room.getRentPrice()))
+        );
+        layouty1.setAlignment(Pos.TOP_LEFT);
+
+
+        Button rent = new Button("Rent");
+        layouty2.getChildren().addAll(rent);
+
+        rent.setOnAction(e->{
 
 
 
+        });
 
+        stage.show();
     }
 
 
 }
 
-class RentRoomConfirmationUI {
-    public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
-
-
-
-
-    }
-
-
-}
 
 class ManageOrganizedEventUI {
     public static void show(){

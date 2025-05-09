@@ -4,9 +4,10 @@ import BackEnd.Attendee;
 import BackEnd.Category;
 import BackEnd.Database;
 import BackEnd.Event;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -48,10 +50,25 @@ public class AttendeeGUI {
         sidebar.setStyle("-fx-background-color: #eeeeee;");
         sidebar.setPrefWidth(200);
 
-        Button profileBtn = new Button("My Account");
+        Button myAccBtn = new Button("My Account");
         Button logoutBtn = new Button("Logout");
+        Button MyEvent = new Button("My events");
 
-        sidebar.getChildren().addAll(profileBtn, logoutBtn);
+        MyEvent.setOnAction(e->{
+
+        });
+        logoutBtn.setOnAction(e -> {
+            stage.close();
+            tempAttendee = null;
+            LoginWindow.show();
+        });
+
+        myAccBtn.setOnAction(e -> {
+            stage.close();
+            AttendeeGUI.myAccount.show();
+        });
+
+        sidebar.getChildren().addAll(myAccBtn, logoutBtn);
 
         // 2. Create the toggle button (top left)
         Button toggleBtn = new Button("☰");
@@ -109,7 +126,9 @@ public class AttendeeGUI {
         VBox otherOption = new VBox(20,or,CatsCombo);
         otherOption.setAlignment(Pos.CENTER);
 
-        final VBox SearchResult = new VBox(10);
+        final FlowPane SearchResult = new FlowPane();
+        SearchResult.setVgap(10);
+        SearchResult.setHgap(10);
         final Label FoundCond = new Label("");
         Button Catssearch = new Button("Search");
 
@@ -121,8 +140,13 @@ public class AttendeeGUI {
                 List<Event> events = selectedCategory.getEvents();
                 for(int i=0; i< events.size();i++){
                     Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
+                    eventButton.setOnAction(ee -> {
+                        String eventName = eventButton.getText().substring(0,eventButton.getText().indexOf("\n"));
+                        EventDetails.show(Database.findEvent(eventName).getFirst());
+                    });
                     SearchResult.getChildren().add(eventButton);
                 }
+                FoundCond.setText("");
                 SearchResult.getChildren().add(FoundCond);
             }
             else{
@@ -179,13 +203,14 @@ public class AttendeeGUI {
             Label text = new Label("MY ACCOUNT");
             text.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 18));
             text.setPadding(new Insets(20));
+            String interests = tempAttendee.showInterest();
             Label details = new Label("Username: " + tempAttendee.getUsername() + "\n"
                     + "Email: " + tempAttendee.getEmail() + "\n"
                     + "ID: " + tempAttendee.getID() + "\n"
                     + "Age: " + tempAttendee.getAge() + "\n"
-                    + "Date of Birth: " + tempAttendee.getDateOfBirth() + "\n" +
+                    + "Date of Birth: " + tempAttendee.getDateOfBirth().DOBToString() + "\n" +
                     "Address: " + tempAttendee.getAddress() +"\n" +
-                    "Interests: " + "\n");
+                    "Interests: " + "\n" + interests);
             details.setFont(Font.font("Arial", FontWeight.BOLD, 12));
             VBox detailsVpane = new VBox(details);
             detailsVpane.setPadding(new Insets(10));
@@ -202,6 +227,24 @@ public class AttendeeGUI {
                 stage.close();
                 AttendeeGUI.show(tempAttendee);
             });
+        }
+        public static class myEvents {
+            public static void show() {
+                Button backBtn = new Button("Back");
+
+                VBox root = new VBox();
+                ScrollPane scrollPane = new ScrollPane(root);
+                scrollPane.setFitToWidth(true);
+
+                Scene scene = new Scene(scrollPane, 600, 800);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+                backBtn.setOnAction(e -> {
+                    stage.close();
+                    AttendeeGUI.show(tempAttendee);
+                });
+            }
         }
     }
 }

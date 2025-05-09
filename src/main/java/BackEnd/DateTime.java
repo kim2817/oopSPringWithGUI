@@ -69,6 +69,10 @@ public class DateTime {
                 "\n  at time:"+ event.getEventDate().getTime();
     }
 
+    public String DOBToString(){
+        return (this.getDay()+"/"+this.getMonth()+"/"+this.getYear());
+    }
+
     @Override
     public String toString() {
         String ret = "Day: " + day + "; Month: " + month + "; Year: " + year;
