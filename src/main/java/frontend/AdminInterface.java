@@ -29,8 +29,8 @@ import static BackEnd.DateTime.displayTime;
 
 
 public class AdminInterface {
+    public static Label rooms = new Label();
     public static Admin tempAdmin;
-
     public static void show(Admin q) {
         tempAdmin = q;
 
@@ -408,9 +408,9 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            Label answer = new Label();
-            EventDetailsAdmin.displayrooms(answer);
-            VBox Vpane = new VBox(20, createHBox, textHbox);
+            EventDetailsAdmin.displayrooms();
+
+            VBox Vpane = new VBox(20, createHBox,rooms, textHbox);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
 
