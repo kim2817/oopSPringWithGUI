@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -223,10 +224,9 @@ class MyEventsUI {
 
         Button createNewEvent = new Button("Create New Event");
         Button viewOrganisedEvents = new Button("View Organised Events");
-        Button manageEvent = new Button("Manage Events");
         Button back = new Button("Back");
         Button viewStats = new Button("View BarChart");
-        layoutx2.getChildren().addAll(createNewEvent,viewOrganisedEvents,manageEvent,viewStats,back);
+        layoutx2.getChildren().addAll(createNewEvent,viewOrganisedEvents,viewStats,back);
         layoutx2.setAlignment(Pos.CENTER);
 
         back.setOnAction(e->{
@@ -252,7 +252,7 @@ class MyEventsUI {
                 Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
                 eventButton.setOnAction(ee -> {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
-                    ViewEventDetailsUI.show(Database.findEvent(eventName).getFirst(),u);
+                    EditEventDetailsUI.show(Database.findEvent(eventName).getFirst(),u);
                 });
                 SearchResult.getChildren().add(eventButton);
             }
@@ -466,12 +466,6 @@ class RentRoomDetailsUI {
 
 class ManageOrganizedEventUI {
     public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
 
 
 
@@ -482,16 +476,61 @@ class ManageOrganizedEventUI {
 }
 
 class EditEventDetailsUI {
-    public static void show(){
+    public static void show(Event event,Organizer u) {
         Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
+        VBox names = new VBox(30);
+        VBox fields = new VBox(20);
+        VBox btn = new VBox(20);
+
+        HBox layout = new HBox(50,names,fields);
+        TextField name = new TextField(event.getEventName());
+        ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
+        ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.setPromptText("Select a Category");
+        CatsCombo.getItems().addAll(items);
+        TextField price = new TextField();
+        DatePicker date = new DatePicker();
+        ArrayList<String> times = new ArrayList<>();
+        times.add("MORNING");
+        times.add("EVENING");
+        times.add("AFTERNOON");
+        ComboBox<String> timeSlot = new ComboBox<>(FXCollections.observableArrayList(times));
+        Button upname = new Button("Update Name");
+        Button upcat = new Button("Update Category");
+        Button upprice = new Button("Update Price");
+        Button update = new Button("Update Date");
+
+
+        upname.setOnAction(e->{
+            event.setEventName(name.getText());
+        });
+        upcat.setOnAction(e->{
+
+        });
+        upprice.setOnAction(e->{
+            event.setTicketPrice(Double.parseDouble(price.getText()));
+        });
+        update.setOnAction(e->{
+
+        });
 
 
 
 
+
+        fields.getChildren().addAll(name,CatsCombo,price,date,timeSlot);
+        names.getChildren().addAll(new Label("Name:"),new Label("Category:"),new Label("Price: "),new Label("Date: "),new Label("Time Slot:"));
+
+
+
+        Button back = new Button("Back");
+        back.setOnAction(e->{
+            stage.close();
+        });
+
+        Scene scene = new Scene(layout, 800, 450);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -524,39 +563,6 @@ class DeleteEventConfirmationUI {
 
 }
 
-class EventSearchResultUI {
-    public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
-
-
-
-
-    }
-
-
-}
-
-class EventFilterResultUI {
-    public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
-
-
-
-
-    }
-
-
-}
 
 class ViewEventDetailsUI {
     public static void show(Event event,Organizer u) {
