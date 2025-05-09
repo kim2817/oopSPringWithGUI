@@ -211,6 +211,7 @@ public class RegisterWindow {
 
         cancelBtn.setOnAction(e -> {
             stage.close();
+            RegisterLogin.show();
         });
 
 
