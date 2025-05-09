@@ -33,8 +33,8 @@ import static BackEnd.DateTime.displayTime;
 
 public class AttendeeGUI {
     public static Attendee tempAttendee;
-    public static FlowPane SearchResult;
-    public static Label FoundCond;
+    private static FlowPane SearchResult;
+    private static Label FoundCond;
     public static void show(Attendee attendee) {
         tempAttendee = attendee;
         Stage stage = new Stage();

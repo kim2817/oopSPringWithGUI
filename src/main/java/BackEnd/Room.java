@@ -1,6 +1,6 @@
 package BackEnd;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Room implements HasID,Runnable {
@@ -9,7 +9,7 @@ public class Room implements HasID,Runnable {
     private int roomCapacity;
     private double rentPrice;
     private Schedule bookedSlots = new Schedule();
-    private DateTime userslot;
+    private static ArrayList<Room> roomList = new ArrayList<>();
 
     public Room(){
         this("",100,100.00);
@@ -38,11 +38,6 @@ public class Room implements HasID,Runnable {
         return rentPrice;
     }
     // mutators \\
-
-    public void setUserslot(DateTime userslot) {
-        this.userslot = userslot;
-    }
-
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
@@ -52,6 +47,11 @@ public class Room implements HasID,Runnable {
     public boolean isAvailable(DateTime slot){
         return bookedSlots.isAvailable(slot);
     }
+
+    public static ArrayList<Room> getRoomList() {
+        return roomList;
+    }
+
     public void reserveSlot(DateTime slot, Event event){
         bookedSlots.add(slot,event);
     }
@@ -101,13 +101,21 @@ public class Room implements HasID,Runnable {
         Database.delete(this);
     }
     static public void listRooms(){
-        System.out.println(Arrays.toString(Database.readAll(new Room())));
+        Object[] T = Database.readAll(new Room());
+        Room[] options = new Room[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Room) T[i];
+        }
+        roomList.clear();
+        for(Room e : options){
+                roomList.add(e);
+        }
     }
     @Override
     public void run() {
         while (true){
           try{
-              listavaRooms(userslot);
+              listRooms();
               Thread.sleep(50000);
           }catch (InterruptedException e){
             System.out.println("thread was intruppted");
