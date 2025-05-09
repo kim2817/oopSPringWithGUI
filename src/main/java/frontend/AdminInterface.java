@@ -175,8 +175,8 @@ public class AdminInterface {
             VBox otherOption = new VBox(20, or, CatsCombo);
             otherOption.setAlignment(Pos.CENTER);
 
-            final VBox SearchResult = new VBox(10);
-            final Label FoundCond = new Label("");
+            final FlowPane SearchResult = new FlowPane();
+            SearchResult.setHgap(20);
             Button Catssearch = new Button("Search");
 
             Catssearch.setOnAction(e -> {
@@ -184,16 +184,11 @@ public class AdminInterface {
 
                 Category selectedCategory = Database.findCat(CatsCombo.getValue());
                 if (!((selectedCategory.getEvents()).isEmpty())) {
-                    FoundCond.setText("Events in this Category : ");
                     List<Event> events = selectedCategory.getEvents();
                     for (int i = 0; i < events.size(); i++) {
                         Button eventButton = new Button(events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
                         SearchResult.getChildren().add(eventButton);
                     }
-                    SearchResult.getChildren().add(FoundCond);
-                } else {
-                    FoundCond.setText("No events found in this Category");
-                    SearchResult.getChildren().add(FoundCond);
                 }
             });
 
