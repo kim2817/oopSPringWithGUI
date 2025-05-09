@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EventDetailsAdmin implements Runnable{
-    public static ExecutorService excutor ;
+    public static ExecutorService excutor;
     public static void show(Event event) {
         Stage stage = new Stage();
         stage.setTitle("Event Details");
@@ -53,7 +53,7 @@ public class EventDetailsAdmin implements Runnable{
         }
     }
     public static void displayrooms(){
-        if(excutor.isShutdown()||excutor == null){
+        if(excutor == null||excutor.isShutdown()) {
             excutor = Executors.newFixedThreadPool(3);
         }
         excutor.execute(new EventDetailsAdmin());
