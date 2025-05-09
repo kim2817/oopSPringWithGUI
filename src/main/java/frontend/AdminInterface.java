@@ -171,13 +171,12 @@ public class AdminInterface {
                 ArrayList<Event> bwoah = Admin.searchEvents(search.getText());
 
                 for(Event q: bwoah){
-                    System.out.println(q);
+                    answer.setText(q.toString());
                 }
 
             });
-
-            VBox Vpane = new VBox(10, tempHbox, backBtn);
-            Vpane.setAlignment(Pos.BOTTOM_LEFT);
+            VBox backVpane = new VBox(10, backBtn);
+            backVpane.setAlignment(Pos.BOTTOM_LEFT);
 
             Label or = new Label("OR");
             ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
@@ -222,7 +221,7 @@ public class AdminInterface {
             });
 
 
-            VBox root = new VBox(20, Hpane,otherOption, catSearching, SearchResult, Vpane);
+            VBox root = new VBox(20, Hpane, tempHbox, otherOption, catSearching, SearchResult, backBtn);
             Scene scene = new Scene(root, 800, 300);
             stage.setScene(scene);
 
@@ -230,10 +229,11 @@ public class AdminInterface {
 
 
 
-            ScrollPane scrollPane = new ScrollPane(Vpane);
+            ScrollPane scrollPane = new ScrollPane(root);
             scrollPane.setFitToWidth(true);
 
-            Vpane.setPadding(new Insets(20));
+            root.setPadding(new Insets(20));
+
         }
     }
 

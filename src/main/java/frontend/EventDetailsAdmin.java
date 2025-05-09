@@ -1,9 +1,12 @@
 package frontend;
 
 import BackEnd.Event;
+import BackEnd.Room;
 import BackEnd.RunRoomChecker;
 import javafx.stage.Stage;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,7 +26,8 @@ public class EventDetailsAdmin implements Runnable{
             try{
                 RunRoomChecker.refreshroom();
                 Thread.sleep(2000);
-                // GET THE ROOMLIST IN THE ROOMS CLASS AND USE IT TO PRINT THE ROOMS LAYOUT
+                ArrayList<Room>rooms = Room.getRoomList();
+
             }catch(InterruptedException ex){
                 System.out.println("thread was intruppted");
             }
