@@ -56,20 +56,7 @@ public class Room implements HasID,Runnable {
         bookedSlots.add(slot,event);
     }
     // CRUD \\
-    public static void createRoom(User user){
-        if(!(user instanceof Admin)) return;
-        Scanner in = new Scanner(System.in);
-        System.out.println("Creating Room");
-        System.out.print("Room Name: ");
-        String roomName = in.next();
-        System.out.print("Capacity: ");
-        int capacity = in.nextInt();
-        System.out.print("Rent Price: ");
-        double rentPrice = in.nextDouble();
-        System.out.print("Location: ");
-        String location = in.next();
-        Database.create(new Room(roomName,capacity,rentPrice,location));
-    }
+
     public void update(Admin admin){
         String[] options = new String[]{"Name","Capacity","Rent Price"};
         Scanner in = new Scanner(System.in);
@@ -116,7 +103,7 @@ public class Room implements HasID,Runnable {
     }
     @Override
     public String toString() {
-        return "{ID: " + roomID + "; Name: " + roomName + "; Capacity: " + roomCapacity + "; Rent Price: " + rentPrice + "; Location: " + roomLocation + "; Booked Slots: " + bookedSlots + "}";
+        return "{ID: " + roomID + "; Name: " + roomName + "; Capacity: " + roomCapacity + "; Rent Price: " + rentPrice + "; Booked Slots: " + bookedSlots + "}";
     }
     @Override
     public boolean equals(Object obj) {
