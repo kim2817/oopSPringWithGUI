@@ -30,6 +30,7 @@ import static BackEnd.DateTime.displayTime;
 
 public class AdminInterface {
     public static Button tempback = new Button("Back");
+    public static Label categories = new Label();
     public static Label rooms = new Label();
     public static Admin tempAdmin;
     public static void show(Admin q) {
@@ -430,9 +431,17 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            VBox Vpane = new VBox(20, createHBox, textHbox);
+            VBox catVpane = new VBox(20, categories);
+            VBox Vpane = new VBox(20, createHBox, catVpane, textHbox);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+            tempback.setOnAction(e -> {
+                stage.close();
+                AdminInterface.show(tempAdmin);
+                EventDetailsAdmin.excutor.shutdownNow();
+                RunRoomChecker.executor.shutdownNow();
+            });
 
 
             Scene scene = new Scene(Vpane, 600, 400);

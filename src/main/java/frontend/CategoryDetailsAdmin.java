@@ -4,6 +4,7 @@ import BackEnd.Category;
 import BackEnd.Room;
 import BackEnd.RunCatChecker;
 import BackEnd.RunRoomChecker;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +25,7 @@ public class CategoryDetailsAdmin implements Runnable {
                     System.out.println(q.toString() + " \n\n");
                     res.append(q.toString());
                 }
-                Platform.runLater(()->AdminInterface.rooms.setText(res.toString()));
+                Platform.runLater(()->AdminInterface.categories.setText(res.toString()));
 
 
 

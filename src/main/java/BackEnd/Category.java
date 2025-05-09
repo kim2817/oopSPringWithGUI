@@ -165,7 +165,7 @@ public class Category implements HasID,Runnable {
     public void run() {
         while (true){
             try{
-                listRooms();
+                listCat();
                 Thread.sleep(50000);
             }catch (InterruptedException e){
                 System.out.println("thread was intruppted");
