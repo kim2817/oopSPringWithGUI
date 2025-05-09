@@ -43,6 +43,7 @@ public class Category implements HasID,Runnable {
     }
 
     public static ArrayList<Category> getCatList() {
+        listCat();
         return catList;
     }
 
@@ -153,9 +154,7 @@ public class Category implements HasID,Runnable {
             options[i] = (Category) T[i];
         }
         catList.clear();
-        for(Category  e : options){
-            catList.add(e);
-        }
+        catList.addAll(Arrays.asList(options));
     }
 
     public void deleteEventFromCat(Event obj) {
