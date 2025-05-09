@@ -237,9 +237,8 @@ class CreateNewEventUI {
 
         rentRoom.setOnAction(e->{
             Category selectedCategory = Database.findCat(CatsCombo.getValue());
-            System.out.println(selectedCategory);
-//            stage.close();
-//            RentRoomUI.show(name,selectedCategory,u);
+            stage.close();
+            RentRoomUI.show(name,selectedCategory,u);
         });
 
         stage.show();
@@ -284,13 +283,15 @@ class RentRoomUI {
         layoutx2.setAlignment(Pos.TOP_LEFT);
 
 
-        LocalDate dateValue = date.getValue();
-        int day = dateValue.getDayOfMonth();
-        int month = dateValue.getMonthValue();
-        int year = dateValue.getYear();
+        Button btn = new Button("dsa");
+        btn.setOnAction(e->{LocalDate dateValue = date.getValue();
+            int day = dateValue.getDayOfMonth();
+            int month = dateValue.getMonthValue();
+            int year = dateValue.getYear();
 
 
 
+        });
 
 
         stage.show();
