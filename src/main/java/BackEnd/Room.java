@@ -47,6 +47,11 @@ public class Room implements HasID,Runnable {
     public boolean isAvailable(DateTime slot){
         return bookedSlots.isAvailable(slot);
     }
+
+    public static ArrayList<Room> getRoomList() {
+        return roomList;
+    }
+
     public void reserveSlot(DateTime slot, Event event){
         bookedSlots.add(slot,event);
     }
