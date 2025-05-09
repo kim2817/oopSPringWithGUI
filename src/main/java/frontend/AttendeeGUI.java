@@ -58,7 +58,8 @@ public class AttendeeGUI {
         Button MyEvent = new Button("My events");
 
         MyEvent.setOnAction(e->{
-
+            stage.close();
+            AttendeeBookedEvents.show(tempAttendee);
         });
         logoutBtn.setOnAction(e -> {
             stage.close();
@@ -122,6 +123,8 @@ public class AttendeeGUI {
             eventToButton(searchEvents(searchField.getText()));
         });
 
+        Separator separator = new Separator();
+
         //categories searching..
         Label or = new Label("OR");
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
@@ -147,19 +150,15 @@ public class AttendeeGUI {
         intrestsLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         //layout
-        VBox centerContent = new VBox(20, searchSection, otherOption,catSearching, SearchResult,intrestsLabel);
+        VBox centerContent = new VBox(20, searchSection,otherOption,catSearching, separator,SearchResult,intrestsLabel);
         centerContent.setPadding(new Insets(20));
-
-        // 3. Dummy main content
 
         centerContent.setAlignment(Pos.CENTER);
         VBox root = new VBox(sidebarRoot,centerContent);
 
-        // 4. Assemble layout
         sidebarRoot.setTop(topBar);
         sidebarRoot.setLeft(sidebar); // visible by default
         sidebarRoot.setCenter(centerContent);
-
 
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
@@ -229,23 +228,8 @@ public class AttendeeGUI {
                 AttendeeGUI.show(tempAttendee);
             });
         }
-        public static class myEvents {
-            public static void show() {
-                Button backBtn = new Button("Back");
 
-                VBox root = new VBox();
-                ScrollPane scrollPane = new ScrollPane(root);
-                scrollPane.setFitToWidth(true);
 
-                Scene scene = new Scene(scrollPane, 600, 800);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-                backBtn.setOnAction(e -> {
-                    stage.close();
-                    AttendeeGUI.show(tempAttendee);
-                });
-            }
-        }
+
     }
 }

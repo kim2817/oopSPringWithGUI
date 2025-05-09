@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import static BackEnd.Gender.FEMALE;
-import static BackEnd.Gender.MALE;
 import static javafx.application.Application.launch;
 
 public class Main extends Application{
@@ -37,35 +36,11 @@ public class Main extends Application{
                 "address",Double.parseDouble("50.5"), "standup comedy", "plays","workshops"));
 
         launch(args);
-
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Button loginButton = new Button("Login");
-        Button registerButton = new Button("Register");
-        Color lilac = Color.web("#ac98df");
-
-        loginButton.setOnAction(e->{
-           LoginWindow.show();
-        });
-        registerButton.setOnAction(e->{
-            RegisterWindow.show();
-        });
-
-        StackPane root = new StackPane(new HBox(20, loginButton, registerButton));
-        Scene scene = new Scene(root, 300, 200, lilac);
-
-        Stage login = new Stage();
-
-        Image icon = new Image("img.png");
-
-        root.setPadding(new Insets(20));
-
-        login.getIcons().add(icon);
-        login.setTitle("Eventra login");
-        login.setScene(scene);
-        login.show();
+        RegisterLogin.show();
 
     }
 

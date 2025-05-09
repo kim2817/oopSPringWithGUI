@@ -4,7 +4,6 @@ import BackEnd.Admin;
 import BackEnd.Category;
 import BackEnd.Database;
 import BackEnd.Event;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -22,9 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 
-import javax.net.ssl.SNIHostName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +69,7 @@ public class AdminInterface {
 
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
-        stage.getIcons().add(new Image("img.png"));
+        stage.getIcons().add(new Image("Logo.png"));
 
         Image profileImage = new Image("profile.png"); // Replace with your actual image
         ImageView profileIcon = new ImageView(profileImage);

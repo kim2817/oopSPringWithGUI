@@ -17,7 +17,7 @@ public class LoginWindow {
     public static void show(){
         Stage stage = new Stage();
 
-        Image icon = new Image("img.png");
+        Image icon = new Image("Logo.png");
         stage.getIcons().add(icon);
 
         stage.setTitle("Eventra Login");
@@ -41,9 +41,13 @@ public class LoginWindow {
         grid.add(loginBtn, 0, 2);
         grid.add(cancelBtn, 1, 2);
 
-        cancelBtn.setOnAction(e -> stage.close());
+        cancelBtn.setOnAction(e -> {
+            stage.close();
+            RegisterLogin.show();
+        });
 
         loginBtn.setOnAction(e -> {
+            stage.close();
             User Person;
             String user = fieldUser.getText();
             String pass = fieldPass.getText();

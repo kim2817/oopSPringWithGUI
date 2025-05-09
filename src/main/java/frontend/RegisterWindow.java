@@ -25,7 +25,7 @@ public class RegisterWindow {
         stage.setTitle("Eventra Registration");
 
         //icon
-        Image icon = new Image("img.png");
+        Image icon = new Image("Logo.png");
         stage.getIcons().add(icon);
 
         //role radiobutton

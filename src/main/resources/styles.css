@@ -1,0 +1,111 @@
+@font-face {
+    font-family: "Caviar";
+    src: url("fonts/CaviarDreams_Bold.ttf");
+}
+
+@font-face {
+    font-family: "Champagne";
+    src: url("fonts/ChampagneLimousines-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Comfortaa";
+    src: url("fonts/Comfortaa-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Gafien";
+    src: url("fonts/Gafien.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-VariableFont_wght.ttf");
+}
+
+.h1 {
+    -fx-font-family: "Champagne";
+    -fx-font-size: 36px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #47276d;
+}
+
+
+.h2 {
+    -fx-font-family: "Champagne";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #140a18;
+}
+
+.h3 {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444444;
+}
+
+/*  Body */
+
+.body-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+}
+
+/*  button manzar */
+.button {
+    -fx-font-size: 14px;
+    -fx-font-weight: semi-bold;
+    -fx-padding: 8 16 8 16;
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #cccccc;
+}
+
+.cta-button {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 25;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 24;
+}
+
+.cta-button:hover {
+    -fx-background-color: rgba(255,255,255,0.15);
+}
+
+
+/* To color bgs yall */
+.lilac-panel {
+    -fx-background-color: linear-gradient(to bottom right, #d4a3f2, #9e76ec);
+    -fx-background-radius: 40 0 0 40;
+    -fx-padding: 40;
+}
+
+
+
+.gray-bg {
+    -fx-background-color: #f0f0f0;
+}
+
+.purple-button {
+    -fx-background-color: #a074e2; /* darker pastel purple */
+    -fx-text-fill: white;
+    -fx-font-family: "Champagne";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 12px;  /* rounded rectangle */
+    -fx-padding: 10 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 5, 0.3, 0, 2);
+    -fx-border-color: transparent;
+}
+
+.purple-button:hover {
+    -fx-background-color: #8f5fd4; /* hover: slightly richer */
+}
