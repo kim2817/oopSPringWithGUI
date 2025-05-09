@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import java.util.Scanner;
 
+import static BackEnd.Database.readAll;
+
 
 public class Admin extends User{
 
@@ -45,35 +47,44 @@ public class Admin extends User{
     public void setWorkingHours(String workingHours) {
         this.workingHours = workingHours;
     }
-    public void setID(String ID) {
-        this.ID = "a" + System.nanoTime();
-    }
+
 
 
     //Methods
 
-    public void addRooms(Room o, String roomName, int roomCapacity, double rentPrice){
-        Database.create(o);
-        o.setRoomName(roomName);
-        o.setRoomCapacity(roomCapacity);
-        o.setRentPrice(rentPrice);
-
+    public void addRooms(String roomName, int roomCapacity, double rentPrice){
+        Room newroom= new Room(roomName, roomCapacity,rentPrice);
+        Database.create(newroom);
+    }
+    public void addCat(String catName){
+        Category newCat= new Category(catName);
+        Database.create(newCat);
     }
 
     public static ArrayList<Event> searchEvents(String EventName){
             return Database.findEvent(EventName);
+    }
+
+    public ArrayList<Organizer> viewOrganizers(){
+        Object[] T = readAll(new Organizer());
+            Organizer[] options = new Organizer[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Organizer) T[i];
+        }
+        return new ArrayList<>(Arrays.asList(options));
+    }
+
+    public ArrayList<Attendee> viewAttendee(){
+        Object[] T = readAll(new Attendee());
+        Attendee[] options = new Attendee[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Attendee) T[i];
+        }
+        return new ArrayList<>(Arrays.asList(options));
 
     }
 
-    public void viewOrganizers(){
-        System.out.println(Arrays.toString(Database.readAll(new Organizer())));
-    }
-
-    public void viewAttendee(){
-        System.out.println(Arrays.toString(Database.readAll(new Attendee())));
-    }
-
-
+// addroom: room name, id(constructoe), room cap, price
 
     // CRUD
 
