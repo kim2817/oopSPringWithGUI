@@ -75,7 +75,6 @@ public class Event implements HasID {
     //CRUD
     static Scanner input = new Scanner(System.in);
     public void update(){Database.update(this);}
-    public static void listAllEvents(){System.out.println(Arrays.toString(Database.readAll(new Event())));}
     public void showEvent(){
         System.out.println(Database.read(this.eventID));
     }
