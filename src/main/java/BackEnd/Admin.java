@@ -52,12 +52,13 @@ public class Admin extends User{
 
     //Methods
 
-    public void addRooms(Room o, String roomName, int roomCapacity, double rentPrice){
-        Database.create(o);
-        o.setRoomName(roomName);
-        o.setRoomCapacity(roomCapacity);
-        o.setRentPrice(rentPrice);
-
+    public void addRooms(String roomName, int roomCapacity, double rentPrice){
+        Room newroom= new Room(roomName, roomCapacity,rentPrice);
+        Database.create(newroom);
+    }
+    public void addCat(String catName){
+        Category newCat= new Category(catName);
+        Database.create(newCat);
     }
 
     public static ArrayList<Event> searchEvents(String EventName){
@@ -83,7 +84,7 @@ public class Admin extends User{
 
     }
 
-
+// addroom: room name, id(constructoe), room cap, price
 
     // CRUD
 

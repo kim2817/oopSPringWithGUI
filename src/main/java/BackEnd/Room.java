@@ -8,19 +8,17 @@ public class Room implements HasID,Runnable {
     private String roomName;
     private int roomCapacity;
     private double rentPrice;
-    private String roomLocation;
     private Schedule bookedSlots = new Schedule();
     private DateTime userslot;
 
     public Room(){
-        this("",100,100.00,"");
+        this("",100,100.00);
     }
-    public Room(String roomName, int roomCapacity, double rentPrice, String roomLocation){
+    public Room(String roomName, int roomCapacity, double rentPrice){
         roomID = "R" + System.nanoTime();
         this.roomName = roomName;
         this.roomCapacity = roomCapacity;
         this.rentPrice = rentPrice;
-        this.roomLocation = roomLocation;
     }
 
     // accessors \\
