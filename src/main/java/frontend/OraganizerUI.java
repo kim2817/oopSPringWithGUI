@@ -407,7 +407,7 @@ class DeleteEventConfirmationUI {
         });
         st.show();
     }
-    //edit to commit
+
 }
 
 class EventSearchResultUI {
