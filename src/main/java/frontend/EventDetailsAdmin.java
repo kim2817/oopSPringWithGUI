@@ -48,6 +48,9 @@ public class EventDetailsAdmin implements Runnable{
         }
     }
     public static void displayrooms(){
+        if(excutor.isShutdown()){
+            excutor = Executors.newFixedThreadPool(3);
+        }
         excutor.execute(new EventDetailsAdmin());
 
 //        AdminInterface.tempback.setOnAction(e->{
