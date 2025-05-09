@@ -39,11 +39,16 @@ public class Category implements HasID,Runnable {
         return catName;
     }
     public ArrayList<Event> getEvents() {
+        Object[] objects = Database.readAll(new Event());
+        events.clear();
+        for(Object o:objects){
+            Event cur = (Event)o;
+            if(cur.getEventCat() == this) events.add(cur);
+        }
         return events;
     }
 
     public static ArrayList<Category> getCatList() {
-        listCat();
         return catList;
     }
 
