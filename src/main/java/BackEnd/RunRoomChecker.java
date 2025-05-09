@@ -1,14 +1,14 @@
 package BackEnd;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RunRoomChecker {
     RunRoomChecker() {
 
     }
-    public static void Displayrooms(DateTime Userslot){
+    public static void refreshroom(){
+        ExecutorService executor = Executors.newFixedThreadPool(5);
         Room r = new Room();
-        r.setUserslot(Userslot);
-        Thread t = new Thread(r);
-        t.start();
-
+        executor.execute(r);
     }
 }
