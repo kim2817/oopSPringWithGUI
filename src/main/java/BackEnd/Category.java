@@ -7,12 +7,12 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 
-public class Category implements HasID {
+public class Category implements HasID,Runnable {
     private final String catID; //store the ID of each category
     private String catName; // name of the category
     public static int totCats = 0; // stores total number of categories;
     private ArrayList<Event> events = new ArrayList<>();// stores events under each category;
-
+    private static ArrayList<Category> catList = new ArrayList<>();
 
 
     Scanner input = new Scanner(System.in);
@@ -40,6 +40,10 @@ public class Category implements HasID {
     }
     public ArrayList<Event> getEvents() {
         return events;
+    }
+
+    public static ArrayList<Category> getCatList() {
+        return catList;
     }
 
     public void setCatName(String catName) {
@@ -142,11 +146,32 @@ public class Category implements HasID {
             events.add(event);
         }
     }
+    static public void listCat(){
+        Object[] T = Database.readAll(new Category());
+        Category[] options = new Category[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Category) T[i];
+        }
+        catList.clear();
+        for(Category  e : options){
+            catList.add(e);
+        }
+    }
 
     public void deleteEventFromCat(Event obj) {
         events.remove(obj);
     }
-
+    @Override
+    public void run() {
+        while (true){
+            try{
+                listRooms();
+                Thread.sleep(50000);
+            }catch (InterruptedException e){
+                System.out.println("thread was intruppted");
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -157,4 +182,6 @@ public class Category implements HasID {
         return this.catName.equals(cat.catName);
     }
 
+
 }
+
