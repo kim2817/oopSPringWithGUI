@@ -1,9 +1,6 @@
 package frontend;
 
-import BackEnd.Admin;
-import BackEnd.Category;
-import BackEnd.Database;
-import BackEnd.Event;
+import BackEnd.*;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,7 +35,6 @@ public class AdminInterface {
         tempAdmin = q;
 
 
-
         Text greeting = new Text("Welcome Mr/Mrs: " + q.getUsername());
         greeting.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
@@ -68,8 +64,6 @@ public class AdminInterface {
         });
 
 
-
-
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
         stage.getIcons().add(new Image("img.png"));
@@ -85,24 +79,24 @@ public class AdminInterface {
         navBar.setStyle("-fx-background-color: #dddddd;");
 
 
-        HBox topBar = new HBox(10,toggleBtn,navBar);
+        HBox topBar = new HBox(10, toggleBtn, navBar);
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.setPadding(new Insets(10));
         topBar.setStyle("-fx-background-color: #dddddd;");
-            logout.setOnAction(e -> {
+        logout.setOnAction(e -> {
             stage.close();
             tempAdmin = null;
             LoginWindow.show();
         });
 
-            accDetails.setOnAction(e -> {
+        accDetails.setOnAction(e -> {
             stage.close();
             myAccount.show();
         });
 
 
         Button eventsBtn = new Button("Events");
-        Button usersBtn = new Button("Users");
+        Button usersBtn = new Button("Show Attendees");
         Button mngDataBtn = new Button("Manage Data");
         HBox buttons = new HBox(10, eventsBtn, usersBtn, mngDataBtn);
         buttons.setAlignment(Pos.CENTER);
@@ -122,14 +116,13 @@ public class AdminInterface {
         });
 
 
-
         VBox centerContent = new VBox(20, buttons);
 
         centerContent.setPadding(new Insets(20));
         centerContent.setAlignment(Pos.CENTER);
 
 
-        VBox root = new VBox(topBar,sidebarRoot,centerContent);
+        VBox root = new VBox(topBar, sidebarRoot, centerContent);
 
         // 4. Assemble layout
         sidebarRoot.setTop(topBar);
@@ -170,7 +163,7 @@ public class AdminInterface {
             searchBtn.setOnAction(e -> {
                 ArrayList<Event> bwoah = Admin.searchEvents(search.getText());
 
-                for(Event q: bwoah){
+                for (Event q : bwoah) {
                     answer.setText(q.toString());
                 }
 
@@ -183,7 +176,7 @@ public class AdminInterface {
             ComboBox<String> CatsCombo = new ComboBox<>();
             CatsCombo.setPromptText("Select a Category");
             CatsCombo.getItems().addAll(items);
-            VBox otherOption = new VBox(20,or,CatsCombo);
+            VBox otherOption = new VBox(20, or, CatsCombo);
             otherOption.setAlignment(Pos.CENTER);
 
             final VBox SearchResult = new VBox(10);
@@ -194,25 +187,23 @@ public class AdminInterface {
                 SearchResult.getChildren().clear();
 
                 Category selectedCategory = Database.findCat(CatsCombo.getValue());
-                if(!((selectedCategory.getEvents()).isEmpty())) {
+                if (!((selectedCategory.getEvents()).isEmpty())) {
                     FoundCond.setText("Events in this Category : ");
                     List<Event> events = selectedCategory.getEvents();
-                    for(int i=0; i< events.size();i++){
-                        Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
+                    for (int i = 0; i < events.size(); i++) {
+                        Button eventButton = new Button(events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
                         SearchResult.getChildren().add(eventButton);
                     }
                     SearchResult.getChildren().add(FoundCond);
-                }
-                else{
+                } else {
                     FoundCond.setText("No events found in this Category");
                     SearchResult.getChildren().add(FoundCond);
                 }
             });
 
-            HBox catSearching = new HBox(10,CatsCombo,Catssearch);
+            HBox catSearching = new HBox(10, CatsCombo, Catssearch);
             catSearching.setAlignment(Pos.CENTER);
             SearchResult.setAlignment(Pos.CENTER);
-
 
 
             backBtn.setOnAction(e -> {
@@ -224,9 +215,6 @@ public class AdminInterface {
             VBox root = new VBox(20, Hpane, tempHbox, otherOption, catSearching, SearchResult, backBtn);
             Scene scene = new Scene(root, 800, 300);
             stage.setScene(scene);
-
-
-
 
 
             ScrollPane scrollPane = new ScrollPane(root);
@@ -241,33 +229,23 @@ public class AdminInterface {
         public static void show() {
             Image icon = new Image("profile.png");
             Stage stage = new Stage();
-            stage.setTitle("Show Users");
+            stage.setTitle("Show Attendees");
             stage.getIcons().add(icon);
+            Label text = new Label("Click on an attendee to show more details:");
+            HBox Hpane1 = new HBox(10, text);
+            Hpane1.setAlignment(Pos.CENTER);
+
             Button backBtn = new Button("Back");
-            ComboBox<String> usersCombo = new ComboBox<>();
-            usersCombo.setPromptText("Select User Type");
-            usersCombo.getItems().add(0, "Attendee");
-            usersCombo.getItems().add(1, "Organizer");
-
-            Button list = new Button("List");
-
-            HBox Hpane1 = new HBox(usersCombo, list);
-            Hpane1.setPadding(new Insets(10));
-            Hpane1.setAlignment(Pos.TOP_CENTER);
-            VBox Vpane = new VBox(20, Hpane1, backBtn);
+            HBox Hpane2 = new HBox(10, backBtn);
+            Hpane2.setAlignment(Pos.BOTTOM_LEFT);
+            HBox attendeeHbox = new HBox(10);
+            VBox Vpane = new VBox(20, Hpane1, attendeeHbox, Hpane2);
             Scene scene = new Scene(Vpane, 500, 300);
             stage.setScene(scene);
             stage.show();
 
-            //Hpane1.setPadding(new Insets(20));
+            //ArrayList<Attendee> output = Admin.
 
-            list.setOnAction(e -> {
-                if (usersCombo.getValue().equals("Oragnizer")) {
-                    //Organizer List
-                } else {
-                    //Attende List
-                }
-            });
 
             Vpane.setAlignment(Pos.TOP_CENTER);
 
@@ -296,12 +274,11 @@ public class AdminInterface {
             HBox Hpane1 = new HBox(10, roomChoice, catChoice);
             Hpane1.setAlignment(Pos.CENTER);
             Text text = new Text("Please choose room or catgeory");
-            HBox textHbox = new HBox(10,text);
+            HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
             Button backBtn = new Button("Back");
             HBox Hpane2 = new HBox(10, backBtn);
             Hpane2.setAlignment(Pos.BOTTOM_LEFT);
-
 
 
             backBtn.setOnAction(e -> {
@@ -309,12 +286,12 @@ public class AdminInterface {
                 AdminInterface.show(tempAdmin);
             });
 
-            CRUDRoom.setOnAction(e->{
+            CRUDRoom.setOnAction(e -> {
                 stage.close();
                 roomCRUD.show();
             });
 
-            CRUDCat.setOnAction(e->{
+            CRUDCat.setOnAction(e -> {
                 stage.close();
                 catCRUD.show();
             });
@@ -324,7 +301,7 @@ public class AdminInterface {
             HBox catCRUD = new HBox(10, CRUDCat);
             catCRUD.setAlignment(Pos.CENTER);
 
-            VBox Vpane = new VBox(20,textHbox, Hpane1, roomCRUD, catCRUD, Hpane2);
+            VBox Vpane = new VBox(20, textHbox, Hpane1, roomCRUD, catCRUD, Hpane2);
             Vpane.setAlignment(Pos.CENTER);
             Scene scene = new Scene(Vpane, 500, 200);
 
@@ -382,7 +359,7 @@ public class AdminInterface {
             HBox imageHpane = new HBox(20, pfpView);
             imageHpane.setAlignment(Pos.TOP_CENTER);
 
-            Line seperatorline = new Line(0,50,275,50);
+            Line seperatorline = new Line(0, 50, 275, 50);
             seperatorline.setStroke(Color.BLACK);
             seperatorline.setStrokeWidth(4);
 
@@ -398,7 +375,7 @@ public class AdminInterface {
             VBox detailsVpane = new VBox(details);
             detailsVpane.setPadding(new Insets(10));
 
-            VBox Vpane = new VBox(5,text,seperatorline, imageHpane, detailsVpane, backBtn);
+            VBox Vpane = new VBox(5, text, seperatorline, imageHpane, detailsVpane, backBtn);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(10));
 
@@ -422,7 +399,7 @@ public class AdminInterface {
             Button createRoom = new Button("Create Room");
             HBox createHBox = new HBox(10, createRoom);
             createHBox.setAlignment(Pos.TOP_LEFT);
-            HBox textHbox = new HBox(10,text);
+            HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
             VBox Vpane = new VBox(20, createHBox, textHbox);
@@ -430,69 +407,31 @@ public class AdminInterface {
             Vpane.setPadding(new Insets(20));
 
 
-
             Scene scene = new Scene(Vpane, 600, 400);
             stage.setScene(scene);
             stage.show();
 
         }
+    }
+    public static class catCRUD {
+        public static void show() {
+            Stage stage = new Stage();
+            stage.setTitle("Rooms");
+            Label text = new Label("Click on a room to show more details");
+            Button createRoom = new Button("Create Room");
+            HBox createHBox = new HBox(10, createRoom);
+            createHBox.setAlignment(Pos.TOP_LEFT);
+            HBox textHbox = new HBox(10, text);
+            textHbox.setAlignment(Pos.CENTER);
+
+            VBox Vpane = new VBox(20, createHBox, textHbox);
+            Vpane.setAlignment(Pos.TOP_CENTER);
+            Vpane.setPadding(new Insets(20));
 
 
-            class createRoom {
-                public static void show() {
-                    Stage stage = new Stage();
-                    stage.setTitle("Create room");
-                }
-            }
-            class updateRoom {
-                public static void show() {
-                    Stage stage = new Stage();
-                    Image icon = new Image("profile.png");
-                    stage.getIcons().add(icon);
-                    stage.setTitle("Update room");
-                }
-            }
-        }
-
-        public static class catCRUD {
-            public static void show(){
-
-            }
-
-        class createCat {
-                public static void show() {
-                    Stage stage = new Stage();
-                    Image icon = new Image("profile.png");
-                    stage.getIcons().add(icon);
-                    stage.setTitle("Create Category");
-                }
-            }
-
-            class readCat {
-                public static void show() {
-                    Stage stage = new Stage();
-                    Image icon = new Image("profile.png");
-                    stage.getIcons().add(icon);
-                    stage.setTitle("List Category");
-                }
-            }
-
-            class updateCat {
-                public static void show() {
-                    Stage stage = new Stage();
-                    Image icon = new Image("profile.png");
-                    stage.getIcons().add(icon);
-                    stage.setTitle("Update Category");
-                }
-            }
-
-            class deleteCat {
-                public static void show() {
-                    Stage stage = new Stage();
-                    Image icon = new Image("profile.png");
-                    stage.getIcons().add(icon);
-                    stage.setTitle("Delete Category");
-                }
-            }
+            Scene scene = new Scene(Vpane, 600, 400);
+            stage.setScene(scene);
+            stage.show();
         }
     }
+}
