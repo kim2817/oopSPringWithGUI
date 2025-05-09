@@ -43,6 +43,7 @@ public class EventDetailsAdmin implements Runnable{
 
             }catch(InterruptedException ex){
                 System.out.println("thread was intruppted");
+                break;
             }
 
         }
