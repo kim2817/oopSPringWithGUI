@@ -83,7 +83,8 @@ public class Attendee extends User implements HasID {
     public String showBookedEvents() {
         if (bookedEvents.isEmpty()) {
             return "No booked events";
-        } else {
+        }
+        else {
             String s="";
             for (Event e : bookedEvents) {
                 s+=e.AttendeeToString()+"\n\n\n";
