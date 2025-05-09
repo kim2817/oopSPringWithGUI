@@ -432,9 +432,11 @@ public class AdminInterface {
             textHbox.setAlignment(Pos.CENTER);
 
             VBox catVpane = new VBox(20, categories);
-            VBox Vpane = new VBox(20, createHBox, catVpane, textHbox);
+            VBox Vpane = new VBox(20, createHBox, catVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+            CategoryDetailsAdmin.displayrooms();
 
             tempback.setOnAction(e -> {
                 stage.close();
