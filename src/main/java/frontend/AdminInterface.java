@@ -29,8 +29,9 @@ import static BackEnd.DateTime.displayTime;
 
 
 public class AdminInterface {
+    public static Button tempback = new Button("Back");
+    public static Label rooms = new Label();
     public static Admin tempAdmin;
-
     public static void show(Admin q) {
         tempAdmin = q;
 
@@ -73,16 +74,11 @@ public class AdminInterface {
         profileIcon.setFitWidth(40);
         profileIcon.setFitHeight(40);
 
-        HBox navBar = new HBox(10, profileIcon, greeting);
+        HBox navBar = new HBox(15,toggleBtn, profileIcon, greeting);
         navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.setPadding(new Insets(10));
         navBar.setStyle("-fx-background-color: #dddddd;");
 
-
-        HBox topBar = new HBox(10, toggleBtn, navBar);
-        topBar.setAlignment(Pos.TOP_LEFT);
-        topBar.setPadding(new Insets(10));
-        topBar.setStyle("-fx-background-color: #dddddd;");
         logout.setOnAction(e -> {
             stage.close();
             tempAdmin = null;
@@ -122,10 +118,10 @@ public class AdminInterface {
         centerContent.setAlignment(Pos.CENTER);
 
 
-        VBox root = new VBox(topBar, sidebarRoot, centerContent);
+        VBox root = new VBox(navBar, sidebarRoot, centerContent);
 
         // 4. Assemble layout
-        sidebarRoot.setTop(topBar);
+        sidebarRoot.setTop(navBar);
         sidebarRoot.setLeft(sidebar); // visible by default
         sidebarRoot.setCenter(centerContent);
 
@@ -408,11 +404,18 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            Label answer = new Label();
-            EventDetailsAdmin.displayrooms(answer);
-            VBox Vpane = new VBox(20, createHBox, textHbox);
+            EventDetailsAdmin.displayrooms();
+            VBox roomsVpane = new VBox(20, rooms);
+            VBox Vpane = new VBox(20, createHBox,roomsVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+            tempback.setOnAction(e -> {
+                stage.close();
+                AdminInterface.show(tempAdmin);
+                EventDetailsAdmin.excutor.shutdownNow();
+                RunRoomChecker.executor.shutdownNow();
+            });
 
 
             Scene scene = new Scene(Vpane, 600, 400);
