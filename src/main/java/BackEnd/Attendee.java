@@ -54,6 +54,9 @@ public class Attendee extends User implements HasID {
     public Category[] getInterest() {
         return interest;
     }
+    public ArrayList<Event> getBookedEvents() {
+        return bookedEvents;
+    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -207,4 +210,9 @@ public class Attendee extends User implements HasID {
         return ID;
     }
 
+    public void bookTickets(Event event, int ticketCount) {
+        this.balance.withdraw(ticketCount*event.getTicketPrice());
+        bookedEvents.add(event);
+        event.addAttendee(ticketCount);
+    }
 }

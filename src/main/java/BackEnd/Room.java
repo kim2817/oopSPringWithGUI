@@ -119,6 +119,7 @@ public class Room implements HasID,Runnable {
               Thread.sleep(50000);
           }catch (InterruptedException e){
             System.out.println("thread was intruppted");
+            break;
           }
         }
     }

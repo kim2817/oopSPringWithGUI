@@ -1,19 +1,18 @@
 package BackEnd;
-import frontend.EventDetailsAdmin;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RunRoomChecker {
+public class RunCatChecker {
     public static ExecutorService executor;
-    RunRoomChecker() {
+    RunCatChecker() {
 
     }
-    public static void refreshroom(){
+    public static void refreshCat(){
         if(executor == null||executor.isShutdown()) {
             executor = Executors.newFixedThreadPool(3);
         }
-        Room r = new Room();
+        Category r = new Category();
         executor.execute(r);
     }
 }

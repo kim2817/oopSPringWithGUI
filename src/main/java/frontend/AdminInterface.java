@@ -29,8 +29,10 @@ import static BackEnd.DateTime.displayTime;
 
 
 public class AdminInterface {
+    public static Button tempback = new Button("Back");
+    public static Label categories = new Label();
+    public static Label rooms = new Label();
     public static Admin tempAdmin;
-
     public static void show(Admin q) {
         tempAdmin = q;
 
@@ -73,16 +75,11 @@ public class AdminInterface {
         profileIcon.setFitWidth(40);
         profileIcon.setFitHeight(40);
 
-        HBox navBar = new HBox(10, profileIcon, greeting);
+        HBox navBar = new HBox(15,toggleBtn, profileIcon, greeting);
         navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.setPadding(new Insets(10));
         navBar.setStyle("-fx-background-color: #dddddd;");
 
-
-        HBox topBar = new HBox(10, toggleBtn, navBar);
-        topBar.setAlignment(Pos.TOP_LEFT);
-        topBar.setPadding(new Insets(10));
-        topBar.setStyle("-fx-background-color: #dddddd;");
         logout.setOnAction(e -> {
             stage.close();
             tempAdmin = null;
@@ -122,10 +119,10 @@ public class AdminInterface {
         centerContent.setAlignment(Pos.CENTER);
 
 
-        VBox root = new VBox(topBar, sidebarRoot, centerContent);
+        VBox root = new VBox(navBar, sidebarRoot, centerContent);
 
         // 4. Assemble layout
-        sidebarRoot.setTop(topBar);
+        sidebarRoot.setTop(navBar);
         sidebarRoot.setLeft(sidebar); // visible by default
         sidebarRoot.setCenter(centerContent);
 
@@ -179,8 +176,8 @@ public class AdminInterface {
             VBox otherOption = new VBox(20, or, CatsCombo);
             otherOption.setAlignment(Pos.CENTER);
 
-            final VBox SearchResult = new VBox(10);
-            final Label FoundCond = new Label("");
+            final FlowPane SearchResult = new FlowPane();
+            SearchResult.setHgap(20);
             Button Catssearch = new Button("Search");
 
             Catssearch.setOnAction(e -> {
@@ -188,16 +185,11 @@ public class AdminInterface {
 
                 Category selectedCategory = Database.findCat(CatsCombo.getValue());
                 if (!((selectedCategory.getEvents()).isEmpty())) {
-                    FoundCond.setText("Events in this Category : ");
                     List<Event> events = selectedCategory.getEvents();
                     for (int i = 0; i < events.size(); i++) {
                         Button eventButton = new Button(events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
                         SearchResult.getChildren().add(eventButton);
                     }
-                    SearchResult.getChildren().add(FoundCond);
-                } else {
-                    FoundCond.setText("No events found in this Category");
-                    SearchResult.getChildren().add(FoundCond);
                 }
             });
 
@@ -408,11 +400,18 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            Label answer = new Label();
-            EventDetailsAdmin.displayrooms(answer);
-            VBox Vpane = new VBox(20, createHBox, textHbox);
+            EventDetailsAdmin.displayrooms();
+            VBox roomsVpane = new VBox(20, rooms);
+            VBox Vpane = new VBox(20, createHBox,roomsVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+            tempback.setOnAction(e -> {
+                stage.close();
+                AdminInterface.show(tempAdmin);
+                EventDetailsAdmin.excutor.shutdownNow();
+                RunRoomChecker.executor.shutdownNow();
+            });
 
 
             Scene scene = new Scene(Vpane, 600, 400);
@@ -432,9 +431,19 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            VBox Vpane = new VBox(20, createHBox, textHbox);
+            VBox catVpane = new VBox(20, categories);
+            VBox Vpane = new VBox(20, createHBox, catVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+            CategoryDetailsAdmin.displayrooms();
+
+            tempback.setOnAction(e -> {
+                stage.close();
+                AdminInterface.show(tempAdmin);
+                CategoryDetailsAdmin.executor.shutdownNow();
+                RunRoomChecker.executor.shutdownNow();
+            });
 
 
             Scene scene = new Scene(Vpane, 600, 400);
