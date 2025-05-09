@@ -1,5 +1,6 @@
 package frontend;
 
+import BackEnd.Attendee;
 import BackEnd.DateTime;
 import BackEnd.Event;
 import BackEnd.Wallet;
@@ -105,7 +106,7 @@ class TicketPurchaseConfirmation{
         st.setResizable(false);
         st.setScene(sets);
         btn1.setOnAction(e-> {
-            AttendeeGUI.tempAttendee.bookTickets(event, ticketCount);
+            AttendeeGUI.tempAttendee.bookTickets(event,AttendeeGUI.tempAttendee,ticketCount);
             AttendeeGUI.show(AttendeeGUI.tempAttendee);
             stage.close();
             st.close();
