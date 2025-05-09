@@ -84,7 +84,8 @@
 .lilac-panel {
     -fx-background-color: linear-gradient(to bottom right, #d4a3f2, #9e76ec);
     -fx-background-radius: 40 0 0 40;
-    -fx-padding: 40;
+    -fx-padding: 0;
+    -fx-margin: 0;
 }
 
 
