@@ -6,6 +6,8 @@ import BackEnd.Database;
 import BackEnd.Event;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -123,7 +126,9 @@ public class AttendeeGUI {
         VBox otherOption = new VBox(20,or,CatsCombo);
         otherOption.setAlignment(Pos.CENTER);
 
-        final VBox SearchResult = new VBox(10);
+        final FlowPane SearchResult = new FlowPane();
+        SearchResult.setVgap(10);
+        SearchResult.setHgap(10);
         final Label FoundCond = new Label("");
         Button Catssearch = new Button("Search");
 
@@ -135,8 +140,12 @@ public class AttendeeGUI {
                 List<Event> events = selectedCategory.getEvents();
                 for(int i=0; i< events.size();i++){
                     Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
+                    eventButton.setOnAction(ee -> {
+                        FoundCond.setText(eventButton.getText());
+                    });
                     SearchResult.getChildren().add(eventButton);
                 }
+                FoundCond.setText("");
                 SearchResult.getChildren().add(FoundCond);
             }
             else{
