@@ -14,7 +14,11 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static BackEnd.DateTime.displayTime;
 
 
 class OrganizerUI {
@@ -101,19 +105,23 @@ class ViewEventsUI {
 }
 
 class MyEventsUI {
+    private static FlowPane SearchResult;
+    private static Label FoundCond;
     public static void show(Organizer u){
         Stage stage = new Stage();
         HBox layoutx1 = new HBox(10);
         VBox layouty1 = new VBox(10, layoutx1);
         VBox layouty2 = new VBox(10);
-        HBox layoutx2 = new HBox(10,layouty2);
-        HBox layoutx3 = new HBox(10);
-        VBox layouty3 = new VBox(10, layoutx3);
-
-        VBox layout = new VBox(layouty1,layoutx2,layouty3);
-        Scene s = new Scene(layout , 800,450);
+        HBox layoutx2 = new HBox(10, layouty2);
+        HBox emptySpace = new HBox();
+        emptySpace.setAlignment(Pos.CENTER);
+        SearchResult = new FlowPane(10,10);
+        emptySpace.getChildren().add(SearchResult);
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(layouty1,layoutx2,emptySpace);
+        Scene s = new Scene(layout,800,450);
         stage.setScene(s);
-
+        FoundCond = new Label();
         layout.setPadding(new Insets(20));
 
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
@@ -133,16 +141,32 @@ class MyEventsUI {
             stage.close();
             CreateNewEventUI.show(u);
         });
-
+        viewOrganisedEvents.setOnAction(e ->{
+            System.out.println(CatsCombo1.getValue());
+            eventToButton(u.getOrganizedEvents(Database.findCat(CatsCombo1.getValue())));
+        });
         stage.show();
-
-
-
-
-
     }
-
-
+    public static void eventToButton(List<Event> events) {
+        SearchResult.getChildren().clear();
+        System.out.println(events);
+        if (events != null && !(events.isEmpty())) {
+            for (Event event : events) {
+                Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
+                eventButton.setOnAction(ee -> {
+                    String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
+                    EventDetailsAttendee.show(Database.findEvent(eventName).getFirst());
+                });
+                SearchResult.getChildren().add(eventButton);
+            }
+            FoundCond.setText("");
+            SearchResult.getChildren().add(FoundCond);
+        }
+        else{
+            FoundCond.setText("No events found");
+            SearchResult.getChildren().add(FoundCond);
+        }
+    }
 }
 
 class CreateNewEventUI {
