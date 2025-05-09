@@ -24,6 +24,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import javax.naming.directory.SearchResult;
+import java.util.ArrayList;
 import java.util.List;
 
 import static BackEnd.Admin.searchEvents;
@@ -31,7 +33,8 @@ import static BackEnd.DateTime.displayTime;
 
 public class AttendeeGUI {
     public static Attendee tempAttendee;
-
+    public static FlowPane SearchResult;
+    public static Label FoundCond;
     public static void show(Attendee attendee) {
         tempAttendee = attendee;
         Stage stage = new Stage();
@@ -111,10 +114,12 @@ public class AttendeeGUI {
         searchSection.setAlignment(Pos.CENTER);
         searchSection.setPadding(new Insets(10));
 
+        SearchResult = new FlowPane();
+        SearchResult.setVgap(10);
+        SearchResult.setHgap(10);
+        FoundCond = new Label("");
         searchBtn.setOnAction(e->{
-
-            System.out.println(searchEvents(searchField.getText()));
-
+            eventToButton(searchEvents(searchField.getText()));
         });
 
         //categories searching..
@@ -126,33 +131,10 @@ public class AttendeeGUI {
         VBox otherOption = new VBox(20,or,CatsCombo);
         otherOption.setAlignment(Pos.CENTER);
 
-        final FlowPane SearchResult = new FlowPane();
-        SearchResult.setVgap(10);
-        SearchResult.setHgap(10);
-        final Label FoundCond = new Label("");
         Button Catssearch = new Button("Search");
 
         Catssearch.setOnAction(e -> {
-            SearchResult.getChildren().clear();
-
-            Category selectedCategory = Database.findCat(CatsCombo.getValue());
-            if(!((selectedCategory.getEvents()).isEmpty())) {
-                List<Event> events = selectedCategory.getEvents();
-                for(int i=0; i< events.size();i++){
-                    Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
-                    eventButton.setOnAction(ee -> {
-                        String eventName = eventButton.getText().substring(0,eventButton.getText().indexOf("\n"));
-                        EventDetails.show(Database.findEvent(eventName).getFirst());
-                    });
-                    SearchResult.getChildren().add(eventButton);
-                }
-                FoundCond.setText("");
-                SearchResult.getChildren().add(FoundCond);
-            }
-            else{
-                FoundCond.setText("No events found in this Category");
-                SearchResult.getChildren().add(FoundCond);
-            }
+            eventToButton(Database.findCat(CatsCombo.getValue()).getEvents());
         });
 
         HBox catSearching = new HBox(10,CatsCombo,Catssearch);
@@ -185,6 +167,25 @@ public class AttendeeGUI {
         Scene scene = new Scene(scrollPane, 600, 800);
         stage.setScene(scene);
         stage.show();
+    }
+    public static void eventToButton(List<Event> events){
+        SearchResult.getChildren().clear();
+        if(events!=null && !(events.isEmpty())) {
+            for (Event event : events) {
+                Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
+                eventButton.setOnAction(ee -> {
+                    String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
+                    EventDetails.show(Database.findEvent(eventName).getFirst());
+                });
+                SearchResult.getChildren().add(eventButton);
+            }
+            FoundCond.setText("");
+            SearchResult.getChildren().add(FoundCond);
+        }
+        else{
+            FoundCond.setText("No events found");
+            SearchResult.getChildren().add(FoundCond);
+        }
     }
     public static class myAccount {
         public static void show() {

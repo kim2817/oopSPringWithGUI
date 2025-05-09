@@ -95,7 +95,7 @@ public class Database {
                     create(new Wallet(in.nextDouble()));
                     break;
                 case "Room":
-                    create(new Room(in.next(),in.nextInt(),in.nextDouble(),in.next()));
+                    create(new Room(in.next(),in.nextInt(),in.nextDouble()));
                     break;
                 case "Attendee":
                     create(new Attendee(in.next(),in.next(),in.next(),new DateTime(in.next()),(in.nextBoolean()? Gender.MALE : Gender.FEMALE),in.nextInt(),in.next(),in.nextDouble(),in.next(),in.next(),in.next()));
