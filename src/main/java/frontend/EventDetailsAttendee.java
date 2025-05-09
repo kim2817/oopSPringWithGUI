@@ -63,12 +63,12 @@ class BookEventTickets{
         Button button = new Button("Book");
         ticketCount.setOnKeyTyped(e->{
             if(ticketCount.getText().isEmpty()) ticketCount.setText("0");
-            totalPrice.setText(String.valueOf((event.getTicketPrice()*Double.parseDouble(ticketCount.getText()))));
+            totalPrice.setText(String.valueOf((event.getTicketPrice()*Integer.parseInt(ticketCount.getText()))));
         });
         Label err = new Label("");
         ticketCount.setText("0");
         balance.setText(String.valueOf(AttendeeGUI.tempAttendee.getBalance()));
-        VBox root = new VBox(10, eventName, new Separator(), balanceHBox, ticketCountHBox, totalPriceHBox, button);
+        VBox root = new VBox(10, eventName, new Separator(), balanceHBox, ticketCountHBox, totalPriceHBox, err, button);
         Stage stage = new Stage();
         stage.setTitle("Event Details");
         root.setPadding(new Insets(20));
@@ -86,14 +86,14 @@ class BookEventTickets{
             else{
                 err.setText("");
                 stage.hide();
-                TicketPurchaseConfirmation.show(event,price,stage);
+                TicketPurchaseConfirmation.show(event,Integer.parseInt(ticketCount.getText()),stage);
             }
         });
     }
 }
 
 class TicketPurchaseConfirmation{
-    public static void show(Event event, double totalPrice, Stage stage){
+    public static void show(Event event, int ticketCount, Stage stage){
         Stage st = new Stage();
         Button btn1 = new Button("yes");
         Button btn2 = new Button("no");
@@ -106,7 +106,7 @@ class TicketPurchaseConfirmation{
         st.setResizable(false);
         st.setScene(sets);
         btn1.setOnAction(e-> {
-            AttendeeGUI.tempAttendee.setBalance(new Wallet(AttendeeGUI.tempAttendee.getBalance()-totalPrice));
+            AttendeeGUI.tempAttendee.bookTickets(event, ticketCount);
             AttendeeGUI.show(AttendeeGUI.tempAttendee);
             stage.close();
             st.close();

@@ -4,6 +4,7 @@ import BackEnd.Attendee;
 import BackEnd.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -13,8 +14,8 @@ import static frontend.AttendeeGUI.tempAttendee;
 public class AttendeeBookedEvents {
     public static void show(Attendee attendee) {
         Button backBtn = new Button("Back");
-
-        VBox root = new VBox(backBtn);
+        Label temp = new Label(attendee.getBookedEvents().toString());
+        VBox root = new VBox(20, temp, backBtn);
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 
