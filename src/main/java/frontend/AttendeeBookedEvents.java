@@ -14,7 +14,7 @@ public class AttendeeBookedEvents {
     public static void show(Attendee attendee) {
         Button backBtn = new Button("Back");
 
-        VBox root = new VBox();
+        VBox root = new VBox(backBtn);
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 

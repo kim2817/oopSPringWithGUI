@@ -408,6 +408,8 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
+            Label answer = new Label();
+            EventDetailsAdmin.displayrooms(answer);
             VBox Vpane = new VBox(20, createHBox, textHbox);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
@@ -422,9 +424,9 @@ public class AdminInterface {
     public static class catCRUD {
         public static void show() {
             Stage stage = new Stage();
-            stage.setTitle("Rooms");
-            Label text = new Label("Click on a room to show more details");
-            Button createRoom = new Button("Create Room");
+            stage.setTitle("Categories");
+            Label text = new Label("Categories");
+            Button createRoom = new Button("Create Category");
             HBox createHBox = new HBox(10, createRoom);
             createHBox.setAlignment(Pos.TOP_LEFT);
             HBox textHbox = new HBox(10, text);

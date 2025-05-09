@@ -1,8 +1,10 @@
 package frontend;
 
+import BackEnd.Attendee;
 import BackEnd.Event;
 import BackEnd.Room;
 import BackEnd.RunRoomChecker;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.util.ArrayDeque;
@@ -26,17 +28,22 @@ public class EventDetailsAdmin implements Runnable{
             try{
                 RunRoomChecker.refreshroom();
                 Thread.sleep(2000);
-                ArrayList<Room>rooms = Room.getRoomList();
-
             }catch(InterruptedException ex){
                 System.out.println("thread was intruppted");
             }
 
         }
     }
-    public static void displayrooms(){
+    public static void displayrooms(Label label){
         ExecutorService excutor = Executors.newFixedThreadPool(3);
         excutor.execute(new EventDetailsAdmin());
 
+
+        Label answer = new Label();
+        ArrayList<Room>rooms = Room.getRoomList();
+        for (Room q: rooms){
+            answer.setText(q.toString());
+            System.out.println(q.toString() + " \n\n");
+        }
     }
 }
