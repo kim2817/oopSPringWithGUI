@@ -30,6 +30,7 @@ import java.util.List;
 import static BackEnd.Admin.searchEvents;
 import static BackEnd.DateTime.displayTime;
 import static BackEnd.TimeSlot.*;
+import static frontend.AttendeeGUI.curStage;
 import static frontend.AttendeeGUI.eventToButton;
 import static javafx.application.Application.launch;
 
@@ -80,6 +81,7 @@ class OrganizerUI {
 
         layouty1.getChildren().add(lbl("Hello Mr/Ms: " + u.getUsername(),10.0,10.0));
         layouty1.getChildren().add(lbl("Balance: " + u.getBalance().getBalance(),30.0, 10.0 ));
+        layouty1.getChildren().addAll(new Label("Email: "+u.getEmail()),new Label("Gender: "+u.getGen()));
         layouty1.setAlignment(Pos.TOP_LEFT);
         layouty2.getChildren().add(lbl("----------------------------------------------------------------------------------------------------------------------------------------------------------",70.0, 100.0 ));
         layouty2.setAlignment(Pos.CENTER);
@@ -241,7 +243,7 @@ class MyEventsUI {
         });
         viewStats.setOnAction(e->{
             stage.close();
-            ShowBarChart.show(u.getOrganizedEvents());
+            ShowBarChart.show(u.getOrganizedEvents(),u);
         });
         createNewEvent.setOnAction(e->{
             stage.close();
@@ -261,7 +263,7 @@ class MyEventsUI {
                 Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
                 eventButton.setOnAction(ee -> {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
-                    EditEventDetailsUI.show(Database.findEvent(eventName).getFirst(),u);
+                    EditEventDetailsUI.show(event,u);
                 });
                 SearchResult.getChildren().add(eventButton);
             }
@@ -400,7 +402,8 @@ class RentRoomUI {
 
         });
 
-        rentRoom.setOnAction(e->{LocalDate dateValue = date.getValue();
+        rentRoom.setOnAction(e->{
+            LocalDate dateValue = date.getValue();
             int day = dateValue.getDayOfMonth();
             int month = dateValue.getMonthValue();
             int year = dateValue.getYear();
@@ -488,16 +491,9 @@ class RentRoomDetailsUI {
 }
 
 
-class ManageOrganizedEventUI {
-    public static void show(){
 
 
 
-
-    }
-
-
-}
 
 class EditEventDetailsUI {
     public static void show(Event event,Organizer u) {
@@ -506,7 +502,7 @@ class EditEventDetailsUI {
         VBox fields = new VBox(20);
         VBox btn = new VBox(20);
 
-        HBox layout = new HBox(50,names,fields);
+        HBox layout = new HBox(50,names,fields,btn);
         TextField name = new TextField(event.getEventName());
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo = new ComboBox<>();
@@ -523,19 +519,28 @@ class EditEventDetailsUI {
         Button upcat = new Button("Update Category");
         Button upprice = new Button("Update Price");
         Button update = new Button("Update Date");
+        Button back = new Button("Back");
+        Button delete = new Button("Delete");
 
 
         upname.setOnAction(e->{
             event.setEventName(name.getText());
         });
         upcat.setOnAction(e->{
-
+            event.setEventCat(Database.findCat(CatsCombo.getValue()));
+            System.out.println(event);
         });
         upprice.setOnAction(e->{
             event.setTicketPrice(Double.parseDouble(price.getText()));
         });
         update.setOnAction(e->{
-
+            LocalDate dateValue = date.getValue();
+            int day = dateValue.getDayOfMonth();
+            int month = dateValue.getMonthValue();
+            int year = dateValue.getYear();
+            TimeSlot slot = TimeSlot.stringTo(timeSlot.getValue());
+            DateTime datetime = new DateTime(day,month,year,slot);
+            event.setEventDate(datetime);
         });
 
 
@@ -544,12 +549,16 @@ class EditEventDetailsUI {
 
         fields.getChildren().addAll(name,CatsCombo,price,date,timeSlot);
         names.getChildren().addAll(new Label("Name:"),new Label("Category:"),new Label("Price: "),new Label("Date: "),new Label("Time Slot:"));
+        btn.getChildren().addAll(upname,upcat,upprice,update,back,delete);
 
 
-
-        Button back = new Button("Back");
         back.setOnAction(e->{
             stage.close();
+        });
+
+        delete.setOnAction(e->{
+            stage.close();
+            DeleteEventConfirmationUI.show(event);
         });
 
         Scene scene = new Scene(layout, 800, 450);
@@ -562,7 +571,7 @@ class EditEventDetailsUI {
 }
 
 class DeleteEventConfirmationUI {
-    public static void show(){
+    public static void show(Event E){
         Stage st = new Stage();
         Button btn1 = new Button("Yes");
         Button btn2 = new Button("No");
@@ -575,12 +584,11 @@ class DeleteEventConfirmationUI {
         st.setResizable(false);
         st.setScene(sets);
         btn1.setOnAction(e-> {
-
-
+            st.close();
+            Database.delete(E);
         });
         btn2.setOnAction(e-> {
-
-
+            st.close();
         });
         st.show();
     }
@@ -613,7 +621,8 @@ class ViewEventDetailsUI {
 }
 
 class ShowBarChart {
-    public static void show(ArrayList<Event> events) {
+
+    public static void show(ArrayList<Event> events,Organizer u) {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Age Range");
@@ -635,11 +644,17 @@ class ShowBarChart {
         barChart.getData().addAll(male,female);
         male.setName("Male");
         female.setName("Female");
-        HBox hbox = new HBox(barChart);
+        Button back = new Button("Back");
+
+        HBox hbox = new HBox(barChart,back);
         hbox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(hbox, 300, 600);
+        Scene scene = new Scene(hbox, 800, 450);
         Stage stage = new Stage();
         stage.setScene(scene);
+        back.setOnAction(e->{
+            stage.close();
+            MyEventsUI.show(u);
+        });
         stage.show();
     }
 }

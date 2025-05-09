@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Organizer extends User {
     private Wallet balance;
+
     public Organizer(){
         ID = "O" + System.nanoTime();
     }
@@ -19,15 +20,12 @@ public class Organizer extends User {
         this.gen = gen;
         ID = "O" + System.nanoTime();
     }
+
     public void create(){
         Database.create(this);
     }
-    public void update(){
-        Database.update(this);
-    }
-    public void delete(){
-        Database.delete(this);
-    }
+
+
     public Event[] listOrganizedEvents() {
 
         Object[] T = Database.readAll((new Event()));
@@ -64,6 +62,7 @@ public class Organizer extends User {
     public ArrayList<Event> getOrganizedEvents(){
         return getOrganizedEvents(null);
     }
+
     public ArrayList<Event> getOrganizedEvents(Category category){
         System.out.println(category);
         Object[] T = Database.readAll((new Event()));
@@ -81,6 +80,9 @@ public class Organizer extends User {
 
     public Wallet getBalance() {
         return balance;
+    }
+    public void setBalance(Wallet balance) {
+        this.balance = balance;
     }
 
     @Override
