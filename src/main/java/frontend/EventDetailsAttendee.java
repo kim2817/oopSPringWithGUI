@@ -107,7 +107,7 @@ class TicketPurchaseConfirmation{
         st.setScene(sets);
         btn1.setOnAction(e-> {
             AttendeeGUI.tempAttendee.bookTickets(event,AttendeeGUI.tempAttendee,ticketCount);
-            AttendeeGUI.show(AttendeeGUI.tempAttendee);
+            PaymentSuccessful.show(event,ticketCount);
             stage.close();
             st.close();
         });
@@ -116,5 +116,33 @@ class TicketPurchaseConfirmation{
             stage.show();
         });
         st.show();
+    }
+}
+
+class PaymentSuccessful{
+    public static void show(Event event, int ticketCount){
+        HBox hBox1 = new HBox(new Label("Success"));
+        hBox1.setAlignment(Pos.CENTER);
+        Button ok = new Button("Ok");
+        VBox root = new VBox(10.0, hBox1, new Separator(),
+                new Label("Number of Purchased Tickets: " + ticketCount),
+                new Label("Event ID: " + event.getID()),
+                new Label("Event Name: " + event.getEventName()),
+                new Label("Event Room: " + event.getEventRoom()),
+                new Label("Price Payed: " + event.getTicketPrice()*ticketCount),
+                new Label("Balance: " + AttendeeGUI.tempAttendee.getBalance()),
+                ok);
+        Stage stage = new Stage();
+        stage.setTitle("Event Details");
+        root.setPadding(new Insets(20));
+        ScrollPane scrollPane = new ScrollPane(root);
+        scrollPane.setFitToWidth(true);
+        Scene scene = new Scene(scrollPane, 800, 450);
+        stage.setScene(scene);
+        stage.show();
+        ok.setOnAction(e->{
+            stage.close();
+            AttendeeGUI.show(AttendeeGUI.tempAttendee);
+        });
     }
 }

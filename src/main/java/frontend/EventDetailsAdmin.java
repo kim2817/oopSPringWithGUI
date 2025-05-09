@@ -5,6 +5,7 @@ import BackEnd.Event;
 import BackEnd.Room;
 import BackEnd.RunRoomChecker;
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -23,22 +24,25 @@ public class EventDetailsAdmin implements Runnable{
 
 
     }
+    static void updateButtons(ArrayList<Room> rooms){
+        AdminInterface.roomsVBox.getChildren().clear();
+        ArrayList<Button> buttons = new ArrayList<>();
+        for(Room room:rooms){
+            Button button = new Button(room.getRoomName());
+            button.setOnAction(e->{
 
+            });
+            buttons.add(button);
+        }
+        AdminInterface.roomsVBox.getChildren().addAll(buttons);
+    }
     @Override
     public void run() {
         while(true){
             try{
                 RunRoomChecker.refreshroom();
                 Thread.sleep(2000);
-                ArrayList<Room>roomsarray = Room.getRoomList();
-                StringBuilder res = new StringBuilder();
-                for (Room q: roomsarray){
-//                    AdminInterface.rooms.setText(q.toString());
-                    System.out.println(q.toString() + " \n\n");
-                    res.append(q.toString());
-                    res.append("\n\n");
-                }
-                Platform.runLater(()->AdminInterface.rooms.setText(res.toString()));
+                Platform.runLater(()->updateButtons(Room.getRoomList()));
 
 
 
