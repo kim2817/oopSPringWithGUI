@@ -68,7 +68,7 @@ public class Room implements HasID,Runnable {
         double rentPrice = in.nextDouble();
         System.out.print("Location: ");
         String location = in.next();
-        Database.create(new Room(roomName,capacity,rentPrice,location));
+        Database.create(new Room(roomName,capacity,rentPrice));
     }
     public void update(Admin admin){
         String[] options = new String[]{"Name","Capacity","Rent Price"};
@@ -116,7 +116,7 @@ public class Room implements HasID,Runnable {
     }
     @Override
     public String toString() {
-        return "{ID: " + roomID + "; Name: " + roomName + "; Capacity: " + roomCapacity + "; Rent Price: " + rentPrice + "; Location: " + roomLocation + "; Booked Slots: " + bookedSlots + "}";
+        return "{ID: " + roomID + "; Name: " + roomName + "; Capacity: " + roomCapacity + "; Rent Price: " + rentPrice + "; Booked Slots: " + bookedSlots + "}";
     }
     @Override
     public boolean equals(Object obj) {
