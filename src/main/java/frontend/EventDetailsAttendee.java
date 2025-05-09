@@ -47,7 +47,6 @@ public class EventDetailsAttendee {
             stage.close();
             BookEventTickets.show(event);
         });
-
     }
 }
 
