@@ -66,7 +66,7 @@ public class AdminInterface {
 
         Stage stage = new Stage();
         stage.setTitle("Admin Interface");
-        stage.getIcons().add(new Image("img.png"));
+        stage.getIcons().add(new Image("Logo.png"));
 
         Image profileImage = new Image("profile.png"); // Replace with your actual image
         ImageView profileIcon = new ImageView(profileImage);
@@ -238,13 +238,15 @@ public class AdminInterface {
             Button backBtn = new Button("Back");
             HBox Hpane2 = new HBox(10, backBtn);
             Hpane2.setAlignment(Pos.BOTTOM_LEFT);
-            HBox attendeeHbox = new HBox(10);
+            VBox attendeeHbox = new VBox(10);
             VBox Vpane = new VBox(20, Hpane1, attendeeHbox, Hpane2);
-            Scene scene = new Scene(Vpane, 500, 300);
-            stage.setScene(scene);
-            stage.show();
 
-            //ArrayList<Attendee> output = Admin.
+
+            ArrayList<Attendee> output = Admin.viewAttendee();
+            for(Attendee q: output) {
+                Label answer = new Label(q.toString());
+                attendeeHbox.getChildren().add(answer);
+            }
 
 
             Vpane.setAlignment(Pos.TOP_CENTER);
@@ -254,6 +256,10 @@ public class AdminInterface {
                 AdminInterface.show(tempAdmin);
             });
             Vpane.setPadding(new Insets(20));
+            Scene scene = new Scene(Vpane, 500, 300);
+            stage.setScene(scene);
+            stage.show();
+
         }
     }
 
