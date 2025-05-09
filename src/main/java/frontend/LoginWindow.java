@@ -31,6 +31,8 @@ public class LoginWindow {
         greeting.setAlignment(Pos.CENTER);
 
         VBox purplePanel = new VBox(greeting);
+        purplePanel.setPadding(new Insets(20, 30, 20, 30)); // top, right, bottom, left
+
         purplePanel.setAlignment(Pos.CENTER);
         purplePanel.setPrefWidth(300);
         purplePanel.getStyleClass().add("lilac-panel");
@@ -113,6 +115,7 @@ public class LoginWindow {
 
 
         VBox subroot = new VBox(15, userField, passField, notFound, btns);
+
         subroot.setAlignment(Pos.CENTER); // Keeps everything centered as a block
         subroot.setPadding(new Insets(30));
         subroot.setAlignment(Pos.CENTER);
@@ -123,8 +126,8 @@ public class LoginWindow {
         purplePanel.setPrefHeight(450);
 
         HBox lastSubRoot = new HBox(purplePanel, subroot);
+        lastSubRoot.setPadding(new Insets(20));
         lastSubRoot.setAlignment(Pos.CENTER_LEFT);
-        lastSubRoot.setPadding(Insets.EMPTY);
         lastSubRoot.setSpacing(0);
 
         StackPane root = new StackPane(lastSubRoot);

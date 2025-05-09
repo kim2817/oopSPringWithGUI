@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import javax.net.ssl.SNIHostName;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Flow;
 
 import static BackEnd.DateTime.displayTime;
 
@@ -31,7 +32,7 @@ import static BackEnd.DateTime.displayTime;
 public class AdminInterface {
     public static Button tempback = new Button("Back");
     public static Label categories = new Label();
-    public static Label rooms = new Label();
+    public static FlowPane roomsVBox = new FlowPane();
     public static Admin tempAdmin;
     public static void show(Admin q) {
         tempAdmin = q;
@@ -401,7 +402,8 @@ public class AdminInterface {
             textHbox.setAlignment(Pos.CENTER);
 
             EventDetailsAdmin.displayrooms();
-            VBox roomsVpane = new VBox(20, rooms);
+            FlowPane roomsVpane = new FlowPane(20,20);
+            AdminInterface.roomsVBox = roomsVpane;
             VBox Vpane = new VBox(20, createHBox,roomsVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));

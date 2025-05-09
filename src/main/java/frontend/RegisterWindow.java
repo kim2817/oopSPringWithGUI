@@ -9,10 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
@@ -40,6 +37,9 @@ public class RegisterWindow {
         Attendee.setToggleGroup(Roles);
 
         HBox roleGaps = new HBox(10, role, Organizer, Attendee);
+        Label wnabyCreateAcc = new Label("Create a New Account");
+        wnabyCreateAcc.getStyleClass().add("h1");
+
 
         //username
         Label usernameLabel = new Label("Username:");
@@ -141,20 +141,30 @@ public class RegisterWindow {
         Button cancelBtn = new Button("Cancel");
         HBox hb10= new HBox(hgap,registerBtn,cancelBtn);
 
-        VBox vb= new VBox(10,hb1,hb2,hb3,hb4,hb5,hb51,hb6,hb7,hb8,hb9,hb10);
+        VBox vb= new VBox(10,wnabyCreateAcc,hb1,hb2,hb3,hb4,hb5,hb51,hb6,hb7,hb8,hb9,hb10);
         vb.setAlignment(Pos.CENTER);
+        vb.setPadding(new Insets(20));
+        vb.setAlignment(Pos.CENTER);
+        vb.setMaxWidth(450);
 
-        vb.setPadding(new Insets(10.0));
-        Pane newpane = new Pane(vb);
-        ScrollPane scrollPane = new ScrollPane(newpane);
+        VBox Moraba3Eswed = new VBox(vb);
+        Moraba3Eswed.setMaxWidth(500);
+        Moraba3Eswed.setAlignment(Pos.CENTER);
+        Moraba3Eswed.setStyle("-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 30; "
+                + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.3, 0, 4);");
+
+        StackPane centerHebabPane = new StackPane(Moraba3Eswed);
+        centerHebabPane.setAlignment(Pos.CENTER);
+        centerHebabPane.getStyleClass().add("lilacSquare-panel");
+
+        ScrollPane scrollPane = new ScrollPane(centerHebabPane);
         scrollPane.setFitToWidth(true);
-        newpane.setPadding(new Insets(20));
-        Scene scene = new Scene(scrollPane, 500, 700);
-        stage.setScene(scene);
-        stage.show();
+        scrollPane.setFitToHeight(true);
 
 
-        registerBtn.setDisable(true); // initially disabled
+
+
+        registerBtn.setDisable(true);
 
 
 
@@ -175,7 +185,7 @@ public class RegisterWindow {
         registerBtn.setOnAction(e -> {
             String password = passwordField.getText();
             String confirm = confirmField.getText();
-//            if ()
+
             if (!password.equals(confirm)) {
                 messageLabel.setText("Passwords do not match.");
             } else if (password.length() < 8) {
@@ -204,7 +214,16 @@ public class RegisterWindow {
             RegisterLogin.show();
         });
 
+        Scene scene = new Scene(scrollPane, 800, 450);
+        scene.getStylesheets().add(LoginWindow.class.getResource("/styles.css").toExternalForm());
 
+
+        stage.setResizable(false);
+
+        stage.setScene(scene);
+        stage.show();
+        stage.setScene(scene);
+        stage.show();
 
 
 

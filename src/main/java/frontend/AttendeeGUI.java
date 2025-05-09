@@ -116,6 +116,7 @@ public class AttendeeGUI {
             SearchResult.getChildren().clear();
             if(buttons.isEmpty()){
                 FoundCond.setText("No event found");
+                SearchResult.getChildren().add(FoundCond);
             }
             else{
                 FoundCond.setText("");
@@ -145,6 +146,7 @@ public class AttendeeGUI {
             SearchResult.getChildren().clear();
             if(buttons.isEmpty()){
                 FoundCond.setText("No event found");
+                SearchResult.getChildren().add(FoundCond);
             }
             else{
                 FoundCond.setText("");

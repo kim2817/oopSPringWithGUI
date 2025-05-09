@@ -57,6 +57,18 @@ public class Attendee extends User implements HasID {
     public ArrayList<Event> getBookedEvents() {
         return bookedEvents;
     }
+    public String getAgeGroup(){
+        if(age < 18){
+            return "<18";
+        }
+        else if(age < 30){
+            return "18-30";
+        }
+        else if(age < 50){
+            return "30-50";
+        }
+        else return ">50";
+    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -136,7 +148,7 @@ public class Attendee extends User implements HasID {
             throw new EventnotAvaible("Event is not avaible hehe");
         }
         balance.withdraw(total);
-        temppurchased.addAttendee(noOfTickets);
+        temppurchased.addAttendee(new Attendee(),noOfTickets);
         bookedEvents.add(temppurchased);
         System.out.println("You have purchased " + noOfTickets + " ticket(s) for event ID " + eventID);
 
@@ -210,9 +222,9 @@ public class Attendee extends User implements HasID {
         return ID;
     }
 
-    public void bookTickets(Event event, int ticketCount) {
+    public void bookTickets(Event event, Attendee attendee, int ticketCount) {
         this.balance.withdraw(ticketCount*event.getTicketPrice());
         bookedEvents.add(event);
-        event.addAttendee(ticketCount);
+        event.addAttendee(attendee,ticketCount);
     }
 }
