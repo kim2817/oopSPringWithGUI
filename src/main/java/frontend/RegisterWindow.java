@@ -5,11 +5,13 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -55,7 +57,7 @@ public class RegisterWindow {
         Label confirmLabel = new Label("Confirm Password:");
         PasswordField confirmField = new PasswordField();
 
-        Label messageLabel = new Label();
+        Label messageLabel = new Label("");
 
 
 
@@ -121,46 +123,35 @@ public class RegisterWindow {
             }
         });
 
+
         //Alligning stuff
-        GridPane grid = new GridPane();
-        grid.setVgap(10);
-        grid.setHgap(10);
-
-        grid.add(role, 0, 0);
-        grid.add(Organizer, 1, 0);
-        grid.add(Attendee, 2, 0);
-
-        grid.add(usernameLabel, 0, 1);
-        grid.add(usernameField, 1, 1, 2, 1);
-
-        grid.add(emailLabel, 0, 2);
-        grid.add(emailField, 1, 2, 2, 1);
-
-        grid.add(passwordLabel, 0, 3);
-        grid.add(passwordField, 1, 3, 2, 1);
-
-        grid.add(confirmLabel, 0, 4);
-        grid.add(confirmField, 1, 4, 2, 1);
-
-        grid.add(genderLabel, 0, 5);
-        grid.add(genderBox, 1, 5, 2, 1);
-
-        grid.add(dobLabel, 0, 6);
-        grid.add(dobPicker, 1, 6, 2, 1);
-
-        grid.add(balanceLabel, 0, 7);
-        grid.add(balanceField, 1, 7, 2, 1);
-
-        grid.add(attendeeExtraBox, 0, 8, 3, 1);
-
+        int hgap=10;
+        VBox hb1= new VBox(hgap, role,Organizer,Attendee );
+        VBox hb2= new VBox(hgap,usernameLabel,usernameField );
+        VBox hb3= new VBox(hgap, emailLabel, emailField);
+        VBox hb4= new VBox(hgap,passwordLabel, passwordField);
+        VBox hb5= new VBox(hgap,confirmLabel, confirmField);
+        VBox hb51= new VBox(messageLabel);
+        VBox hb6= new VBox(hgap,genderLabel,genderBox);
+        VBox hb7= new VBox(hgap,dobLabel,dobPicker);
+        VBox hb8= new VBox(hgap,balanceLabel,balanceField);
+        VBox hb9= new VBox(hgap,attendeeExtraBox);
 
         Button registerBtn = new Button("Register");
         Button cancelBtn = new Button("Cancel");
+        HBox hb10= new HBox(hgap,registerBtn,cancelBtn);
 
-        grid.add(messageLabel, 0, 8, 3, 1);
+        VBox vb= new VBox(10,hb1,hb2,hb3,hb4,hb5,hb51,hb6,hb7,hb8,hb9,hb10);
+        vb.setAlignment(Pos.CENTER);
 
-        grid.add(registerBtn, 1, 10);
-        grid.add(cancelBtn, 2, 10);
+        vb.setPadding(new Insets(10.0));
+        Pane newpane = new Pane(vb);
+        ScrollPane scrollPane = new ScrollPane(newpane);
+        scrollPane.setFitToWidth(true);
+        newpane.setPadding(new Insets(20));
+        Scene scene = new Scene(scrollPane, 500, 700);
+        stage.setScene(scene);
+        stage.show();
 
 
         registerBtn.setDisable(true); // initially disabled
@@ -184,8 +175,7 @@ public class RegisterWindow {
         registerBtn.setOnAction(e -> {
             String password = passwordField.getText();
             String confirm = confirmField.getText();
-
-
+//            if ()
             if (!password.equals(confirm)) {
                 messageLabel.setText("Passwords do not match.");
             } else if (password.length() < 8) {
@@ -217,15 +207,7 @@ public class RegisterWindow {
 
 
 
-        ScrollPane scrollPane = new ScrollPane(grid);
-        scrollPane.setFitToWidth(true);
-
-        grid.setPadding(new Insets(20));
-
-        Scene scene = new Scene(scrollPane, 500, 700);
 
 
-        stage.setScene(scene);
-        stage.show();
     }
 }
