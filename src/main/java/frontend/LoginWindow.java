@@ -77,7 +77,7 @@ public class LoginWindow {
             RegisterLogin.show();
         });
 
-        Label notFound= new Label("");
+        Label notFound= new Label();
         loginBtn.setOnAction(e -> {
 
             User Person;
@@ -104,11 +104,10 @@ public class LoginWindow {
                      notFound.setText("Account found");
                      stage.close();
                  }
-             else{
-                     notFound.setText("Account is not registered");
-                 }
              }
-
+             else{
+                 notFound.setText("Account is not registered");
+             }
 
         });
 
