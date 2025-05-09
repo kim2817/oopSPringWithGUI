@@ -72,6 +72,14 @@ public class Event implements HasID {
         eventAttendees += nOfTickets;
     }
 
+
+    public void rentRoom(DateTime slot, Room room){
+     room.reserveSlot(slot, this);
+     this.setEventRoom(room);
+     this.setEventDate(slot);
+    }
+
+
     //CRUD
     static Scanner input = new Scanner(System.in);
     public void update(){Database.update(this);}
