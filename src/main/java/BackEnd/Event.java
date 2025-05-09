@@ -1,5 +1,6 @@
 package BackEnd;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class Event implements HasID {
     private DateTime eventDate;
     private int eventRoomCap;
     private int eventAttendees=0;
-
+    private HashMap<String[],Integer> statistics = new HashMap<>();
 
     //Constructors
     //no arg constructor
@@ -48,12 +49,15 @@ public class Event implements HasID {
     public DateTime getEventDate() {return eventDate;}
     public int getEventRoomCap(){return eventRoomCap;}
     public int getEventAttendees(){return eventAttendees;}
+    public HashMap<String[], Integer> getStatistics() {
+        return statistics;
+    }
 
     //mutators
     public void setEventName(String eventName){this.eventName=eventName;}
     public void setEventCat(Category eventCat){this.eventCat=eventCat;}
     public void setTicketPrice(double ticketPrice){
-        if (ticketPrice>0){
+        if(ticketPrice>0){
             this.ticketPrice=ticketPrice;
         }
     }
@@ -68,8 +72,12 @@ public class Event implements HasID {
     public boolean isThereEnough(int nOfTickets){
         return eventAttendees + nOfTickets <= eventRoomCap;
     }
-    public void addAttendee(int nOfTickets){
+    public void addAttendee(Attendee attendee, int nOfTickets){
         eventAttendees += nOfTickets;
+        eventOrg.getBalance().deposit(0.7*nOfTickets*ticketPrice);
+        String[] key = new String[]{attendee.getAgeGroup(),attendee.getGen()==Gender.MALE?"m":"f"};
+        statistics.putIfAbsent(key, 0);
+        statistics.replace(key,statistics.get(key)+nOfTickets);
     }
 
 

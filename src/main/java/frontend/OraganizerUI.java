@@ -8,6 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -16,15 +20,18 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static BackEnd.Admin.searchEvents;
 import static BackEnd.DateTime.displayTime;
 import static BackEnd.TimeSlot.*;
 import static frontend.AttendeeGUI.eventToButton;
+import static javafx.application.Application.launch;
 
 
 class OrganizerUI {
@@ -223,17 +230,19 @@ class MyEventsUI {
 
         Button createNewEvent = new Button("Create New Event");
         Button viewOrganisedEvents = new Button("View Organised Events");
-        Button manageEvent = new Button("Manage Events");
         Button back = new Button("Back");
         Button viewStats = new Button("View BarChart");
-        layoutx2.getChildren().addAll(createNewEvent,viewOrganisedEvents,manageEvent,viewStats,back);
+        layoutx2.getChildren().addAll(createNewEvent,viewOrganisedEvents,viewStats,back);
         layoutx2.setAlignment(Pos.CENTER);
 
         back.setOnAction(e->{
             stage.close();
             OrganizerUI.show(u);
         });
-
+        viewStats.setOnAction(e->{
+            stage.close();
+            ShowBarChart.show(u.getOrganizedEvents());
+        });
         createNewEvent.setOnAction(e->{
             stage.close();
             CreateNewEventUI.show(u);
@@ -252,7 +261,7 @@ class MyEventsUI {
                 Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
                 eventButton.setOnAction(ee -> {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
-                    ViewEventDetailsUI.show(Database.findEvent(eventName).getFirst(),u);
+                    EditEventDetailsUI.show(Database.findEvent(eventName).getFirst(),u);
                 });
                 SearchResult.getChildren().add(eventButton);
             }
@@ -380,8 +389,7 @@ class RentRoomUI {
 
         layoutx2.getChildren().addAll(new Label("Time   "),timeSlot);
         layoutx2.setAlignment(Pos.TOP_LEFT);
-
-
+        FlowPane flowPane = new FlowPane();
 
 
         Button rentRoom = new Button("Rent Room");
@@ -398,12 +406,17 @@ class RentRoomUI {
             int year = dateValue.getYear();
             TimeSlot slot = TimeSlot.stringTo(timeSlot.getValue());
             DateTime datetime = new DateTime(day,month,year,slot);
-            //Database.create();
-
-
-
+            Object[] rooms = Database.readAll(new Room());
+            ArrayList<Room> filteredRooms = new ArrayList<>();
+            for(Object o:rooms){
+                Room cur = (Room)o;
+                if(cur.isAvailable(datetime)) filteredRooms.add(cur);
+            }
+            ArrayList<Button> buttons = eventToButton(filteredRooms, n, dateValue, slot, u);
+            flowPane.getChildren().clear();
+            flowPane.getChildren().addAll(buttons);
         });
-        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),back,layoutx3,layoutx4);
+        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),back,rentRoom,flowPane,layoutx3,layoutx4);
         Scene s = new Scene(layout , 800,450);
         layout.setPadding(new Insets(20));
         stage.setScene(s);
@@ -411,8 +424,19 @@ class RentRoomUI {
 
         stage.show();
     }
-
-
+    public static ArrayList<Button> eventToButton(List<Room> rooms, String eventName, LocalDate localDate, TimeSlot slot, Organizer u){
+        ArrayList<Button> buttons = new ArrayList<>();
+        if(rooms != null && !(rooms.isEmpty())) {
+            for (Room room : rooms) {
+                Button roomButton = new Button(room.getRoomName() + "\n" + room.getRentPrice());
+                roomButton.setOnAction(ee -> {
+                    RentRoomDetailsUI.show(room,eventName,localDate,slot,u);
+                });
+                buttons.add(roomButton);
+            }
+        }
+        return buttons;
+    }
 }
 
 class RentRoomDetailsUI {
@@ -466,12 +490,6 @@ class RentRoomDetailsUI {
 
 class ManageOrganizedEventUI {
     public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
 
 
 
@@ -482,16 +500,61 @@ class ManageOrganizedEventUI {
 }
 
 class EditEventDetailsUI {
-    public static void show(){
+    public static void show(Event event,Organizer u) {
         Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
+        VBox names = new VBox(30);
+        VBox fields = new VBox(20);
+        VBox btn = new VBox(20);
+
+        HBox layout = new HBox(50,names,fields);
+        TextField name = new TextField(event.getEventName());
+        ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
+        ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.setPromptText("Select a Category");
+        CatsCombo.getItems().addAll(items);
+        TextField price = new TextField();
+        DatePicker date = new DatePicker();
+        ArrayList<String> times = new ArrayList<>();
+        times.add("MORNING");
+        times.add("EVENING");
+        times.add("AFTERNOON");
+        ComboBox<String> timeSlot = new ComboBox<>(FXCollections.observableArrayList(times));
+        Button upname = new Button("Update Name");
+        Button upcat = new Button("Update Category");
+        Button upprice = new Button("Update Price");
+        Button update = new Button("Update Date");
+
+
+        upname.setOnAction(e->{
+            event.setEventName(name.getText());
+        });
+        upcat.setOnAction(e->{
+
+        });
+        upprice.setOnAction(e->{
+            event.setTicketPrice(Double.parseDouble(price.getText()));
+        });
+        update.setOnAction(e->{
+
+        });
 
 
 
 
+
+        fields.getChildren().addAll(name,CatsCombo,price,date,timeSlot);
+        names.getChildren().addAll(new Label("Name:"),new Label("Category:"),new Label("Price: "),new Label("Date: "),new Label("Time Slot:"));
+
+
+
+        Button back = new Button("Back");
+        back.setOnAction(e->{
+            stage.close();
+        });
+
+        Scene scene = new Scene(layout, 800, 450);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -524,39 +587,6 @@ class DeleteEventConfirmationUI {
 
 }
 
-class EventSearchResultUI {
-    public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
-
-
-
-
-    }
-
-
-}
-
-class EventFilterResultUI {
-    public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
-
-
-
-
-
-    }
-
-
-}
 
 class ViewEventDetailsUI {
     public static void show(Event event,Organizer u) {
@@ -580,4 +610,36 @@ class ViewEventDetailsUI {
     }
 
 
+}
+
+class ShowBarChart {
+    public static void show(ArrayList<Event> events) {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Age Range");
+        yAxis.setLabel("Frequency");
+        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+        XYChart.Series<String,Number> male = new XYChart.Series<>();
+        XYChart.Series<String,Number> female = new XYChart.Series<>();
+        HashMap<String[],Integer> statistics = new HashMap<>();
+        for(Event event:events){
+            for(String[] key:event.getStatistics().keySet()){
+                statistics.putIfAbsent(key, 0);
+                statistics.replace(key,statistics.get(key)+event.getStatistics().get(key));
+            }
+        }
+        for(String[] key:statistics.keySet()){
+            if(key[1].equals("m")) male.getData().add(new XYChart.Data<>(key[0],statistics.get(key)));
+            else female.getData().add(new XYChart.Data<>(key[0],statistics.get(key)));
+        }
+        barChart.getData().addAll(male,female);
+        male.setName("Male");
+        female.setName("Female");
+        HBox hbox = new HBox(barChart);
+        hbox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(hbox, 300, 600);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
 }
