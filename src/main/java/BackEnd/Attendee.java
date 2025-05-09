@@ -51,6 +51,9 @@ public class Attendee extends User implements HasID {
     public String getAddress() {
         return address;
     }
+    public Category[] getInterest() {
+        return interest;
+    }
 
     public void setAddress(String address) {
         this.address = address;

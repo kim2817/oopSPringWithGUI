@@ -1,13 +1,8 @@
 package frontend;
 
-import BackEnd.Attendee;
-import BackEnd.Category;
-import BackEnd.Database;
-import BackEnd.Event;
+import BackEnd.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,7 +19,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import javax.naming.directory.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +48,10 @@ public class AttendeeGUI {
         sidebar.setPrefWidth(200);
 
         Button myAccBtn = new Button("My Account");
+        Button myEventBtn = new Button("My Events");
         Button logoutBtn = new Button("Logout");
-        Button MyEvent = new Button("My events");
 
-        MyEvent.setOnAction(e->{
+        myEventBtn.setOnAction(e->{
             stage.close();
             AttendeeBookedEvents.show(tempAttendee);
         });
@@ -72,12 +66,11 @@ public class AttendeeGUI {
             AttendeeGUI.myAccount.show();
         });
 
-        sidebar.getChildren().addAll(myAccBtn, logoutBtn);
+        sidebar.getChildren().addAll(myAccBtn, myEventBtn, logoutBtn);
 
         // 2. Create the toggle button (top left)
         Button toggleBtn = new Button("☰");
         toggleBtn.setFocusTraversable(false);
-
         toggleBtn.setOnAction(e -> {
             if (sidebarRoot.getLeft() == null) {
                 sidebarRoot.setLeft(sidebar);
@@ -89,7 +82,7 @@ public class AttendeeGUI {
 
 
 
-        Label greeting = new Label("Hello Mr/Ms " + attendee.getUsername() + ",");
+        Label greeting = new Label("Hello " + tempAttendee.getGen().getTitle() + " " + attendee.getUsername() + ",");
         Label balanceLabel = new Label("Balance: $" + attendee.getBalance());
 
         VBox userBox = new VBox(5, greeting, balanceLabel);
@@ -115,12 +108,18 @@ public class AttendeeGUI {
         searchSection.setAlignment(Pos.CENTER);
         searchSection.setPadding(new Insets(10));
 
-        SearchResult = new FlowPane();
-        SearchResult.setVgap(10);
-        SearchResult.setHgap(10);
+        SearchResult = new FlowPane(10,10);
         FoundCond = new Label("");
         searchBtn.setOnAction(e->{
-            eventToButton(searchEvents(searchField.getText()));
+            ArrayList<Button> buttons = eventToButton(searchEvents(searchField.getText()));
+            SearchResult.getChildren().clear();
+            if(buttons.isEmpty()){
+                FoundCond.setText("No event found");
+            }
+            else{
+                FoundCond.setText("");
+                SearchResult.getChildren().addAll(buttons);
+            }
         });
 
         Separator separator = new Separator();
@@ -135,9 +134,21 @@ public class AttendeeGUI {
         otherOption.setAlignment(Pos.CENTER);
 
         Button Catssearch = new Button("Search");
-
+        Catssearch.setDisable(true);
+        CatsCombo.setOnAction(e->{
+            Catssearch.setDisable(false);
+        });
         Catssearch.setOnAction(e -> {
-            eventToButton(Database.findCat(CatsCombo.getValue()).getEvents());
+            Category cat = Database.findCat(CatsCombo.getValue());
+            ArrayList<Button> buttons = eventToButton(cat.getEvents());
+            SearchResult.getChildren().clear();
+            if(buttons.isEmpty()){
+                FoundCond.setText("No event found");
+            }
+            else{
+                FoundCond.setText("");
+                SearchResult.getChildren().addAll(buttons);
+            }
         });
 
         HBox catSearching = new HBox(10,CatsCombo,Catssearch);
@@ -148,18 +159,30 @@ public class AttendeeGUI {
         //intrests
         Label intrestsLabel = new Label("Events you may like");
         intrestsLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
+        Category[] interests = tempAttendee.getInterest();
+        TitledPane[] panes = new TitledPane[3];
+        for(int i=0;i<3;i++){
+            HBox hBox = new HBox(10);
+            hBox.setAlignment(Pos.CENTER);
+            panes[i] = new TitledPane();
+            panes[i].setText(interests[i].getCatName());
+            panes[i].setContent(hBox);
+            ArrayList<Button> buttons = eventToButton(interests[i].getEvents());
+            if(buttons.size()>5) hBox.getChildren().addAll(buttons.subList(0,5));
+            else hBox.getChildren().addAll(buttons);
+        }
+        Accordion accordion = new Accordion();
+        accordion.getPanes().addAll(panes);
         //layout
-        VBox centerContent = new VBox(20, searchSection,otherOption,catSearching, separator,SearchResult,intrestsLabel);
+        VBox centerContent = new VBox(20, searchSection,otherOption,catSearching,SearchResult,separator,intrestsLabel,accordion);
         centerContent.setPadding(new Insets(20));
 
-        centerContent.setAlignment(Pos.CENTER);
+        centerContent.setAlignment(Pos.TOP_CENTER);
         VBox root = new VBox(sidebarRoot,centerContent);
 
         sidebarRoot.setTop(topBar);
-        sidebarRoot.setLeft(sidebar); // visible by default
         sidebarRoot.setCenter(centerContent);
-
+        sidebarRoot.minHeightProperty().bind(stage.heightProperty().subtract(topBar.heightProperty()));
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 
@@ -167,8 +190,9 @@ public class AttendeeGUI {
         stage.setScene(scene);
         stage.show();
     }
-    public static void eventToButton(List<Event> events){
+    public static ArrayList<Button> eventToButton(List<Event> events){
         SearchResult.getChildren().clear();
+        ArrayList<Button> buttons = new ArrayList<>();
         if(events!=null && !(events.isEmpty())) {
             for (Event event : events) {
                 Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
@@ -176,15 +200,10 @@ public class AttendeeGUI {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
                     EventDetailsAttendee.show(Database.findEvent(eventName).getFirst());
                 });
-                SearchResult.getChildren().add(eventButton);
+                buttons.add(eventButton);
             }
-            FoundCond.setText("");
-            SearchResult.getChildren().add(FoundCond);
         }
-        else{
-            FoundCond.setText("No events found");
-            SearchResult.getChildren().add(FoundCond);
-        }
+        return buttons;
     }
     public static class myAccount {
         public static void show() {
