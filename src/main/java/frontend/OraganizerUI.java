@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
+import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -385,18 +386,27 @@ class EditEventDetailsUI {
 
 class DeleteEventConfirmationUI {
     public static void show(){
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        AnchorPane layout = new AnchorPane();
-        Scene s = new Scene(layout , 800,450);
-        stage.setScene(s);
+        Stage st = new Stage();
+        Button btn1 = new Button("yes");
+        Button btn2 = new Button("no");
+        Label newlabel= new Label("ARE YOU SURE???????");
+        HBox hb1= new HBox(20,btn1,btn2);
+        VBox vb1= new VBox(20,newlabel,hb1);
+        Scene sets= new Scene(vb1,200,100);
+        hb1.setAlignment(Pos.CENTER);
+        vb1.setAlignment(Pos.CENTER);
+        st.setResizable(false);
+        st.setScene(sets);
+        btn1.setOnAction(e-> {
 
 
+        });
+        btn2.setOnAction(e-> {
 
 
-
+        });
+        st.show();
     }
-
 
 }
 
