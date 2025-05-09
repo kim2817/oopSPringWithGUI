@@ -441,7 +441,7 @@ public class AdminInterface {
             tempback.setOnAction(e -> {
                 stage.close();
                 AdminInterface.show(tempAdmin);
-                EventDetailsAdmin.excutor.shutdownNow();
+                CategoryDetailsAdmin.executor.shutdownNow();
                 RunRoomChecker.executor.shutdownNow();
             });
 
