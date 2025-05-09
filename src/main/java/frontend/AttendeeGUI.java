@@ -24,6 +24,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static BackEnd.Admin.searchEvents;
@@ -111,10 +112,29 @@ public class AttendeeGUI {
         searchSection.setAlignment(Pos.CENTER);
         searchSection.setPadding(new Insets(10));
 
+        final FlowPane SearchResult = new FlowPane();
+        SearchResult.setVgap(10);
+        SearchResult.setHgap(10);
+        final Label FoundCond = new Label("");
         searchBtn.setOnAction(e->{
-
-            System.out.println(searchEvents(searchField.getText()));
-
+            SearchResult.getChildren().clear();
+            List<Event> events = searchEvents(searchField.getText());
+            if(!(events.isEmpty())) {
+                for(int i=0; i< events.size();i++){
+                    Button eventButton = new Button (events.get(i).getEventName() + "\n" + displayTime(events.get(i)));
+                    eventButton.setOnAction(ee -> {
+                        String eventName = eventButton.getText().substring(0,eventButton.getText().indexOf("\n"));
+                        EventDetails.show(Database.findEvent(eventName).getFirst());
+                    });
+                    SearchResult.getChildren().add(eventButton);
+                }
+                FoundCond.setText("");
+                SearchResult.getChildren().add(FoundCond);
+            }
+            else{
+                FoundCond.setText("No events found in this Category");
+                SearchResult.getChildren().add(FoundCond);
+            }
         });
 
         //categories searching..
@@ -126,15 +146,10 @@ public class AttendeeGUI {
         VBox otherOption = new VBox(20,or,CatsCombo);
         otherOption.setAlignment(Pos.CENTER);
 
-        final FlowPane SearchResult = new FlowPane();
-        SearchResult.setVgap(10);
-        SearchResult.setHgap(10);
-        final Label FoundCond = new Label("");
         Button Catssearch = new Button("Search");
 
         Catssearch.setOnAction(e -> {
             SearchResult.getChildren().clear();
-
             Category selectedCategory = Database.findCat(CatsCombo.getValue());
             if(!((selectedCategory.getEvents()).isEmpty())) {
                 List<Event> events = selectedCategory.getEvents();
