@@ -28,13 +28,6 @@ public class EventDetailsAdmin implements Runnable{
             try{
                 RunRoomChecker.refreshroom();
                 Thread.sleep(2000);
-
-                Label answer = new Label();
-                ArrayList<Room>rooms = Room.getRoomList();
-                for (Room q: rooms){
-                    answer.setText(q.toString());
-                    System.out.println(q.toString() + " \n\n");
-                }
             }catch(InterruptedException ex){
                 System.out.println("thread was intruppted");
             }
@@ -45,5 +38,12 @@ public class EventDetailsAdmin implements Runnable{
         ExecutorService excutor = Executors.newFixedThreadPool(3);
         excutor.execute(new EventDetailsAdmin());
 
+
+        Label answer = new Label();
+        ArrayList<Room>rooms = Room.getRoomList();
+        for (Room q: rooms){
+            answer.setText(q.toString());
+            System.out.println(q.toString() + " \n\n");
+        }
     }
 }
