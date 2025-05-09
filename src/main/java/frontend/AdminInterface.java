@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import javax.net.ssl.SNIHostName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,14 +89,6 @@ public class AdminInterface {
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.setPadding(new Insets(10));
         topBar.setStyle("-fx-background-color: #dddddd;");
-
-
-
-
-            accDetails.setOnAction(e -> {
-
-
-        });
             logout.setOnAction(e -> {
             stage.close();
             tempAdmin = null;
@@ -125,7 +118,7 @@ public class AdminInterface {
         });
         mngDataBtn.setOnAction(e -> {
             stage.close();
-            managerooms.show();
+            manageData.show();
         });
 
 
@@ -287,7 +280,7 @@ public class AdminInterface {
     }
 
 
-    public static class managerooms {
+    public static class manageData {
         public static void show() {
             Image icon = new Image("profile.png");
             Stage stage = new Stage();
@@ -295,38 +288,50 @@ public class AdminInterface {
             stage.getIcons().add(icon);
             ToggleGroup group = new ToggleGroup();
             RadioButton roomChoice = new RadioButton("Room");
-            Button createRoom = new Button("Create Room");
-            Button readRoom = new Button("List Rooms");
-            Button updateRoom = new Button("Update Rooms");
-            Button deleteRoom = new Button("Delete Room");
+            Button CRUDRoom = new Button("Show Rooms");
+
 
             RadioButton catChoice = new RadioButton("Category");
-            Button createCat = new Button("Create Category");
-            Button readCat = new Button("List Category");
-            Button updateCat = new Button("Update Category");
-            Button deleteCat = new Button("Delete Category");
+            Button CRUDCat = new Button("Show Categories");
             HBox Hpane1 = new HBox(10, roomChoice, catChoice);
             Hpane1.setAlignment(Pos.CENTER);
             Text text = new Text("Please choose room or catgeory");
+            HBox textHbox = new HBox(10,text);
+            textHbox.setAlignment(Pos.CENTER);
             Button backBtn = new Button("Back");
             HBox Hpane2 = new HBox(10, backBtn);
             Hpane2.setAlignment(Pos.BOTTOM_LEFT);
+
+
 
             backBtn.setOnAction(e -> {
                 stage.close();
                 AdminInterface.show(tempAdmin);
             });
 
-            HBox roomCRUD = new HBox(10, createRoom, readRoom, updateRoom, deleteRoom);
+            CRUDRoom.setOnAction(e->{
+                stage.close();
+                roomCRUD.show();
+            });
+
+            CRUDCat.setOnAction(e->{
+                stage.close();
+                catCRUD.show();
+            });
+
+            HBox roomCRUD = new HBox(10, CRUDRoom);
             roomCRUD.setAlignment(Pos.CENTER);
-            HBox catCRUD = new HBox(10, createCat, readCat, updateCat, deleteCat);
+            HBox catCRUD = new HBox(10, CRUDCat);
             catCRUD.setAlignment(Pos.CENTER);
 
-            VBox Vpane = new VBox(20, Hpane1, roomCRUD, catCRUD, Hpane2);
+            VBox Vpane = new VBox(20,textHbox, Hpane1, roomCRUD, catCRUD, Hpane2);
             Vpane.setAlignment(Pos.CENTER);
             Scene scene = new Scene(Vpane, 500, 200);
+
             roomChoice.setToggleGroup(group);
             catChoice.setToggleGroup(group);
+            roomChoice.setSelected(true);
+
 
             catCRUD.setVisible(false);
             catCRUD.setManaged(false);
@@ -410,8 +415,28 @@ public class AdminInterface {
     }
 
     public static class roomCRUD {
-
+        public static void show() {
             Stage stage = new Stage();
+            stage.setTitle("Rooms");
+            Label text = new Label("Click on a room to show more details");
+            Button createRoom = new Button("Create Room");
+            HBox createHBox = new HBox(10, createRoom);
+            createHBox.setAlignment(Pos.TOP_LEFT);
+            HBox textHbox = new HBox(10,text);
+            textHbox.setAlignment(Pos.CENTER);
+
+            VBox Vpane = new VBox(20, createHBox, textHbox);
+            Vpane.setAlignment(Pos.TOP_CENTER);
+            Vpane.setPadding(new Insets(20));
+
+
+
+            Scene scene = new Scene(Vpane, 600, 400);
+            stage.setScene(scene);
+            stage.show();
+
+        }
+
 
             class createRoom {
                 public static void show() {
@@ -419,30 +444,26 @@ public class AdminInterface {
                     stage.setTitle("Create room");
                 }
             }
-            class readRoom {
-                public static void show() {
-                    Stage stage = new Stage();
-                    stage.setTitle("List rooms");
-                }
-            }
             class updateRoom {
                 public static void show() {
                     Stage stage = new Stage();
+                    Image icon = new Image("profile.png");
+                    stage.getIcons().add(icon);
                     stage.setTitle("Update room");
                 }
             }
-            class deleteRoom {
-                public static void show() {
-                    Stage stage = new Stage();
-                    stage.setTitle("Delete room");
-                }
-
         }
 
         public static class catCRUD {
-            class createCat {
+            public static void show(){
+
+            }
+
+        class createCat {
                 public static void show() {
                     Stage stage = new Stage();
+                    Image icon = new Image("profile.png");
+                    stage.getIcons().add(icon);
                     stage.setTitle("Create Category");
                 }
             }
@@ -450,6 +471,8 @@ public class AdminInterface {
             class readCat {
                 public static void show() {
                     Stage stage = new Stage();
+                    Image icon = new Image("profile.png");
+                    stage.getIcons().add(icon);
                     stage.setTitle("List Category");
                 }
             }
@@ -457,6 +480,8 @@ public class AdminInterface {
             class updateCat {
                 public static void show() {
                     Stage stage = new Stage();
+                    Image icon = new Image("profile.png");
+                    stage.getIcons().add(icon);
                     stage.setTitle("Update Category");
                 }
             }
@@ -464,10 +489,10 @@ public class AdminInterface {
             class deleteCat {
                 public static void show() {
                     Stage stage = new Stage();
+                    Image icon = new Image("profile.png");
+                    stage.getIcons().add(icon);
                     stage.setTitle("Delete Category");
                 }
             }
-
         }
     }
-}
