@@ -29,6 +29,7 @@ public class AttendeeGUI {
     public static Attendee tempAttendee;
     private static FlowPane SearchResult;
     private static Label FoundCond;
+    public static Stage curStage;
     public static void show(Attendee attendee) {
         tempAttendee = attendee;
         Stage stage = new Stage();
@@ -188,6 +189,7 @@ public class AttendeeGUI {
 
         Scene scene = new Scene(scrollPane, 600, 800);
         stage.setScene(scene);
+        curStage=stage;
         stage.show();
     }
     public static ArrayList<Button> eventToButton(List<Event> events){
@@ -199,6 +201,7 @@ public class AttendeeGUI {
                 eventButton.setOnAction(ee -> {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
                     EventDetailsAttendee.show(Database.findEvent(eventName).getFirst());
+                    AttendeeGUI.curStage.close();
                 });
                 buttons.add(eventButton);
             }
