@@ -13,14 +13,26 @@ public enum TimeSlot{
         };
     }
 
-    public String toString(TimeSlot t) {
-        if(t==MORNING){
+
+    public String toString() {
+        if(this==MORNING){
             return "Morning";
-        }else if(t==EVENING){
+        }else if(this==EVENING){
             return "Evening";
         }else{
             return "Afternoon";
         }
 
     }
+    static public TimeSlot stringTo(String s){
+   if(s.equals("MORNING")){
+       return MORNING;
+   }else if(s.equals("AFTERNOON")){
+       return AFTERNOON;
+   }else{
+       return EVENING;
+   }
+    }
+
+
 }
