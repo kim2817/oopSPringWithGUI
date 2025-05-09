@@ -65,7 +65,7 @@ public class Admin extends User{
             return Database.findEvent(EventName);
     }
 
-    public ArrayList<Organizer> viewOrganizers(){
+    public static ArrayList<Organizer> viewOrganizers(){
         Object[] T = readAll(new Organizer());
             Organizer[] options = new Organizer[T.length];
         for (int i = 0; i < T.length; i++) {
@@ -74,7 +74,7 @@ public class Admin extends User{
         return new ArrayList<>(Arrays.asList(options));
     }
 
-    public ArrayList<Attendee> viewAttendee(){
+    public static ArrayList<Attendee> viewAttendee(){
         Object[] T = readAll(new Attendee());
         Attendee[] options = new Attendee[T.length];
         for (int i = 0; i < T.length; i++) {
@@ -84,7 +84,6 @@ public class Admin extends User{
 
     }
 
-// addroom: room name, id(constructoe), room cap, price
 
     // CRUD
 
