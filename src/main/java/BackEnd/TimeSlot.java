@@ -12,4 +12,15 @@ public enum TimeSlot{
             default -> null;
         };
     }
+
+    public String toString(TimeSlot t) {
+        if(t==MORNING){
+            return "Morning";
+        }else if(t==EVENING){
+            return "Evening";
+        }else{
+            return "Afternoon";
+        }
+
+    }
 }
