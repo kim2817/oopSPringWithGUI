@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import java.util.Scanner;
 
+import static BackEnd.Database.readAll;
+
 
 public class Admin extends User{
 
@@ -45,9 +47,7 @@ public class Admin extends User{
     public void setWorkingHours(String workingHours) {
         this.workingHours = workingHours;
     }
-    public void setID(String ID) {
-        this.ID = "a" + System.nanoTime();
-    }
+
 
 
     //Methods
@@ -62,15 +62,25 @@ public class Admin extends User{
 
     public static ArrayList<Event> searchEvents(String EventName){
             return Database.findEvent(EventName);
-
     }
 
-    public void viewOrganizers(){
-        System.out.println(Arrays.toString(Database.readAll(new Organizer())));
+    public ArrayList<Organizer> viewOrganizers(){
+        Object[] T = readAll(new Organizer());
+            Organizer[] options = new Organizer[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Organizer) T[i];
+        }
+        return new ArrayList<>(Arrays.asList(options));
     }
 
-    public void viewAttendee(){
-        System.out.println(Arrays.toString(Database.readAll(new Attendee())));
+    public ArrayList<Attendee> viewAttendee(){
+        Object[] T = readAll(new Attendee());
+        Attendee[] options = new Attendee[T.length];
+        for (int i = 0; i < T.length; i++) {
+            options[i] = (Attendee) T[i];
+        }
+        return new ArrayList<>(Arrays.asList(options));
+
     }
 
 
