@@ -42,11 +42,6 @@ public class CategoryDetailsAdmin implements Runnable {
         }
         executor.execute(new CategoryDetailsAdmin());
 
-//        AdminInterface.tempback.setOnAction(e->{
-//            excutor.shutdownNow();
-//
-//        });
-
     }
 }
 
