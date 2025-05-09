@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Attendee extends User implements HasID {
     private String ID;
     private int age;
-    private String address;
     private String city;
     private Wallet balance;
     private Category[] interest = new Category[3];
@@ -24,7 +23,6 @@ public class Attendee extends User implements HasID {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
         this.gen = gen;
         this.ID = "A" + System.nanoTime();
         this.age = age;
@@ -48,9 +46,7 @@ public class Attendee extends User implements HasID {
     public void attendeeDeposit(double money){
         balance.deposit(money);
     }
-    public String getAddress() {
-        return address;
-    }
+
     public Category[] getInterest() {
         return interest;
     }
@@ -70,9 +66,7 @@ public class Attendee extends User implements HasID {
         else return ">50";
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+
     public void setID(String ID) {
         this.ID = ID;
     }
@@ -110,7 +104,7 @@ public class Attendee extends User implements HasID {
             return s;
         }
     }
-    //edit to commit
+
     public void chooseEvent() {
         Scanner input = new Scanner(System.in);
         Object[] T = Database.readAll(new Event());
