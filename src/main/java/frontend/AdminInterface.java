@@ -74,16 +74,11 @@ public class AdminInterface {
         profileIcon.setFitWidth(40);
         profileIcon.setFitHeight(40);
 
-        HBox navBar = new HBox(10, profileIcon, greeting);
+        HBox navBar = new HBox(15,toggleBtn, profileIcon, greeting);
         navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.setPadding(new Insets(10));
         navBar.setStyle("-fx-background-color: #dddddd;");
 
-
-        HBox topBar = new HBox(10, toggleBtn, navBar);
-        topBar.setAlignment(Pos.TOP_LEFT);
-        topBar.setPadding(new Insets(10));
-        topBar.setStyle("-fx-background-color: #dddddd;");
         logout.setOnAction(e -> {
             stage.close();
             tempAdmin = null;
@@ -123,10 +118,10 @@ public class AdminInterface {
         centerContent.setAlignment(Pos.CENTER);
 
 
-        VBox root = new VBox(topBar, sidebarRoot, centerContent);
+        VBox root = new VBox(navBar, sidebarRoot, centerContent);
 
         // 4. Assemble layout
-        sidebarRoot.setTop(topBar);
+        sidebarRoot.setTop(navBar);
         sidebarRoot.setLeft(sidebar); // visible by default
         sidebarRoot.setCenter(centerContent);
 
