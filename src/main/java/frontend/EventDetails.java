@@ -8,7 +8,7 @@ public class EventDetails {
     public static void show(Event event) {
         Stage stage = new Stage();
         stage.setTitle("Event Details");
-        System.out.println(event);
+        System.out.println(event.getEventAttendees());
 
 
     }
