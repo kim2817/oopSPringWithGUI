@@ -8,6 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -20,12 +24,14 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static BackEnd.Admin.searchEvents;
 import static BackEnd.DateTime.displayTime;
 import static BackEnd.TimeSlot.*;
 import static frontend.AttendeeGUI.eventToButton;
+import static javafx.application.Application.launch;
 
 
 class OrganizerUI {
@@ -233,7 +239,10 @@ class MyEventsUI {
             stage.close();
             OrganizerUI.show(u);
         });
-
+        viewStats.setOnAction(e->{
+            stage.close();
+            ShowBarChart.show(u.getOrganizedEvents());
+        });
         createNewEvent.setOnAction(e->{
             stage.close();
             CreateNewEventUI.show(u);
@@ -380,8 +389,7 @@ class RentRoomUI {
 
         layoutx2.getChildren().addAll(new Label("Time   "),timeSlot);
         layoutx2.setAlignment(Pos.TOP_LEFT);
-
-
+        FlowPane flowPane = new FlowPane();
 
 
         Button rentRoom = new Button("Rent Room");
@@ -398,12 +406,17 @@ class RentRoomUI {
             int year = dateValue.getYear();
             TimeSlot slot = TimeSlot.stringTo(timeSlot.getValue());
             DateTime datetime = new DateTime(day,month,year,slot);
-            //Database.create();
-
-
-
+            Object[] rooms = Database.readAll(new Room());
+            ArrayList<Room> filteredRooms = new ArrayList<>();
+            for(Object o:rooms){
+                Room cur = (Room)o;
+                if(cur.isAvailable(datetime)) filteredRooms.add(cur);
+            }
+            ArrayList<Button> buttons = eventToButton(filteredRooms, n, dateValue, slot, u);
+            flowPane.getChildren().clear();
+            flowPane.getChildren().addAll(buttons);
         });
-        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),back,layoutx3,layoutx4);
+        VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),back,rentRoom,flowPane,layoutx3,layoutx4);
         Scene s = new Scene(layout , 800,450);
         layout.setPadding(new Insets(20));
         stage.setScene(s);
@@ -411,8 +424,19 @@ class RentRoomUI {
 
         stage.show();
     }
-
-
+    public static ArrayList<Button> eventToButton(List<Room> rooms, String eventName, LocalDate localDate, TimeSlot slot, Organizer u){
+        ArrayList<Button> buttons = new ArrayList<>();
+        if(rooms != null && !(rooms.isEmpty())) {
+            for (Room room : rooms) {
+                Button roomButton = new Button(room.getRoomName() + "\n" + room.getRentPrice());
+                roomButton.setOnAction(ee -> {
+                    RentRoomDetailsUI.show(room,eventName,localDate,slot,u);
+                });
+                buttons.add(roomButton);
+            }
+        }
+        return buttons;
+    }
 }
 
 class RentRoomDetailsUI {
@@ -586,4 +610,36 @@ class ViewEventDetailsUI {
     }
 
 
+}
+
+class ShowBarChart {
+    public static void show(ArrayList<Event> events) {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Age Range");
+        yAxis.setLabel("Frequency");
+        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+        XYChart.Series<String,Number> male = new XYChart.Series<>();
+        XYChart.Series<String,Number> female = new XYChart.Series<>();
+        HashMap<String[],Integer> statistics = new HashMap<>();
+        for(Event event:events){
+            for(String[] key:event.getStatistics().keySet()){
+                statistics.putIfAbsent(key, 0);
+                statistics.replace(key,statistics.get(key)+event.getStatistics().get(key));
+            }
+        }
+        for(String[] key:statistics.keySet()){
+            if(key[1].equals("m")) male.getData().add(new XYChart.Data<>(key[0],statistics.get(key)));
+            else female.getData().add(new XYChart.Data<>(key[0],statistics.get(key)));
+        }
+        barChart.getData().addAll(male,female);
+        male.setName("Male");
+        female.setName("Female");
+        HBox hbox = new HBox(barChart);
+        hbox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(hbox, 300, 600);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
 }
