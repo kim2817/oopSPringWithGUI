@@ -35,7 +35,7 @@ public class LoginWindow {
 
         purplePanel.setAlignment(Pos.CENTER);
         purplePanel.setPrefWidth(300);
-        purplePanel.getStyleClass().add("lilacSquare-panel");
+        purplePanel.getStyleClass().add("lilac-panel");
 
 
         Label username = new Label("Username");
