@@ -10,5 +10,6 @@ public class EventDetails {
         stage.setTitle("Event Details");
         System.out.println(event);
 
+
     }
 }
