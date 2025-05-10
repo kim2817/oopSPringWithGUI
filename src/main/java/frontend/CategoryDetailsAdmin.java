@@ -17,7 +17,7 @@ public class CategoryDetailsAdmin implements Runnable {
         while(true){
             try{
                 RunCatChecker.refreshCat();
-                Thread.sleep(2000);
+                Thread.sleep(200);
                 ArrayList<Category> Catarray = Category.getCatList();
                 StringBuilder res = new StringBuilder();
                 for (Category q: Catarray){

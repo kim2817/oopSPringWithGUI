@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import static BackEnd.Gender.FEMALE;
-import static javafx.application.Application.launch;
 
 public class Main extends Application{
 

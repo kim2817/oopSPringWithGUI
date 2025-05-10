@@ -237,7 +237,7 @@ public class AttendeeGUI {
     public static class myAccount {
         public static void show() {
             Button backBtn = new Button("Back");
-            Image pfp = new Image("pfp.png");
+            Image pfp = new Image("profile.png");
             ImageView pfpView = new ImageView(pfp);
             pfpView.setFitWidth(80);
             pfpView.setFitHeight(80);
