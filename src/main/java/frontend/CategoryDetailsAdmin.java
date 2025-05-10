@@ -50,7 +50,7 @@ public class CategoryDetailsAdmin implements Runnable {
     }
     public static void displayrooms(){
         if(executor == null||executor.isShutdown()) {
-            executor = Executors.newFixedThreadPool(3);
+            executor = Executors.newFixedThreadPool(1);
         }
         executor.execute(new CategoryDetailsAdmin());
 

@@ -10,7 +10,7 @@ public class RunCatChecker {
     }
     public static void refreshCat(){
         if(executor == null||executor.isShutdown()) {
-            executor = Executors.newFixedThreadPool(3);
+            executor = Executors.newFixedThreadPool(1);
         }
         Category r = new Category();
         executor.execute(r);
