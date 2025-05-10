@@ -18,6 +18,7 @@ public class CategoryDetailsAdmin implements Runnable {
         AdminInterface.catsVBox.getChildren().clear();
         ArrayList<Button> buttons = new ArrayList<>();
         for(Category category:categories){
+            if(category == null) continue;
             Button button = new Button(category.getCatName());
             button.getStyleClass().add("rounded-soft-button");
             button.setOnAction(e->{
@@ -35,7 +36,7 @@ public class CategoryDetailsAdmin implements Runnable {
         while(true){
             try{
                 RunCatChecker.refreshCat();
-                Thread.sleep(200);
+                Thread.sleep(2000);
                 Platform.runLater(CategoryDetailsAdmin::update);
 
 
