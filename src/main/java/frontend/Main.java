@@ -47,6 +47,5 @@ public class Main extends Application{
         RegisterLogin.show();
 
     }
-
 }
 

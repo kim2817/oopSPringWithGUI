@@ -35,13 +35,12 @@
     -fx-font-family: "Champagne";
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: #140a18;
+    -fx-text-fill: #47276d;
 }
 
 .h3 {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #444444;
+    -fx-font-size: 15px;
+    -fx-text-fill: #47276d;
 }
 
 /*  Body */
@@ -93,17 +92,22 @@
     -fx-background-radius: 0;
 }
 
+.lilacSidebar-panel {
+    -fx-background-color: #ecd9fa;
+    -fx-background-radius: 0;
+}
+
 .gray-bg {
     -fx-background-color: #f0f0f0;
 }
 
 .purple-button {
-    -fx-background-color: #a074e2; /* darker pastel purple */
+    -fx-background-color: #a074e2;
     -fx-text-fill: white;
     -fx-font-family: "Champagne";
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-background-radius: 12px;  /* rounded rectangle */
+    -fx-background-radius: 12px;
     -fx-padding: 10 30;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 5, 0.3, 0, 2);
@@ -111,5 +115,129 @@
 }
 
 .purple-button:hover {
-    -fx-background-color: #8f5fd4; /* hover: slightly richer */
+    -fx-background-color: #8f5fd4;
 }
+
+.transparent-lilac-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5c3c9e;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+.transparent-lilac-button:hover {
+    -fx-background-color: rgba(160, 116, 226, 0.1);
+}
+
+.filled-textfield {
+    -fx-background-color: #f3eaff;
+    -fx-background-radius: 15;
+    -fx-border-color: transparent;
+    -fx-font-family: "Champagne";
+    -fx-font-size: 13px;
+    -fx-text-fill: #444444;
+    -fx-padding: 10 15;
+}
+
+.custom-combo {
+    -fx-background-color: #f3eaff;
+    -fx-background-radius: 15;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 15;
+    -fx-font-family: "Champagne";
+    -fx-font-size: 13px;
+    -fx-text-fill: #5c3c9e;
+    -fx-padding: 8 12;
+}
+
+
+.custom-combo .text-field {
+    -fx-prompt-text-fill: #5c3c9e;
+}
+
+
+.custom-combo .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+
+
+
+.custom-combo .arrow {
+    -fx-background-color: #5c3c9e;
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z"; /* ▼ simple triangle */
+    -fx-scale-shape: false;
+    -fx-padding: 5;
+}
+
+
+.custom-combo .list-cell {
+    -fx-background-color: #f3eaff;
+    -fx-text-fill: #5c3c9e;
+    -fx-font-family: "Champagne";
+    -fx-font-size: 13px;
+}
+
+
+.custom-combo .list-cell:hover,
+.custom-combo .list-cell:focused {
+    -fx-background-color: #f3eaff;
+    -fx-text-fill: #47276d;
+}
+
+
+.filled-button {
+    -fx-background-color: #5c3c9e;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-font-family: "Champagne";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+    -fx-border-color: transparent;
+}
+
+.filled-button:disabled {
+    -fx-background-color: #dddddd;
+    -fx-text-fill: #999999;
+}
+.rounded-soft-button {
+    -fx-background-color: #f3eaff;
+    -fx-text-fill: #5c3c9e;
+    -fx-font-family: "Champagne";
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+    -fx-padding: 10 20;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 2, 0.3, 0, 1);
+}
+.rounded-soft-button:hover {
+    -fx-background-color: #e4d2f7;
+    -fx-text-fill: #47276d;
+}
+
+.custom-accordion .titled-pane > .title {
+    -fx-background-color: #f3eaff;
+    -fx-border-color: transparent;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 10 15;
+    -fx-text-fill: #5c3c9e;
+    -fx-font-family: "Champagne";
+    -fx-font-size: 13px;
+}
+
+.custom-accordion .titled-pane > .title > .text {
+    -fx-fill: #5c3c9e;
+}
+
+.custom-accordion .titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
