@@ -12,12 +12,20 @@ import javafx.stage.Stage;
 public class EventDetailsAttendee {
     public static void show(Event event) {
         Label eventName = new Label("Event Name: " + event.getEventName());
+        eventName.getStyleClass().add("h2");
+
         Label eventDate = new Label("Date: " + event.getEventDate().DOBToString());
+        eventDate.getStyleClass().add("h3");
         VBox roomDetails = new VBox(10, new Label("Room Name: " + event.getEventRoom().getRoomName()),
                 new Label("Room ID: " + event.getEventRoom().getID()),
                 new Label("Room Capacity: " + event.getEventRoom().getRoomCapacity()));
         roomDetails.setPadding(new Insets(0, 0, 0, 20));
-        VBox roomVBox = new VBox(10, new Label("Room"), roomDetails);
+        Label Room = new Label("Room");
+        Room.getStyleClass().add("h2");
+        VBox roomVBox = new VBox(10,Room, roomDetails);
+
+
+
         Label status = new Label();
         status.setPadding(new Insets(0, 0, 0, 20));
         int x = event.getEventRoomCap() - event.getEventAttendees();
@@ -29,8 +37,13 @@ public class EventDetailsAttendee {
         }
         Button bookNow = new Button("Book Now");
         Button backBtn = new Button("Back");
+        backBtn.getStyleClass().add("filled-button");
+        bookNow.getStyleClass().add("filled-button");
+
+        Label statuss = new Label("Status");
+        statuss.getStyleClass().add("h2");
         VBox root = new VBox(15, eventName, new Separator(),
-                eventDate, new VBox(10, new Label("Status"), status), roomVBox
+                eventDate, new VBox(10, statuss, status), roomVBox
         , new Label("Ticket Price: " + event.getTicketPrice()), bookNow, backBtn);
         Stage stage = new Stage();
         stage.setTitle("Event Details");
@@ -38,6 +51,8 @@ public class EventDetailsAttendee {
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
         Scene scene = new Scene(scrollPane, 600, 800);
+        scene.getStylesheets().add(EventDetailsAttendee.class.getResource("/styles.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
         bookNow.setOnAction(e->{
@@ -55,14 +70,23 @@ class BookEventTickets{
     public static void show(Event event) {
         Label eventName = new Label("Event Name: " + event.getEventName());
         Label balance = new Label();
+        eventName.getStyleClass().add("h2");
+
         HBox balanceHBox = new HBox(10, new Label("Balance: "), balance);
         TextField ticketCount = new TextField();
+        ticketCount.getStyleClass().add("filled-textfield");
+
         HBox ticketCountHBox = new HBox(10, new Label("No. of Tickets: "), ticketCount);
         TextField totalPrice = new TextField();
+        totalPrice.getStyleClass().add("filled-textfield");
+
         totalPrice.setEditable(false);
         HBox totalPriceHBox = new HBox(10, new Label("Total Price: "), totalPrice);
         Button button = new Button("Book");
         Button backBtn = new Button("Back");
+        backBtn.getStyleClass().add("filled-button");
+        button.getStyleClass().add("filled-button");
+
         ticketCount.setOnKeyTyped(e->{
             if(ticketCount.getText().isEmpty()) ticketCount.setText("0");
             totalPrice.setText(String.valueOf((event.getTicketPrice()*Integer.parseInt(ticketCount.getText()))));
@@ -77,6 +101,8 @@ class BookEventTickets{
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
         Scene scene = new Scene(scrollPane, 600, 800);
+        scene.getStylesheets().add(BookEventTickets.class.getResource("/styles.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
         button.setOnAction(e->{
@@ -103,10 +129,15 @@ class TicketPurchaseConfirmation{
         Stage st = new Stage();
         Button btn1 = new Button("yes");
         Button btn2 = new Button("no");
+        btn1.getStyleClass().add("filled-button");
+        btn2.getStyleClass().add("filled-button");
+
         Label newlabel= new Label("ARE YOU SURE???????");
         HBox hb1= new HBox(20,btn1,btn2);
         VBox vb1= new VBox(20,newlabel,hb1);
         Scene sets= new Scene(vb1,200,100);
+        sets.getStylesheets().add(TicketPurchaseConfirmation.class.getResource("/styles.css").toExternalForm());
+
         hb1.setAlignment(Pos.CENTER);
         vb1.setAlignment(Pos.CENTER);
         st.setResizable(false);
@@ -127,9 +158,14 @@ class TicketPurchaseConfirmation{
 
 class PaymentSuccessful{
     public static void show(Event event, int ticketCount){
-        HBox hBox1 = new HBox(new Label("Success"));
+        Label success = new Label("Success");
+        success.getStyleClass().add("h3");
+
+        HBox hBox1 = new HBox(success);
         hBox1.setAlignment(Pos.CENTER);
         Button ok = new Button("Ok");
+        ok.getStyleClass().add("filled-button");
+
         VBox root = new VBox(10.0, hBox1, new Separator(),
                 new Label("Number of Purchased Tickets: " + ticketCount),
                 new Label("Event ID:    " + event.getID()),
@@ -143,7 +179,9 @@ class PaymentSuccessful{
         root.setPadding(new Insets(20));
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
-        Scene scene = new Scene(scrollPane, 800, 450);
+        Scene scene = new Scene(scrollPane, 250, 450);
+        scene.getStylesheets().add(PaymentSuccessful.class.getResource("/styles.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
         ok.setOnAction(e->{
