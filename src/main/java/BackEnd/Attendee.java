@@ -89,9 +89,7 @@ public class Attendee extends User implements HasID {
     public String showInterest() {
         return (this.interest[0].getCatName() + "\n" + this.interest[1].getCatName()+ "\n" + this.interest[2].getCatName());
     }
-    public void showEvents() {
-        System.out.println(Arrays.toString(Database.readAll(new Event())));
-    }
+
     public String showBookedEvents() {
         if (bookedEvents.isEmpty()) {
             return "No booked events";
@@ -148,52 +146,7 @@ public class Attendee extends User implements HasID {
 
 
     }
-    public void attendeeInterface(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("""
-                Please choose one of the following option
-                       1) getId
-                       2) getBalance
-                       3) Deposit money
-                       4) get recommendation based on your interest
-                       5) Show events
-                       6) Choose events
-                       7) Show booked events
-                       8) View wallet details
-                       9) Exit""");
-        int answer = input.nextInt();
-        switch (answer){
-            case 1:
-                System.out.println(this.getID());
-                break;
-            case 2:
-                System.out.println(this.getBalance());
-                break;
-            case 3:
-                System.out.println("please enter a value");
-                double deposit = input.nextDouble();
-                this.attendeeDeposit(deposit);
-                break;
-            case 4:
-                this.showInterest();
-                break;
-            case 5:
-                this.showEvents();
-                break;
-            case 6:
-                this.chooseEvent();
-                break;
-            case 7:
-                this.showBookedEvents();
-                break;
-            case 8:
-                this.viewWalletDetails();
-                break;
-            default:
-                return;
-        }
-        attendeeInterface();
-    }
+//edit to commit
     public void viewWalletDetails() {
         System.out.println("Wallet Details: " + balance);
     }
