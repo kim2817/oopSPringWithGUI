@@ -15,6 +15,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
@@ -39,6 +41,7 @@ class OrganizerUI {
     static Label lbl(String s , double top , double left){
 
         Label Dname = new Label(s);
+        Dname.getStyleClass().add("h2");
         AnchorPane.setTopAnchor(Dname,top);
         AnchorPane.setLeftAnchor(Dname, left);
 
@@ -47,6 +50,7 @@ class OrganizerUI {
     static TextField fld(double top , double left){
 
         TextField Dname = new TextField();
+        Dname.getStyleClass().add("filled-textfield");
         AnchorPane.setTopAnchor(Dname,top);
         AnchorPane.setLeftAnchor(Dname, left);
 
@@ -69,26 +73,41 @@ class OrganizerUI {
         VBox layouty1 = new VBox(10, layoutx1);
         HBox layoutx2 = new HBox(10);
         VBox layouty2 = new VBox(10, layoutx2);
-        HBox layoutx3 = new HBox(10);
-        VBox layouty3 = new VBox(10, layoutx3);
-
+        VBox layouty3 = new VBox(30);
+        layouty3.setPadding(new Insets(20));
         VBox layout = new VBox(layouty1,layouty2,layouty3);
         Scene s = new Scene(layout , 800,450);
+        s.getStylesheets().add(OrganizerUI.class.getResource("/styles.css").toExternalForm());
         stage.setScene(s);
 
         layout.setPadding(new Insets(20));
 
         layouty1.getChildren().add(lbl("Hello Mr/Ms: " + u.getUsername(),10.0,10.0));
         layouty1.getChildren().add(lbl("Balance: " + u.getBalance().getBalance(),30.0, 10.0 ));
-        layouty1.getChildren().addAll(new Label("Email: "+u.getEmail()),new Label("Gender: "+u.getGen()));
+        Label email = new Label("Email: "+u.getEmail());
+        email.getStyleClass().add("h3");
+        Label gender = new Label("Gender: "+u.getGen());
+        gender.getStyleClass().add("h3");
+        layouty1.getChildren().addAll(email,gender);
         layouty1.setAlignment(Pos.TOP_LEFT);
-        layouty2.getChildren().add(lbl("----------------------------------------------------------------------------------------------------------------------------------------------------------",70.0, 100.0 ));
+        Line separatorLine = new Line(0, 50, 275, 50);
+        separatorLine.setStroke(Color.web("#a074e2"));
+        separatorLine.setStrokeWidth(2);
+        layouty2.getChildren().add(separatorLine);
         layouty2.setAlignment(Pos.CENTER);
         Button viewEvents = btn("View Events",90.0,100.0);
+        viewEvents.getStyleClass().add("filled-button");
+        viewEvents.setMaxWidth(150);
         Button myEvents = btn("My Events",90.0,300.0);
+        myEvents.getStyleClass().add("filled-button");
+        myEvents.setMaxWidth(150);
         Button logout = btn("Logout",150.0,210.0);
-        layoutx3.getChildren().addAll(viewEvents,myEvents,logout);
-        layoutx3.setAlignment(Pos.CENTER);
+        logout.getStyleClass().add("filled-button");
+        logout.setMaxWidth(150);
+        layouty3.getChildren().addAll(viewEvents,myEvents,logout);
+        layouty3.setAlignment(Pos.CENTER);
+        Image icon = new Image("Logo.png");
+        stage.getIcons().add(icon);
         stage.show();
 
         viewEvents.setOnAction(e->{
@@ -98,8 +117,6 @@ class OrganizerUI {
         myEvents.setOnAction(e->{
             stage.close();
             MyEventsUI.show(u);
-
-
         });
         logout.setOnAction(e-> {
             stage.close();
@@ -121,6 +138,7 @@ class ViewEventsUI {
         TextField searchField = new TextField();
         searchField.setPromptText("Search for an event");
         Button searchBtn = new Button("Search");
+        searchBtn.getStyleClass().add("filled-button");
         HBox searchBox = new HBox(10, searchField, searchBtn);
         searchBox.setAlignment(Pos.CENTER);
         VBox searchSection = new VBox(10, searchBox);
@@ -154,6 +172,7 @@ class ViewEventsUI {
         otherOption.setAlignment(Pos.CENTER);
 
         Button Catssearch = new Button("Search");
+        Catssearch.getStyleClass().add("filled-button");
         Catssearch.setDisable(true);
         CatsCombo.setOnAction(e->{
             Catssearch.setDisable(false);
@@ -175,6 +194,7 @@ class ViewEventsUI {
         catSearching.setAlignment(Pos.CENTER);
         SearchResult.setAlignment(Pos.CENTER);
         Button back = new Button("Back");
+        back.getStyleClass().add("filled-button");
         VBox layout = new VBox(10,searchSection,otherOption,catSearching,SearchResult,back);
         layout.setAlignment(Pos.CENTER);
         back.setOnAction(e->{
@@ -182,6 +202,7 @@ class ViewEventsUI {
             OrganizerUI.show(u);
         });
         Scene s = new Scene(layout,800,450);
+        s.getStylesheets().add(ViewEventsUI.class.getResource("/styles.css").toExternalForm());
         stage.setScene(s);
         stage.show();
         }
@@ -191,6 +212,7 @@ class ViewEventsUI {
         if(events!=null && !(events.isEmpty())) {
             for (Event event : events) {
                 Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
+                eventButton.getStyleClass().add("filled-button");
                 eventButton.setOnAction(ee -> {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
                     ViewEventDetailsUI.show(Database.findEvent(eventName).getFirst(),u);

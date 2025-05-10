@@ -15,6 +15,7 @@ public class CategoryDetailsAdmin implements Runnable {
     public static ExecutorService executor;
     CategoryDetailsAdmin(){}
     static void updateCategoryButtons(ArrayList<Category> categories){
+        System.out.println("hi");
         AdminInterface.catsVBox.getChildren().clear();
         ArrayList<Button> buttons = new ArrayList<>();
         for(Category category:categories){
@@ -49,6 +50,7 @@ public class CategoryDetailsAdmin implements Runnable {
         }
     }
     public static void displayrooms(){
+//        update();
         if(executor == null||executor.isShutdown()) {
             executor = Executors.newFixedThreadPool(1);
         }
