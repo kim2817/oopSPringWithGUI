@@ -116,7 +116,7 @@ public class Room implements HasID,Runnable {
         while (true){
           try{
               listRooms();
-              Thread.sleep(200);
+              Thread.sleep(2000);
           }catch (InterruptedException e){
             System.out.println("thread was intruppted");
             break;
