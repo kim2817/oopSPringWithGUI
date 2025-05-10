@@ -122,4 +122,20 @@ public class Database {
         Object[] ret = readAll(o);
         return ret[(int)(Math.random()*ret.length)];
     }
+
+    public static boolean checkUser(String username) {
+        Object[] A = readAll(new Attendee());
+        for(Object o:A) {
+            if(((Attendee)o).getUsername().equals(username)) return true;
+        }
+        A = readAll(new Organizer());
+        for(Object o:A) {
+            if(((Organizer)o).getUsername().equals(username)) return true;
+        }
+        A = readAll(new Admin());
+        for(Object o:A) {
+            if(((Admin)o).getUsername().equals(username)) return true;
+        }
+        return false;
+    }
 }
