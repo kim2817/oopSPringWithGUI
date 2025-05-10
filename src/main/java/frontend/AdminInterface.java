@@ -469,7 +469,8 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            VBox catVpane = new VBox(20, categories);
+            FlowPane catVpane = new FlowPane(20,20);
+            catsVBox = catVpane;
             VBox Vpane = new VBox(20, createHBox, catVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
