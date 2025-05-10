@@ -700,8 +700,10 @@ public class AdminInterface {
             });
 
             edit.setOnAction(e -> {
-
+                catEditRoomUI.show(category);
             });
+            stage.setScene(scene);
+            stage.show();
         }
     }
     public static class catDeleteRoomConfirmationUI {
@@ -709,9 +711,11 @@ public class AdminInterface {
             Stage st = new Stage();
             Button btn1 = new Button("Yes");
             Button btn2 = new Button("No");
-            Label newlabel = new Label("Are you sure?");
+            Label newlabel = new Label("ARE YOU SURE???????");
             HBox hb1 = new HBox(20, btn1, btn2);
+            hb1.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, newlabel, hb1);
+            Vpane.setAlignment(Pos.CENTER);
             Scene sets = new Scene(Vpane, 200, 100);
             hb1.setAlignment(Pos.CENTER);
             Vpane.setAlignment(Pos.CENTER);
@@ -720,32 +724,39 @@ public class AdminInterface {
             btn1.setOnAction(e -> {
                 st.close();
                 Database.delete(C);
+                roomCRUD.show();
             });
             btn2.setOnAction(e -> {
                 st.close();
+                roomCRUD.show();
             });
-            st.setResizable(false);
             st.show();
+            st.setResizable(false);
         }
     }
     public static class catEditRoomUI{
         public static void show(Category C){
             Stage stage = new Stage();
-            stage.setTitle("Edit Room");
-            Label title = new Label("EDIT ROOM");
+            stage.setTitle("Edit Category");
+            Label title = new Label("EDIT CATEGORY");
             title.setAlignment(Pos.CENTER);
 
-            Button update = new Button("Update");
-            TextField catName = new TextField("Category Name");
-            catName.setMaxWidth(200);
+
             Button backBtn = new Button("Back");
+            Button update = new Button("Update");
+            TextField roomName = new TextField("Name");
+            roomName.setMaxWidth(200);
             HBox backHpane = new HBox(10, backBtn);
             backHpane.setAlignment(Pos.BOTTOM_LEFT);
 
             Label response = new Label();
             update.setOnAction(e -> {
+                Admin.updateCat(C, roomName.getText());
+                response.setText("Category " + roomName.getText() + " Updated!");
             });
-            VBox Vfield = new VBox(20, catName, update, response);
+
+            backBtn.setAlignment(Pos.BOTTOM_LEFT);
+            VBox Vfield = new VBox(20, roomName);
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, title, Vfield);
             Vpane.setAlignment(Pos.CENTER);
@@ -756,7 +767,7 @@ public class AdminInterface {
             stage.show();
             backBtn.setOnAction(e -> {
                 stage.close();
-                roomCRUD.show();
+                catCRUD.show();
 
             });
         }
