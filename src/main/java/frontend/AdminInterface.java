@@ -109,7 +109,7 @@ public class AdminInterface {
         mngDataBtn.getStyleClass().add("filled-button");
 
 
-        HBox buttons = new HBox(10, eventsBtn, usersBtn, mngDataBtn);
+        VBox buttons = new VBox(30, eventsBtn, usersBtn, mngDataBtn);
         buttons.setAlignment(Pos.CENTER);
 
         eventsBtn.setOnAction(e -> {
@@ -137,7 +137,6 @@ public class AdminInterface {
 
         // 4. Assemble layout
         sidebarRoot.setTop(navBar);
-        sidebarRoot.setLeft(sidebar); // visible by default
         sidebarRoot.setCenter(centerContent);
 
         ScrollPane scrollPane = new ScrollPane(root);
@@ -148,9 +147,10 @@ public class AdminInterface {
 
         stage.setScene(scene);
         stage.show();
+        sidebar.minHeightProperty().bind(scene.heightProperty().subtract(navBar.heightProperty()));
+//        sidebar.maxHeightProperty().bind(stage.heightProperty());
         centerContent.setPadding(new Insets(20));
         centerContent.setAlignment(Pos.TOP_LEFT);
-
     }
 
 
