@@ -66,6 +66,11 @@ public class Admin extends User{
         r.setRentPrice(rentPrice);
         Database.update(r);
     }
+
+    public static void updateCat(Category c, String Catname){
+        c.setCatName(Catname);
+        Database.update(c);
+    }
     public static void delete(Room r){
         Database.delete(r);
     }
