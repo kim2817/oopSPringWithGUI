@@ -41,7 +41,7 @@ public class EventDetailsAdmin implements Runnable{
         while(true){
             try{
                 RunRoomChecker.refreshroom();
-                Thread.sleep(2000);
+                Thread.sleep(200);
                 Platform.runLater(()->updateButtons(Room.getRoomList()));
 
 
