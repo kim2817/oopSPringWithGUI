@@ -34,7 +34,7 @@ public class EventDetailsAdmin implements Runnable{
             Button button = new Button(room.getRoomName());
             button.getStyleClass().add("rounded-soft-button");
             button.setOnAction(e->{
-                AdminInterface.afterButtonClickRoom.show(room);
+                AdminInterface.roomAfterButtonClickRoom.show(room);
             });
             buttons.add(button);
         }
