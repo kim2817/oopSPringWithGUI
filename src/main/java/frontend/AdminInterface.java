@@ -33,6 +33,7 @@ public class AdminInterface {
     public static Button tempback = new Button("Back");
     public static Label categories = new Label();
     public static FlowPane roomsVBox = new FlowPane();
+    public static FlowPane catsVBox = new FlowPane();
     public static Admin tempAdmin;
 
     public static void show(Admin q) {
@@ -448,7 +449,8 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            VBox catVpane = new VBox(20, categories);
+            FlowPane catVpane = new FlowPane(20,20);
+            catsVBox = catVpane;
             VBox Vpane = new VBox(20, createHBox, catVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
