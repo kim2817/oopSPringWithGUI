@@ -60,6 +60,15 @@ public class Admin extends User{
         Category newCat= new Category(catName);
         Database.create(newCat);
     }
+    public static void updateRoom(String roomname , Room r , int roomCapacity , double rentPrice ){
+        r.setRoomName(roomname);
+        r.setRoomCapacity(roomCapacity);
+        r.setRentPrice(rentPrice);
+        Database.update(r);
+    }
+    public static void delete(Room r){
+        Database.delete(r);
+    }
 
     public static ArrayList<Event> searchEvents(String EventName){
             return Database.findEvent(EventName);
