@@ -146,7 +146,7 @@ public class Attendee extends User implements HasID {
 
 
     }
-//edit to commit
+
     public void viewWalletDetails() {
         System.out.println("Wallet Details: " + balance);
     }
