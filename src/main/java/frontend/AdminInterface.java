@@ -638,7 +638,7 @@ public class AdminInterface {
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, title, Vfield);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 600, 300);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
