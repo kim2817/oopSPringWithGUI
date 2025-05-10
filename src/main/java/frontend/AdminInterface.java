@@ -33,6 +33,7 @@ public class AdminInterface {
     public static Button tempback = new Button("Back");
     public static Label categories = new Label();
     public static FlowPane roomsVBox = new FlowPane();
+    public static FlowPane catsVBox = new FlowPane();
     public static Admin tempAdmin;
 
     public static void show(Admin q) {
