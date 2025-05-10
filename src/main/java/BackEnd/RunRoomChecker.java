@@ -11,7 +11,7 @@ public class RunRoomChecker {
     }
     public static void refreshroom(){
         if(executor == null||executor.isShutdown()) {
-            executor = Executors.newFixedThreadPool(3);
+            executor = Executors.newFixedThreadPool(1);
         }
         Room r = new Room();
         executor.execute(r);
