@@ -700,8 +700,10 @@ public class AdminInterface {
             });
 
             edit.setOnAction(e -> {
-
+                catEditRoomUI.show(category);
             });
+            stage.setScene(scene);
+            stage.show();
         }
     }
     public static class catDeleteRoomConfirmationUI {
