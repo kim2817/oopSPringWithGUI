@@ -1,6 +1,7 @@
 package frontend;
 
 import BackEnd.Category;
+import BackEnd.Database;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -141,7 +142,7 @@ public class RegisterWindow {
         Button cancelBtn = new Button("Cancel");
         HBox hb10= new HBox(hgap,registerBtn,cancelBtn);
 
-        VBox vb= new VBox(10,wnabyCreateAcc,hb1,hb2,hb3,hb4,hb5,hb51,hb6,hb7,hb8,hb9,hb10);
+        VBox vb= new VBox(10,wnabyCreateAcc,hb1,hb2,hb3,hb4,hb5,hb6,hb7,hb8,hb9,hb51,hb10);
         vb.setAlignment(Pos.CENTER);
         vb.setPadding(new Insets(20));
         vb.setAlignment(Pos.CENTER);
@@ -183,30 +184,55 @@ public class RegisterWindow {
         );
 
         registerBtn.setOnAction(e -> {
-            String password = passwordField.getText();
-            String confirm = confirmField.getText();
+            try {
+                boolean flag = true;
 
-            if (!password.equals(confirm)) {
-                messageLabel.setText("Passwords do not match.");
-            } else if (password.length() < 8) {
-                messageLabel.setText("Password must be at least 8 characters.");
-            } else {
-                messageLabel.setText("Password is valid!");
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+                String confirm = confirmField.getText();
+                String balance = balanceField.getText();
+
+                if (username.contains(" ")) {
+                    messageLabel.setText("Username can't contain spaces.");
+                } else if(Database.checkUser(username)){
+                    messageLabel.setText("Username already found.");
+                } else if (!password.equals(confirm)) {
+                    messageLabel.setText("Passwords do not match.");
+                } else if (password.length() < 8) {
+                    messageLabel.setText("Password must be at least 8 characters.");
+                } else if (Double.parseDouble(balance) <= 0) {
+                    messageLabel.setText("Balance should be +ve.");
+                } else {
+                    flag = false;
+                }
+                if (flag) return;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                if (Organizer.isSelected()) {
+                    registerOrganizer(emailField.getText(), usernameField.getText(), passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
+                } else {
+                    flag = true;
+                    String age = ageField.getText();
+                    String address = ageField.getText();
+                    if(age.isEmpty() || address.isEmpty()){
+                        messageLabel.setText("Age/Address can't be empty.");
+                    }
+                    else if(CatsCombo1.getValue() == null || CatsCombo2.getValue() == null || CatsCombo3.getValue() == null){
+                        messageLabel.setText("Choose your interests");
+                    }
+                    else if(Integer.parseInt(age) <= 0){
+                        messageLabel.setText("Age should be +ve");
+                    }
+                    else flag=false;
+                    if(flag) return;
+                    registerAttendee(emailField.getText(), usernameField.getText(), passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText(), CatsCombo1.getValue(), CatsCombo2.getValue(), CatsCombo3.getValue());
+                }
+                Stage currentStage = (Stage) registerBtn.getScene().getWindow();
+                currentStage.close();
+                LoginWindow.show();
+            } catch (RuntimeException ex) {
+                messageLabel.setText("Invalid Input");
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String formattedDob = dobPicker.getValue().format(formatter);
-
-            if(Organizer.isSelected()){
-                registerOrganizer(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), balanceField.getText());
-
-            }
-            else{
-                registerAttendee(emailField.getText(),usernameField.getText(),passwordField.getText(), dobPicker.getValue().format(formatter), female.isSelected(), ageField.getText(), cityField.getText(), balanceField.getText(), CatsCombo1.getValue(),CatsCombo2.getValue(),CatsCombo3.getValue());
-            }
-            Stage currentStage = (Stage) registerBtn.getScene().getWindow();
-            currentStage.close();
-            LoginWindow.show();
-
         });
 
         cancelBtn.setOnAction(e -> {

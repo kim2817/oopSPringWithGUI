@@ -37,7 +37,7 @@ public class AttendeeGUI {
         stage.getIcons().add(icon);
         stage.setTitle("Eventra - Attendee Dashboard");
 
-        Image profileImage = new Image("profile.png"); // Replace with your actual image
+        Image profileImage = new Image("profile.png");
         ImageView profileIcon = new ImageView(profileImage);
         profileIcon.setFitWidth(60);
         profileIcon.setFitHeight(60);
@@ -238,37 +238,51 @@ public class AttendeeGUI {
     public static class myAccount {
         public static void show() {
             Button backBtn = new Button("Back");
+            backBtn.getStyleClass().add("filled-button");
+
             Image pfp = new Image("profile.png");
             ImageView pfpView = new ImageView(pfp);
+
+
             pfpView.setFitWidth(80);
             pfpView.setFitHeight(80);
             HBox imageHpane = new HBox(20, pfpView);
             imageHpane.setAlignment(Pos.TOP_CENTER);
 
-            Line seperatorline = new Line(0, 50, 275, 50);
-            seperatorline.setStroke(Color.BLACK);
-            seperatorline.setStrokeWidth(4);
+            Line separatorLine = new Line(0, 50, 275, 50);
+            separatorLine.setStroke(Color.web("#a074e2"));
+            separatorLine.setStrokeWidth(2);
 
             Label text = new Label("MY ACCOUNT");
-            text.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 18));
+            text.getStyleClass().add("h2");
             text.setPadding(new Insets(20));
             String interests = tempAttendee.showInterest();
-            Label details = new Label("Username: " + tempAttendee.getUsername() + "\n"
-                    + "Email: " + tempAttendee.getEmail() + "\n"
-                    + "ID: " + tempAttendee.getID() + "\n"
-                    + "Age: " + tempAttendee.getAge() + "\n"
-                    + "Date of Birth: " + tempAttendee.getDateOfBirth().DOBToString() + "\n" +
-                    "Interests: " + "\n" + interests);
-            details.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+            Label details = new Label(
+                    "Username:      " + tempAttendee.getUsername() + "\n" +
+                            "Email:         " + tempAttendee.getEmail() + "\n" +
+                            "ID:            " + tempAttendee.getID() + "\n" +
+                            "Age:           " + tempAttendee.getAge() + "\n" +
+                            "Date of Birth: " + tempAttendee.getDateOfBirth().DOBToString() + "\n" +
+                            "Interests:\n" + interests
+            );
+
+
+            details.setTextFill(Color.web("#47276d"));
+            details.setPadding(new Insets(10));
             VBox detailsVpane = new VBox(details);
             detailsVpane.setPadding(new Insets(10));
 
-            VBox Vpane = new VBox(5, text, seperatorline, imageHpane, detailsVpane, backBtn);
+            VBox Vpane = new VBox(5, text, separatorLine, imageHpane, detailsVpane, backBtn);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(10));
 
-            Scene scene = new Scene(Vpane, 275, 350);
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            Scene scene = new Scene(scrollPane, 400, 450);
+            scene.getStylesheets().add(myAccount.class.getResource("/styles.css").toExternalForm());
+
             Stage stage = new Stage();
+            stage.getIcons().add(pfp);
+
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
