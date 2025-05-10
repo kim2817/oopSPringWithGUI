@@ -662,7 +662,7 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
         }
-        public static class catAfterButtonClickRoom {
+        public static class catAfterButtonClickCat {
             public static void show(Category category) {
                 Stage stage = new Stage();
                 stage.setTitle("Info");
