@@ -45,6 +45,7 @@ public class EventDetailsAdmin implements Runnable{
     }
     @Override
     public void run() {
+        update();
         while(true){
             try{
                 RunRoomChecker.refreshroom();

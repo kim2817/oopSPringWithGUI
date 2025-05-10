@@ -31,6 +31,7 @@ public class CategoryDetailsAdmin implements Runnable {
         updateCategoryButtons(Category.getCatList());
     }
     public void run() {
+        update();
         while(true){
             try{
                 RunCatChecker.refreshCat();
