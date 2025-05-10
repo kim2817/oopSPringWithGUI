@@ -107,10 +107,11 @@ public class AttendeeGUI {
         navBar.setStyle("-fx-background-color: transparent;");
 
         HBox topBar = new HBox(10,toggleBtn,navBar);
+        topBar.getStyleClass().add("lilacSquare-panel");
 
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setPadding(new Insets(10));
-        topBar.getStyleClass().add("lilacSquare-panel");
+
 
 
         //searching

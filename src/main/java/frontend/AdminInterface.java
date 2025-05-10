@@ -39,24 +39,29 @@ public class AdminInterface {
         tempAdmin = q;
 
 
-        Text greeting = new Text("Welcome Mr/Mrs: " + q.getUsername());
-        greeting.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-
+        Label greeting = new Label("Welcome Mr/Mrs: " + q.getUsername());
+        greeting.getStyleClass().add("h2");
 
         BorderPane sidebarRoot = new BorderPane();
 
         VBox sidebar = new VBox(10);
         sidebar.setPadding(new Insets(10));
-        sidebar.setStyle("-fx-background-color: #eeeeee;");
+        sidebar.getStyleClass().add("lilacSidebar-panel");
         sidebar.setPrefWidth(200);
 
         Button accDetails = new Button("My Account");
         Button logout = new Button("Logout");
+        accDetails.getStyleClass().add("purple-button");
+        logout.getStyleClass().add("purple-button");
+        accDetails.setMaxWidth(150);
+        logout.setMaxWidth(150);
 
         sidebar.getChildren().addAll(accDetails, logout);
 
         // 2. Create the toggle button (top left)
         Button toggleBtn = new Button("☰");
+        toggleBtn.getStyleClass().add("transparent-lilac-button");
+
         toggleBtn.setFocusTraversable(false);
 
         toggleBtn.setOnAction(e -> {
@@ -74,13 +79,14 @@ public class AdminInterface {
 
         Image profileImage = new Image("profile.png"); // Replace with your actual image
         ImageView profileIcon = new ImageView(profileImage);
-        profileIcon.setFitWidth(40);
-        profileIcon.setFitHeight(40);
+        profileIcon.setFitWidth(60);
+        profileIcon.setFitHeight(60);
 
         HBox navBar = new HBox(15, toggleBtn, profileIcon, greeting);
         navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.setPadding(new Insets(10));
-        navBar.setStyle("-fx-background-color: #dddddd;");
+        navBar.getStyleClass().add("lilacSquare-panel");
+
 
         logout.setOnAction(e -> {
             stage.close();
@@ -97,6 +103,11 @@ public class AdminInterface {
         Button eventsBtn = new Button("Events");
         Button usersBtn = new Button("Show Attendees");
         Button mngDataBtn = new Button("Manage Data");
+        eventsBtn.getStyleClass().add("filled-button");
+        usersBtn.getStyleClass().add("filled-button");
+        mngDataBtn.getStyleClass().add("filled-button");
+
+
         HBox buttons = new HBox(10, eventsBtn, usersBtn, mngDataBtn);
         buttons.setAlignment(Pos.CENTER);
 
@@ -132,6 +143,8 @@ public class AdminInterface {
         scrollPane.setFitToWidth(true);
 
         Scene scene = new Scene(scrollPane, 800, 450);
+        scene.getStylesheets().add(AdminInterface.class.getResource("/styles.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
         centerContent.setPadding(new Insets(20));
@@ -206,14 +219,17 @@ public class AdminInterface {
             });
 
 
+
             VBox root = new VBox(20, Hpane, tempHbox, otherOption, catSearching, SearchResult, backBtn);
             ScrollPane scrollPane = new ScrollPane(root);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 800, 300);
+
             stage.setScene(scene);
 
 
             root.setPadding(new Insets(20));
+
 
         }
     }
