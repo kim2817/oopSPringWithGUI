@@ -1,9 +1,6 @@
 package frontend;
 
-import BackEnd.Attendee;
-import BackEnd.DateTime;
 import BackEnd.Event;
-import BackEnd.Wallet;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,8 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import javax.crypto.SealedObject;
 
 public class EventDetailsAttendee {
     public static void show(Event event) {
@@ -33,9 +28,10 @@ public class EventDetailsAttendee {
             status.setText(x + " Tickets Left");
         }
         Button bookNow = new Button("Book Now");
+        Button backBtn = new Button("Back");
         VBox root = new VBox(15, eventName, new Separator(),
                 eventDate, new VBox(10, new Label("Status"), status), roomVBox
-        , new Label("Ticket Price: " + event.getTicketPrice()), bookNow);
+        , new Label("Ticket Price: " + event.getTicketPrice()), bookNow, backBtn);
         Stage stage = new Stage();
         stage.setTitle("Event Details");
         root.setPadding(new Insets(20));
@@ -48,6 +44,10 @@ public class EventDetailsAttendee {
             stage.close();
             BookEventTickets.show(event);
         });
+        backBtn.setOnAction(e->{
+            stage.close();
+            AttendeeGUI.show(AttendeeGUI.tempAttendee);
+        });
     }
 }
 
@@ -59,8 +59,10 @@ class BookEventTickets{
         TextField ticketCount = new TextField();
         HBox ticketCountHBox = new HBox(10, new Label("No. of Tickets: "), ticketCount);
         TextField totalPrice = new TextField();
+        totalPrice.setEditable(false);
         HBox totalPriceHBox = new HBox(10, new Label("Total Price: "), totalPrice);
         Button button = new Button("Book");
+        Button backBtn = new Button("Back");
         ticketCount.setOnKeyTyped(e->{
             if(ticketCount.getText().isEmpty()) ticketCount.setText("0");
             totalPrice.setText(String.valueOf((event.getTicketPrice()*Integer.parseInt(ticketCount.getText()))));
@@ -88,6 +90,10 @@ class BookEventTickets{
                 stage.hide();
                 TicketPurchaseConfirmation.show(event,Integer.parseInt(ticketCount.getText()),stage);
             }
+        });
+        backBtn.setOnAction(e->{
+            stage.close();
+            EventDetailsAttendee.show(event);
         });
     }
 }
@@ -126,11 +132,11 @@ class PaymentSuccessful{
         Button ok = new Button("Ok");
         VBox root = new VBox(10.0, hBox1, new Separator(),
                 new Label("Number of Purchased Tickets: " + ticketCount),
-                new Label("Event ID: " + event.getID()),
-                new Label("Event Name: " + event.getEventName()),
-                new Label("Event Room: " + event.getEventRoom()),
+                new Label("Event ID:    " + event.getID()),
+                new Label("Event Name:  " + event.getEventName()),
+                new Label("Event Room:  " + event.getEventRoom().getRoomName()),
                 new Label("Price Payed: " + event.getTicketPrice()*ticketCount),
-                new Label("Balance: " + AttendeeGUI.tempAttendee.getBalance()),
+                new Label("Balance:     " + AttendeeGUI.tempAttendee.getBalance()),
                 ok);
         Stage stage = new Stage();
         stage.setTitle("Event Details");
