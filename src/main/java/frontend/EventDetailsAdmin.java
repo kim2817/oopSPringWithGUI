@@ -34,20 +34,7 @@ public class EventDetailsAdmin implements Runnable{
             Button button = new Button(room.getRoomName());
             button.getStyleClass().add("rounded-soft-button");
             button.setOnAction(e->{
-
-            });
-            buttons.add(button);
-        }
-        AdminInterface.roomsVBox.getChildren().addAll(buttons);
-    }
-    static void updateCategoryButtons(ArrayList<Category> categories){
-//        AdminInterface.catVPane.getChildren().clear();
-        ArrayList<Button> buttons = new ArrayList<>();
-        for(Category category:categories){
-            Button button = new Button(category.getCatName());
-            button.getStyleClass().add("rounded-soft-button");
-            button.setOnAction(e->{
-
+                AdminInterface.afterButtonClickRoom.show(room);
             });
             buttons.add(button);
         }
@@ -55,15 +42,15 @@ public class EventDetailsAdmin implements Runnable{
     }
     static void update(){
         updateRoomButtons(Room.getRoomList());
-        updateCategoryButtons(Category.getCatList());
     }
     @Override
     public void run() {
+        update();
         while(true){
             try{
                 RunRoomChecker.refreshroom();
                 Thread.sleep(2000);
-                Platform.runLater(()->update());
+                Platform.runLater(EventDetailsAdmin::update);
 
             }catch(InterruptedException ex){
                 System.out.println("thread was intruppted");
