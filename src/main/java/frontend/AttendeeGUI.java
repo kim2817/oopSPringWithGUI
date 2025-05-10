@@ -233,7 +233,6 @@ public class AttendeeGUI {
                     + "ID: " + tempAttendee.getID() + "\n"
                     + "Age: " + tempAttendee.getAge() + "\n"
                     + "Date of Birth: " + tempAttendee.getDateOfBirth().DOBToString() + "\n" +
-                    "Address: " + tempAttendee.getAddress() +"\n" +
                     "Interests: " + "\n" + interests);
             details.setFont(Font.font("Arial", FontWeight.BOLD, 12));
             VBox detailsVpane = new VBox(details);
