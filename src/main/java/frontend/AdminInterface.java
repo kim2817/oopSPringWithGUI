@@ -410,9 +410,6 @@ public class AdminInterface {
 
 
             createRoom.setOnAction(e->{
-                stage.close();
-                EventDetailsAdmin.excutor.shutdownNow();
-                RunRoomChecker.executor.shutdownNow();
                 createRooms.show();
             });
 
@@ -437,8 +434,8 @@ public class AdminInterface {
             Stage stage = new Stage();
             stage.setTitle("Categories");
             Label text = new Label("Categories");
-            Button createRoom = new Button("Create Category");
-            HBox createHBox = new HBox(10, createRoom);
+            Button createCat = new Button("Create Category");
+            HBox createHBox = new HBox(10, createCat);
             createHBox.setAlignment(Pos.TOP_LEFT);
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
@@ -450,6 +447,9 @@ public class AdminInterface {
 
             CategoryDetailsAdmin.displayrooms();
 
+            createCat.setOnAction(e->{
+                createCats.show();
+            });
             tempback.setOnAction(e -> {
                 stage.close();
                 AdminInterface.show(tempAdmin);
@@ -473,25 +473,64 @@ public class AdminInterface {
             HBox titleHpane = new HBox(10, title);
             titleHpane.setAlignment(Pos.CENTER);
 
-            TextField roomName = new TextField("Name:");
+            Button create = new Button("Create");
+            TextField roomName = new TextField("Name");
             roomName.setMaxWidth(200);
-            TextField roomCapacity = new TextField("faf");
-            roomCapacity.setMaxWidth(250);
-            TextField rentPrice = new TextField("faf");
-            rentPrice.setMaxWidth(150);
-            VBox Vfield = new VBox(20, roomName, roomCapacity, rentPrice);
-            Vfield.setAlignment(Pos.CENTER);
+            TextField roomCapacity = new TextField("Room Capacity");
+            roomCapacity.setMaxWidth(200);
+            TextField rentPrice = new TextField("Rent Price");
+            rentPrice.setMaxWidth(200);
             Button backBtn = new Button("Back");
+            HBox backHpane = new HBox(10, backBtn);
+            backHpane.setAlignment(Pos.BOTTOM_LEFT);
+
+            Label response = new Label();
+            create.setOnAction(e->{
+                Admin.addRooms(roomName.getText(), Integer.parseInt(roomCapacity.getText()), Double.parseDouble(rentPrice.getText()));
+                response.setText("Room "+ roomName.getText() + " Created!");
+            });
+            VBox Vfield = new VBox(20, roomName, roomCapacity, rentPrice, create, response);
+            Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, titleHpane,Vfield);
             Vpane.setAlignment(Pos.CENTER);
             Scene scene = new Scene(Vpane, 600, 300);
             stage.setScene(scene);
             stage.show();
-
-            tempback.setOnAction(e -> {
+            backBtn.setOnAction(e -> {
                 stage.close();
-                catCRUD.show();
+                roomCRUD.show();
             });
+        }
+    }
+    public static class createCats {
+        public static void show() {
+            Stage stage = new Stage();
+            stage.setTitle("Create Categories");
+            Label title = new Label("CREATE CATEGORY");
+            HBox titleHpane = new HBox(10, title);
+            titleHpane.setAlignment(Pos.CENTER);
+
+            Button create = new Button("Create");
+            TextField catName = new TextField("Category Name");
+            catName.setMaxWidth(200);
+            Label response = new Label();
+
+
+            create.setOnAction(e -> {
+                Admin.addCat(catName.getText());
+                response.setText("Category " + catName.getText() + " is created!");
+            });
+
+
+
+            VBox Vfield = new VBox(20, catName, create, response);
+            Vfield.setAlignment(Pos.CENTER);
+            VBox Vpane = new VBox(20, titleHpane, Vfield);
+            Vpane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(Vpane, 600, 300);
+            stage.setScene(scene);
+            stage.show();
+
         }
     }
 }

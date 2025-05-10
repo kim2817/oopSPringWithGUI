@@ -21,7 +21,6 @@ public class CategoryDetailsAdmin implements Runnable {
                 ArrayList<Category> Catarray = Category.getCatList();
                 StringBuilder res = new StringBuilder();
                 for (Category q: Catarray){
-//                    AdminInterface.rooms.setText(q.toString());
                     System.out.println(q.toString() + " \n\n");
                     res.append(q.toString());
                     res.append("\n\n");

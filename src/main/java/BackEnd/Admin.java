@@ -52,11 +52,11 @@ public class Admin extends User{
 
     //Methods
 
-    public void addRooms(String roomName, int roomCapacity, double rentPrice){
+    public static void addRooms(String roomName, int roomCapacity, double rentPrice){
         Room newroom= new Room(roomName, roomCapacity,rentPrice);
         Database.create(newroom);
     }
-    public void addCat(String catName){
+    public static void addCat(String catName){
         Category newCat= new Category(catName);
         Database.create(newCat);
     }
