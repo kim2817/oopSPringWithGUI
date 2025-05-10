@@ -210,7 +210,7 @@ public class AdminInterface {
             VBox root = new VBox(20, Hpane, tempHbox, otherOption, catSearching, SearchResult, backBtn);
             ScrollPane scrollPane = new ScrollPane(root);
             scrollPane.setFitToWidth(true);
-            Scene scene = new Scene(scrollPane, 800, 300);
+            Scene scene = new Scene(scrollPane, 800, 450);
             stage.setScene(scene);
 
 
@@ -250,7 +250,7 @@ public class AdminInterface {
                 AdminInterface.show(tempAdmin);
             });
             Vpane.setPadding(new Insets(20));
-            Scene scene = new Scene(Vpane, 500, 300);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setScene(scene);
             stage.show();
 
@@ -303,7 +303,7 @@ public class AdminInterface {
 
             VBox Vpane = new VBox(20, textHbox, Hpane1, roomCRUD, catCRUD, Hpane2);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 500, 200);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setResizable(false);
 
             roomChoice.setToggleGroup(group);
@@ -428,7 +428,7 @@ public class AdminInterface {
             });
 
 
-            Scene scene = new Scene(Vpane, 600, 400);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setScene(scene);
             stage.show();
 
@@ -470,7 +470,7 @@ public class AdminInterface {
             });
 
 
-            Scene scene = new Scene(Vpane, 600, 400);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setScene(scene);
             stage.show();
 
@@ -510,7 +510,7 @@ public class AdminInterface {
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, titleHpane, Vfield);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 600, 300);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
@@ -548,7 +548,7 @@ public class AdminInterface {
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, titleHpane, Vfield);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 600, 300);
+            Scene scene = new Scene(Vpane, 800, 450);
             stage.setScene(scene);
             stage.show();
 
