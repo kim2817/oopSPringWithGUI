@@ -30,9 +30,10 @@ public class AttendeeBookedEvents {
         text.setPadding(new Insets(20));
 
         VBox vBox = new VBox(20);
+        vBox.getChildren().addAll(text,separatorLine);
         for(Event event:attendee.getBookedEvents()){
             Label label = new Label("Event Name: " + event.getEventName() + "\nDate: " + event.getEventDate().DOBToString() + "\nRoom Name: " + event.getEventRoom().getRoomName());
-            vBox.getChildren().addAll(text,separatorLine,label, new Separator());
+            vBox.getChildren().addAll(label, new Separator());
         }
         VBox root = new VBox(20, vBox, backBtn);
         root.setPadding(new Insets(20));

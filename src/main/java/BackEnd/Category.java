@@ -49,6 +49,7 @@ public class Category implements HasID,Runnable {
     }
 
     public static ArrayList<Category> getCatList() {
+        listCat();
         return catList;
     }
 

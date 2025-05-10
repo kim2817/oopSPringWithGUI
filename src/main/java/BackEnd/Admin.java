@@ -60,7 +60,7 @@ public class Admin extends User{
         Category newCat= new Category(catName);
         Database.create(newCat);
     }
-    public static void updateRoom(String roomname , Room r , int roomCapacity , double rentPrice ){
+    public static void updateRoom(Room r, String roomname , int roomCapacity , double rentPrice ){
         r.setRoomName(roomname);
         r.setRoomCapacity(roomCapacity);
         r.setRentPrice(rentPrice);

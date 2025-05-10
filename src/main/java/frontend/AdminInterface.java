@@ -265,8 +265,11 @@ public class AdminInterface {
                 stage.close();
                 AdminInterface.show(tempAdmin);
             });
+
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
             Vpane.setPadding(new Insets(20));
-            Scene scene = new Scene(Vpane, 500, 300);
+            Scene scene = new Scene(scrollPane, 500, 300);
             stage.setScene(scene);
             stage.show();
 
@@ -319,7 +322,6 @@ public class AdminInterface {
 
             VBox Vpane = new VBox(20, textHbox, Hpane1, roomCRUD, catCRUD, Hpane2);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 500, 200);
             stage.setResizable(false);
 
             roomChoice.setToggleGroup(group);
@@ -353,6 +355,7 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
 
+            Scene scene = new Scene(scrollPane, 500, 200);
             Vpane.setPadding(new Insets(20));
             stage.setScene(scene);
             stage.show();
@@ -444,12 +447,13 @@ public class AdminInterface {
             });
 
 
-            Scene scene = new Scene(Vpane, 600, 400);
-            stage.setScene(scene);
-            stage.show();
 
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 600, 400);
+            stage.setScene(scene);
+            stage.show();
+
 
         }
     }
@@ -465,7 +469,8 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            VBox catVpane = new VBox(20, categories);
+            FlowPane catVpane = new FlowPane(20,20);
+            catsVBox = catVpane;
             VBox Vpane = new VBox(20, createHBox, catVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
@@ -483,12 +488,12 @@ public class AdminInterface {
             });
 
 
-            Scene scene = new Scene(Vpane, 600, 400);
-            stage.setScene(scene);
-            stage.show();
 
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 600, 400);
+            stage.setScene(scene);
+            stage.show();
 
         }
 
@@ -523,15 +528,15 @@ public class AdminInterface {
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, titleHpane, Vfield);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 600, 300);
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 600, 300);
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
                 stage.close();
                 roomCRUD.show();
 
-                ScrollPane scrollPane = new ScrollPane(Vpane);
-                scrollPane.setFitToWidth(true);
 
             });
         }
@@ -561,12 +566,12 @@ public class AdminInterface {
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, titleHpane, Vfield);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 600, 300);
-            stage.setScene(scene);
-            stage.show();
 
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 600, 300);
+            stage.setScene(scene);
+            stage.show();
 
         }
     }
@@ -584,18 +589,22 @@ public class AdminInterface {
             info.setText(room.toString());
 
             VBox Vpane = new VBox(20, Hpane, info);
-            Scene scene = new Scene(Vpane, 800, 450);
-
+            Vpane.setAlignment(Pos.CENTER);
             delete.setOnAction(e -> {
+                stage.close();
                 roomDeleteRoomConfirmationUI.show(room);
             });
 
             edit.setOnAction(e -> {
-
+                stage.close();
+                roomEditRoomUI.show(room);
             });
 
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 800, 450);
+            stage.setScene(scene);
+            stage.show();
         }
     }
     public static class roomDeleteRoomConfirmationUI {
@@ -605,7 +614,9 @@ public class AdminInterface {
             Button btn2 = new Button("No");
             Label newlabel = new Label("ARE YOU SURE???????");
             HBox hb1 = new HBox(20, btn1, btn2);
+            hb1.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, newlabel, hb1);
+            Vpane.setAlignment(Pos.CENTER);
             Scene sets = new Scene(Vpane, 200, 100);
             hb1.setAlignment(Pos.CENTER);
             Vpane.setAlignment(Pos.CENTER);
@@ -614,18 +625,18 @@ public class AdminInterface {
             btn1.setOnAction(e -> {
                 st.close();
                 Database.delete(R);
+                roomCRUD.show();
             });
             btn2.setOnAction(e -> {
                 st.close();
+                roomCRUD.show();
             });
             st.show();
-
-            ScrollPane scrollPane = new ScrollPane(Vpane);
-            scrollPane.setFitToWidth(true);
+            st.setResizable(false);
         }
     }
     public static class roomEditRoomUI{
-        public static void show(){
+        public static void show(Room R){
             Stage stage = new Stage();
             stage.setTitle("Edit Room");
             Label title = new Label("EDIT ROOM");
@@ -644,14 +655,18 @@ public class AdminInterface {
 
             Label response = new Label();
             update.setOnAction(e -> {
-                Admin.addRooms(roomName.getText(), Integer.parseInt(roomCapacity.getText()), Double.parseDouble(rentPrice.getText()));
-                response.setText("Room " + roomName.getText() + " Created!");
+                Admin.updateRoom(R, roomName.getText(), Integer.parseInt(roomCapacity.getText()), Double.parseDouble(rentPrice.getText()));
+                response.setText("Room " + roomName.getText() + " Updated!");
             });
-            VBox Vfield = new VBox(20, roomName, roomCapacity, rentPrice, update, response);
+
+            backBtn.setAlignment(Pos.BOTTOM_LEFT);
+            VBox Vfield = new VBox(20, roomName, roomCapacity, rentPrice, update, response,backBtn);
             Vfield.setAlignment(Pos.CENTER);
             VBox Vpane = new VBox(20, title, Vfield);
             Vpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(Vpane, 800, 450);
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 800, 450);
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
@@ -659,95 +674,91 @@ public class AdminInterface {
                 roomCRUD.show();
 
             });
+        }
+
+    }
+    public static class catAfterButtonClickCat {
+        public static void show(Category category) {
+            Stage stage = new Stage();
+            stage.setTitle("Info");
+            Button edit = new Button("Edit");
+            Button delete = new Button("Delete");
+            HBox Hpane = new HBox(15, edit, delete);
+
+            Label info = new Label();
+            info.setAlignment(Pos.CENTER);
+            info.setText(category.toString());
+
+            VBox Vpane = new VBox(20, Hpane, info);
+
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 800, 450);
+
+            delete.setOnAction(e -> {
+                catDeleteRoomConfirmationUI.show(category);
+            });
+
+            edit.setOnAction(e -> {
+
+            });
         }
-        public static class catAfterButtonClickCat {
-            public static void show(Category category) {
-                Stage stage = new Stage();
-                stage.setTitle("Info");
-                Button edit = new Button("Edit");
-                Button delete = new Button("Delete");
-                HBox Hpane = new HBox(15, edit, delete);
-
-                Label info = new Label();
-                info.setAlignment(Pos.CENTER);
-                info.setText(category.toString());
-
-                VBox Vpane = new VBox(20, Hpane, info);
-                Scene scene = new Scene(Vpane, 800, 450);
-
-                delete.setOnAction(e -> {
-                    catDeleteRoomConfirmationUI.show(category);
-                });
-
-                edit.setOnAction(e -> {
-
-                });
-
-                ScrollPane scrollPane = new ScrollPane(Vpane);
-                scrollPane.setFitToWidth(true);
-            }
+    }
+    public static class catDeleteRoomConfirmationUI {
+        public static void show(Category C) {
+            Stage st = new Stage();
+            Button btn1 = new Button("Yes");
+            Button btn2 = new Button("No");
+            Label newlabel = new Label("Are you sure?");
+            HBox hb1 = new HBox(20, btn1, btn2);
+            VBox Vpane = new VBox(20, newlabel, hb1);
+            Scene sets = new Scene(Vpane, 200, 100);
+            hb1.setAlignment(Pos.CENTER);
+            Vpane.setAlignment(Pos.CENTER);
+            st.setResizable(false);
+            st.setScene(sets);
+            btn1.setOnAction(e -> {
+                st.close();
+                Database.delete(C);
+            });
+            btn2.setOnAction(e -> {
+                st.close();
+            });
+            st.setResizable(false);
+            st.show();
         }
-        public static class catDeleteRoomConfirmationUI {
-            public static void show(Category C) {
-                Stage st = new Stage();
-                Button btn1 = new Button("Yes");
-                Button btn2 = new Button("No");
-                Label newlabel = new Label("ARE YOU SURE???????");
-                HBox hb1 = new HBox(20, btn1, btn2);
-                VBox Vpane = new VBox(20, newlabel, hb1);
-                Scene sets = new Scene(Vpane, 200, 100);
-                hb1.setAlignment(Pos.CENTER);
-                Vpane.setAlignment(Pos.CENTER);
-                st.setResizable(false);
-                st.setScene(sets);
-                btn1.setOnAction(e -> {
-                    st.close();
-                    Database.delete(C);
-                });
-                btn2.setOnAction(e -> {
-                    st.close();
-                });
-                st.show();
+    }
+    public static class catEditRoomUI{
+        public static void show(Category C){
+            Stage stage = new Stage();
+            stage.setTitle("Edit Room");
+            Label title = new Label("EDIT ROOM");
+            title.setAlignment(Pos.CENTER);
 
-                ScrollPane scrollPane = new ScrollPane(Vpane);
-                scrollPane.setFitToWidth(true);
-            }
+            Button update = new Button("Update");
+            TextField catName = new TextField("Category Name");
+            catName.setMaxWidth(200);
+            Button backBtn = new Button("Back");
+            HBox backHpane = new HBox(10, backBtn);
+            backHpane.setAlignment(Pos.BOTTOM_LEFT);
+
+            Label response = new Label();
+            update.setOnAction(e -> {
+            });
+            VBox Vfield = new VBox(20, catName, update, response);
+            Vfield.setAlignment(Pos.CENTER);
+            VBox Vpane = new VBox(20, title, Vfield);
+            Vpane.setAlignment(Pos.CENTER);
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
+            Scene scene = new Scene(scrollPane, 800, 450);
+            stage.setScene(scene);
+            stage.show();
+            backBtn.setOnAction(e -> {
+                stage.close();
+                roomCRUD.show();
+
+            });
         }
-        public static class catEditRoomUI{
-            public static void show(Category C){
-                Stage stage = new Stage();
-                stage.setTitle("Edit Room");
-                Label title = new Label("EDIT ROOM");
-                title.setAlignment(Pos.CENTER);
-
-                Button update = new Button("Update");
-                TextField catName = new TextField("Category Name");
-                catName.setMaxWidth(200);
-                Button backBtn = new Button("Back");
-                HBox backHpane = new HBox(10, backBtn);
-                backHpane.setAlignment(Pos.BOTTOM_LEFT);
-
-                Label response = new Label();
-                update.setOnAction(e -> {
-                });
-                VBox Vfield = new VBox(20, catName, update, response);
-                Vfield.setAlignment(Pos.CENTER);
-                VBox Vpane = new VBox(20, title, Vfield);
-                Vpane.setAlignment(Pos.CENTER);
-                Scene scene = new Scene(Vpane, 800, 450);
-                stage.setScene(scene);
-                stage.show();
-                backBtn.setOnAction(e -> {
-                    stage.close();
-                    roomCRUD.show();
-
-                });
-                ScrollPane scrollPane = new ScrollPane(Vpane);
-                scrollPane.setFitToWidth(true);
-            }
-        }
-
     }
 }
