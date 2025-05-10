@@ -28,6 +28,9 @@ public class EventDetailsAdmin implements Runnable{
         AdminInterface.roomsVBox.getChildren().clear();
         ArrayList<Button> buttons = new ArrayList<>();
         for(Room room:rooms){
+            if(room == null){
+                continue;
+            }
             Button button = new Button(room.getRoomName());
             button.setOnAction(e->{
 
@@ -63,6 +66,11 @@ public class EventDetailsAdmin implements Runnable{
 //            excutor.shutdownNow();
 //
 //        });
-
+    }
+    public static void stopchecker(){
+        if(excutor!= null && !excutor.isShutdown()){
+            excutor.shutdownNow();
+            excutor = null;
+        }
     }
 }

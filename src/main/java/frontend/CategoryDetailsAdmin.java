@@ -21,6 +21,9 @@ public class CategoryDetailsAdmin implements Runnable {
                 ArrayList<Category> Catarray = Category.getCatList();
                 StringBuilder res = new StringBuilder();
                 for (Category q: Catarray){
+                    if(q == null){
+                        continue;
+                    }
                     System.out.println(q.toString() + " \n\n");
                     res.append(q.toString());
                     res.append("\n\n");
@@ -42,6 +45,12 @@ public class CategoryDetailsAdmin implements Runnable {
         }
         executor.execute(new CategoryDetailsAdmin());
 
+    }
+    public static void stopchecker(){
+        if(executor!= null && !executor.isShutdown()){
+            executor.shutdownNow();
+            executor = null;
+        }
     }
 }
 
