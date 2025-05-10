@@ -19,13 +19,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
+import javafx.util.converter.LocalDateStringConverter;
+import javafx.util.converter.LocalDateTimeStringConverter;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static BackEnd.Admin.searchEvents;
 import static BackEnd.DateTime.displayTime;
@@ -104,7 +103,7 @@ class OrganizerUI {
         });
         logout.setOnAction(e-> {
             stage.close();
-            LoginWindow.show();
+            RegisterLogin.show();
         });
     }
 }
@@ -330,8 +329,8 @@ class CreateNewEventUI {
         TextField nameField = new TextField();
         layoutx1.getChildren().addAll(new Label("Name     "),nameField);
         layoutx1.setAlignment(Pos.TOP_LEFT);
-
-        layoutx2.getChildren().addAll(new Label("Category"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+        TextField ticketPrice = new TextField();
+        layoutx2.getChildren().addAll(new Label("Ticket Price"),ticketPrice,new Label("\n\nCategory"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
         layoutx2.setAlignment(Pos.TOP_LEFT);
 
         layouty3.getChildren().addAll(new Label("Create New Event"),layoutx1,layoutx2);
@@ -342,17 +341,17 @@ class CreateNewEventUI {
         layouty4.getChildren().addAll(layouty3,rentRoom, back);
         layouty4.setAlignment(Pos.BOTTOM_LEFT);
 
-        String name = nameField.getText();
-
         back.setOnAction(e->{
             stage.close();
             MyEventsUI.show(u);
         });
 
         rentRoom.setOnAction(e->{
+            double price = Double.parseDouble(ticketPrice.getText());
+            String name = nameField.getText();
             Category selectedCategory = Database.findCat(CatsCombo.getValue());
             stage.close();
-            RentRoomUI.show(name,selectedCategory,u);
+            RentRoomUI.show(name,price,selectedCategory,u);
         });
 
         stage.show();
@@ -362,7 +361,7 @@ class CreateNewEventUI {
 }
 
 class RentRoomUI {
-    public static void show(String n, Category C, Organizer u){
+    public static void show(String n,double ticketprice, Category C, Organizer u){
 
 
         Stage stage = new Stage();
@@ -415,7 +414,7 @@ class RentRoomUI {
                 Room cur = (Room)o;
                 if(cur.isAvailable(datetime)) filteredRooms.add(cur);
             }
-            ArrayList<Button> buttons = eventToButton(filteredRooms, n, dateValue, slot, u);
+            ArrayList<Button> buttons = eventToButton(ticketprice,C,filteredRooms, n, dateValue, slot, u);
             flowPane.getChildren().clear();
             flowPane.getChildren().addAll(buttons);
         });
@@ -427,13 +426,13 @@ class RentRoomUI {
 
         stage.show();
     }
-    public static ArrayList<Button> eventToButton(List<Room> rooms, String eventName, LocalDate localDate, TimeSlot slot, Organizer u){
+    public static ArrayList<Button> eventToButton(double ticketprice,Category c,List<Room> rooms, String eventName, LocalDate localDate, TimeSlot slot, Organizer u){
         ArrayList<Button> buttons = new ArrayList<>();
         if(rooms != null && !(rooms.isEmpty())) {
             for (Room room : rooms) {
                 Button roomButton = new Button(room.getRoomName() + "\n" + room.getRentPrice());
                 roomButton.setOnAction(ee -> {
-                    RentRoomDetailsUI.show(room,eventName,localDate,slot,u);
+                    RentRoomDetailsUI.show(ticketprice,c,room,eventName,localDate,slot,u);
                 });
                 buttons.add(roomButton);
             }
@@ -443,7 +442,7 @@ class RentRoomUI {
 }
 
 class RentRoomDetailsUI {
-    public static void show(Room room,String eventName,LocalDate date,TimeSlot timeSlot,Organizer u){
+    public static void show(double ticketprice,Category c,Room room,String eventName,LocalDate date,TimeSlot timeSlot,Organizer u){
 
         int day = date.getDayOfMonth();
         int month = date.getMonthValue();
@@ -466,8 +465,10 @@ class RentRoomDetailsUI {
 
         layouty1.getChildren().addAll(
                 new Label("Room Name  "+room.getRoomName()),
+                new Label("Ticket Price "+ticketprice),
+                new Label("Category  "+c),
                 new Label("Event Name  "+eventName),
-                new Label("Date  "+day + "/"+month+"/"+year + "In The "+timeSlot.toString()),
+                new Label("Date  "+day + "/"+month+"/"+year + " In The "+timeSlot.toString()),
                 new Label("Room Capacity  "+room.getRoomCapacity()),
                 new Label("Price  "+room.getRentPrice()),
                 new Label("New Balance:  "+(u.getBalance().getBalance()-room.getRentPrice()))
@@ -479,9 +480,9 @@ class RentRoomDetailsUI {
         layouty2.getChildren().addAll(rent);
 
         rent.setOnAction(e->{
-
-
-
+            stage.close();
+            Database.create(new Event(eventName,c,room,u,ticketprice,new DateTime(day,month,year,timeSlot)));
+            u.getBalance().withdraw(room.getRentPrice());
         });
 
         stage.show();
@@ -542,8 +543,12 @@ class EditEventDetailsUI {
             DateTime datetime = new DateTime(day,month,year,slot);
             event.setEventDate(datetime);
         });
+        DateTime dte = event.getEventDate();
 
 
+
+        CatsCombo.setPromptText(event.getEventCat().getCatName());
+        price.setText(Double.toString(event.getTicketPrice()));
 
 
 

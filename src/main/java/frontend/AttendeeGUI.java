@@ -33,24 +33,32 @@ public class AttendeeGUI {
     public static void show(Attendee attendee) {
         tempAttendee = attendee;
         Stage stage = new Stage();
+        Image icon = new Image("Logo.png");
+        stage.getIcons().add(icon);
         stage.setTitle("Eventra - Attendee Dashboard");
 
         Image profileImage = new Image("profile.png"); // Replace with your actual image
         ImageView profileIcon = new ImageView(profileImage);
-        profileIcon.setFitWidth(40);
-        profileIcon.setFitHeight(40);
+        profileIcon.setFitWidth(60);
+        profileIcon.setFitHeight(60);
 
         BorderPane sidebarRoot = new BorderPane();
 
-        // 1. Create the sidebar
+
         VBox sidebar = new VBox(10);
+        sidebar.getStyleClass().add("lilacSidebar-panel");
         sidebar.setPadding(new Insets(10));
-        sidebar.setStyle("-fx-background-color: #eeeeee;");
         sidebar.setPrefWidth(200);
 
         Button myAccBtn = new Button("My Account");
         Button myEventBtn = new Button("My Events");
         Button logoutBtn = new Button("Logout");
+        myAccBtn.getStyleClass().add("purple-button");
+        myEventBtn.getStyleClass().add("purple-button");
+        logoutBtn.getStyleClass().add("purple-button");
+        myAccBtn.setMaxWidth(150);
+        myEventBtn.setMaxWidth(150);
+        logoutBtn.setMaxWidth(150);
 
         myEventBtn.setOnAction(e->{
             stage.close();
@@ -71,6 +79,8 @@ public class AttendeeGUI {
 
         // 2. Create the toggle button (top left)
         Button toggleBtn = new Button("☰");
+        toggleBtn.getStyleClass().add("transparent-lilac-button");
+
         toggleBtn.setFocusTraversable(false);
         toggleBtn.setOnAction(e -> {
             if (sidebarRoot.getLeft() == null) {
@@ -85,6 +95,8 @@ public class AttendeeGUI {
 
         Label greeting = new Label("Hello " + tempAttendee.getGen().getTitle() + " " + attendee.getUsername() + ",");
         Label balanceLabel = new Label("Balance: $" + attendee.getBalance());
+        greeting.getStyleClass().add("h2");
+        balanceLabel.getStyleClass().add("h3");
 
         VBox userBox = new VBox(5, greeting, balanceLabel);
         userBox.setAlignment(Pos.CENTER_LEFT);
@@ -92,17 +104,21 @@ public class AttendeeGUI {
         HBox navBar = new HBox(10, profileIcon,userBox);
         navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.setPadding(new Insets(10));
-        navBar.setStyle("-fx-background-color: #dddddd;");
+        navBar.setStyle("-fx-background-color: transparent;");
 
         HBox topBar = new HBox(10,toggleBtn,navBar);
+
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setPadding(new Insets(10));
-        topBar.setStyle("-fx-background-color: #dddddd;");
+        topBar.getStyleClass().add("lilacSquare-panel");
+
 
         //searching
         TextField searchField = new TextField();
+        searchField.getStyleClass().add("filled-textfield");
         searchField.setPromptText("Search for an event");
         Button searchBtn = new Button("Search");
+        searchBtn.getStyleClass().add("filled-button");
         HBox searchBox = new HBox(10, searchField, searchBtn);
         searchBox.setAlignment(Pos.CENTER);
         VBox searchSection = new VBox(10, searchBox);
@@ -128,14 +144,18 @@ public class AttendeeGUI {
 
         //categories searching..
         Label or = new Label("OR");
+        or.getStyleClass().add("h3");
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.getStyleClass().add("custom-combo");
+
         CatsCombo.setPromptText("Select a Category");
         CatsCombo.getItems().addAll(items);
         VBox otherOption = new VBox(20,or,CatsCombo);
         otherOption.setAlignment(Pos.CENTER);
 
         Button Catssearch = new Button("Search");
+        Catssearch.getStyleClass().add("filled-button");
         Catssearch.setDisable(true);
         CatsCombo.setOnAction(e->{
             Catssearch.setDisable(false);
@@ -161,7 +181,7 @@ public class AttendeeGUI {
 
         //intrests
         Label intrestsLabel = new Label("Events you may like");
-        intrestsLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        intrestsLabel.getStyleClass().add("h2");
         Category[] interests = tempAttendee.getInterest();
         TitledPane[] panes = new TitledPane[3];
         for(int i=0;i<3;i++){
@@ -175,6 +195,7 @@ public class AttendeeGUI {
             else hBox.getChildren().addAll(buttons);
         }
         Accordion accordion = new Accordion();
+        accordion.getStyleClass().add("custom-accordion");
         accordion.getPanes().addAll(panes);
         //layout
         VBox centerContent = new VBox(20, searchSection,otherOption,catSearching,SearchResult,separator,intrestsLabel,accordion);
@@ -189,7 +210,9 @@ public class AttendeeGUI {
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 
-        Scene scene = new Scene(scrollPane, 600, 800);
+        Scene scene = new Scene(scrollPane, 800, 450);
+        scene.getStylesheets().add(AttendeeGUI.class.getResource("/styles.css").toExternalForm());
+
         stage.setScene(scene);
         curStage=stage;
         stage.show();
@@ -200,6 +223,7 @@ public class AttendeeGUI {
         if(events!=null && !(events.isEmpty())) {
             for (Event event : events) {
                 Button eventButton = new Button(event.getEventName() + "\n" + displayTime(event));
+                eventButton.getStyleClass().add("rounded-soft-button");
                 eventButton.setOnAction(ee -> {
                     String eventName = eventButton.getText().substring(0, eventButton.getText().indexOf("\n"));
                     EventDetailsAttendee.show(Database.findEvent(eventName).getFirst());

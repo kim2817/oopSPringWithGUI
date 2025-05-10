@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Attendee extends User implements HasID {
     private String ID;
     private int age;
-    private String city;
+    private String address;
     private Wallet balance;
     private Category[] interest = new Category[3];
     private ArrayList<Event> bookedEvents = new ArrayList<>();
@@ -26,6 +26,7 @@ public class Attendee extends User implements HasID {
         this.gen = gen;
         this.ID = "A" + System.nanoTime();
         this.age = age;
+        this.address=address;
         this.balance = new Wallet(walletBalance);
         interest[0] =Database.findCat(interest1);
         interest[1] =Database.findCat(interest2);
@@ -37,14 +38,18 @@ public class Attendee extends User implements HasID {
     public int getAge() {
         return age;
     }
-    public String getCity() {
-        return city;
-    }
     public double getBalance() {
         return balance.getBalance();
     }
     public void attendeeDeposit(double money){
         balance.deposit(money);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Category[] getInterest() {
@@ -72,9 +77,6 @@ public class Attendee extends User implements HasID {
     }
     public void setAge(int age) {
         this.age = age;
-    }
-    public void setCity(String city) {
-        this.city = city;
     }
     public void setBalance(Wallet balance) {
         this.balance = balance;
@@ -155,13 +157,13 @@ public class Attendee extends User implements HasID {
 
     @Override
     public String toString() {
-        return  "Attendee[age=" + age + ", city=" + city + ", balance=" + balance.getBalance() + ", DoB: " + dateOfBirth + "]";
+        return  "Attendee[age=" + age + ", address=" + address + ", balance=" + balance.getBalance() + ", DoB: " + dateOfBirth + "]";
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Attendee) {
-            return this.age == ((Attendee) o).age && this.city.equals(((Attendee) o).city);
+            return this.age == ((Attendee) o).age && this.address.equals(((Attendee) o).address);
         } else return false;
     }
     @Override
