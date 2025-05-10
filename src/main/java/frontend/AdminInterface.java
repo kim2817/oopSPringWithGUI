@@ -33,6 +33,7 @@ public class AdminInterface {
     public static Button tempback = new Button("Back");
     public static Label categories = new Label();
     public static FlowPane roomsVBox = new FlowPane();
+    public static FlowPane catsVBox = new FlowPane();
     public static Admin tempAdmin;
 
     public static void show(Admin q) {
@@ -303,6 +304,7 @@ public class AdminInterface {
             VBox Vpane = new VBox(20, textHbox, Hpane1, roomCRUD, catCRUD, Hpane2);
             Vpane.setAlignment(Pos.CENTER);
             Scene scene = new Scene(Vpane, 500, 200);
+            stage.setResizable(false);
 
             roomChoice.setToggleGroup(group);
             catChoice.setToggleGroup(group);
@@ -357,6 +359,7 @@ public class AdminInterface {
             pfpView.setFitHeight(80);
             HBox imageHpane = new HBox(20, pfpView);
             imageHpane.setAlignment(Pos.TOP_CENTER);
+            stage.setResizable(false);
 
             Line seperatorline = new Line(0, 50, 275, 50);
             seperatorline.setStroke(Color.BLACK);
@@ -386,6 +389,9 @@ public class AdminInterface {
                 AdminInterface.show(tempAdmin);
             });
 
+
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
 
         }
     }
@@ -426,6 +432,8 @@ public class AdminInterface {
             stage.setScene(scene);
             stage.show();
 
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
 
         }
     }
@@ -441,10 +449,13 @@ public class AdminInterface {
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
 
-            VBox catVpane = new VBox(20, categories);
+            FlowPane catVpane = new FlowPane(20, 20);
+            AdminInterface.catsVBox = catVpane;
             VBox Vpane = new VBox(20, createHBox, catVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+
 
             CategoryDetailsAdmin.displayrooms();
 
@@ -461,8 +472,11 @@ public class AdminInterface {
 
             Scene scene = new Scene(Vpane, 600, 400);
             stage.setScene(scene);
-            ;
             stage.show();
+
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
+
         }
 
 
@@ -502,6 +516,10 @@ public class AdminInterface {
             backBtn.setOnAction(e -> {
                 stage.close();
                 roomCRUD.show();
+
+                ScrollPane scrollPane = new ScrollPane(Vpane);
+                scrollPane.setFitToWidth(true);
+
             });
         }
     }
@@ -534,6 +552,9 @@ public class AdminInterface {
             stage.setScene(scene);
             stage.show();
 
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
+
         }
     }
 
@@ -559,6 +580,9 @@ public class AdminInterface {
             edit.setOnAction(e -> {
 
             });
+
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
         }
     }
     public static class DeleteRoomConfirmationUI {
@@ -568,10 +592,10 @@ public class AdminInterface {
             Button btn2 = new Button("No");
             Label newlabel = new Label("ARE YOU SURE???????");
             HBox hb1 = new HBox(20, btn1, btn2);
-            VBox vb1 = new VBox(20, newlabel, hb1);
-            Scene sets = new Scene(vb1, 200, 100);
+            VBox Vpane = new VBox(20, newlabel, hb1);
+            Scene sets = new Scene(Vpane, 200, 100);
             hb1.setAlignment(Pos.CENTER);
-            vb1.setAlignment(Pos.CENTER);
+            Vpane.setAlignment(Pos.CENTER);
             st.setResizable(false);
             st.setScene(sets);
             btn1.setOnAction(e -> {
@@ -582,6 +606,9 @@ public class AdminInterface {
                 st.close();
             });
             st.show();
+
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
         }
     }
     public static class editRoomUI{
@@ -619,6 +646,8 @@ public class AdminInterface {
                 roomCRUD.show();
 
             });
+            ScrollPane scrollPane = new ScrollPane(Vpane);
+            scrollPane.setFitToWidth(true);
         }
     }
 }
