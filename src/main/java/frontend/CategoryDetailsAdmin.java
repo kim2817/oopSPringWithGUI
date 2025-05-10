@@ -23,7 +23,7 @@ public class CategoryDetailsAdmin implements Runnable {
             Button button = new Button(category.getCatName());
             button.getStyleClass().add("rounded-soft-button");
             button.setOnAction(e->{
-
+                AdminInterface.catAfterButtonClickCat.show(category);
             });
             buttons.add(button);
         }
