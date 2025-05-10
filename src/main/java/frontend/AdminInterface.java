@@ -758,7 +758,7 @@ public class AdminInterface {
             backBtn.setAlignment(Pos.BOTTOM_LEFT);
             VBox Vfield = new VBox(20, roomName);
             Vfield.setAlignment(Pos.CENTER);
-            VBox Vpane = new VBox(20, title, Vfield);
+            VBox Vpane = new VBox(20, title, Vfield, update, response);
             Vpane.setAlignment(Pos.CENTER);
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
