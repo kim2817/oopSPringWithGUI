@@ -37,7 +37,6 @@ public class LoginWindow {
         purplePanel.setPrefWidth(300);
         purplePanel.getStyleClass().add("lilac-panel");
 
-
         Label username = new Label("Username");
         TextField fieldUser = new TextField();
 

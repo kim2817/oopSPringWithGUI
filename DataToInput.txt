@@ -1,6 +1,8 @@
 Category Fun
 Category Sad
 Category IDK
+Category plays
+Category workshops
 Room HappyPlace 50 1.99 HappyTown
 Room SadPlace 1 99.99 SadTown
 Attendee hi@gmail.com hi ******** 02/02/2002 true 69 SigmaCity 2.50 Sad Sad Sad

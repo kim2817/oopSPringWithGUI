@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Attendee extends User implements HasID {
     private String ID;
     private int age;
-    private String address;
     private String city;
     private Wallet balance;
     private Category[] interest = new Category[3];
@@ -24,7 +23,6 @@ public class Attendee extends User implements HasID {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
         this.gen = gen;
         this.ID = "A" + System.nanoTime();
         this.age = age;
@@ -48,9 +46,7 @@ public class Attendee extends User implements HasID {
     public void attendeeDeposit(double money){
         balance.deposit(money);
     }
-    public String getAddress() {
-        return address;
-    }
+
     public Category[] getInterest() {
         return interest;
     }
@@ -70,9 +66,7 @@ public class Attendee extends User implements HasID {
         else return ">50";
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+
     public void setID(String ID) {
         this.ID = ID;
     }
@@ -95,9 +89,7 @@ public class Attendee extends User implements HasID {
     public String showInterest() {
         return (this.interest[0].getCatName() + "\n" + this.interest[1].getCatName()+ "\n" + this.interest[2].getCatName());
     }
-    public void showEvents() {
-        System.out.println(Arrays.toString(Database.readAll(new Event())));
-    }
+
     public String showBookedEvents() {
         if (bookedEvents.isEmpty()) {
             return "No booked events";
@@ -110,7 +102,7 @@ public class Attendee extends User implements HasID {
             return s;
         }
     }
-    //edit to commit
+
     public void chooseEvent() {
         Scanner input = new Scanner(System.in);
         Object[] T = Database.readAll(new Event());
@@ -154,52 +146,7 @@ public class Attendee extends User implements HasID {
 
 
     }
-    public void attendeeInterface(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("""
-                Please choose one of the following option
-                       1) getId
-                       2) getBalance
-                       3) Deposit money
-                       4) get recommendation based on your interest
-                       5) Show events
-                       6) Choose events
-                       7) Show booked events
-                       8) View wallet details
-                       9) Exit""");
-        int answer = input.nextInt();
-        switch (answer){
-            case 1:
-                System.out.println(this.getID());
-                break;
-            case 2:
-                System.out.println(this.getBalance());
-                break;
-            case 3:
-                System.out.println("please enter a value");
-                double deposit = input.nextDouble();
-                this.attendeeDeposit(deposit);
-                break;
-            case 4:
-                this.showInterest();
-                break;
-            case 5:
-                this.showEvents();
-                break;
-            case 6:
-                this.chooseEvent();
-                break;
-            case 7:
-                this.showBookedEvents();
-                break;
-            case 8:
-                this.viewWalletDetails();
-                break;
-            default:
-                return;
-        }
-        attendeeInterface();
-    }
+
     public void viewWalletDetails() {
         System.out.println("Wallet Details: " + balance);
     }

@@ -21,7 +21,7 @@ public class RegisterLogin {
         Stage regLog = new Stage();
         Image icon = new Image("Logo.png");
         regLog.getIcons().add(icon);
-        regLog.setTitle("Eventra regLog");
+        regLog.setTitle("Eventra Startup");
 
         Button loginButton = new Button("Login");
         Button registerButton = new Button("Register");
