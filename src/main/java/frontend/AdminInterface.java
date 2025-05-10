@@ -31,6 +31,7 @@ import static BackEnd.DateTime.displayTime;
 
 public class AdminInterface {
     public static Button tempback = new Button("Back");
+
     public static Label categories = new Label();
     public static FlowPane roomsVBox = new FlowPane();
     public static Admin tempAdmin;
@@ -161,10 +162,14 @@ public class AdminInterface {
             stage.setTitle("Search events");
             stage.getIcons().add(icon);
             Button searchBtn = new Button("Search");
+            searchBtn.getStyleClass().add("filled-button");
+
             Label resultLabel = new Label();
             TextField search = new TextField();
 
             Button backBtn = new Button("Back");
+            backBtn.getStyleClass().add("filled-button");
+
             stage.show();
             HBox Hpane = new HBox(10, search, searchBtn);
             Hpane.setAlignment(Pos.TOP_CENTER);
@@ -195,6 +200,8 @@ public class AdminInterface {
             final FlowPane SearchResult = new FlowPane();
             SearchResult.setHgap(20);
             Button Catssearch = new Button("Search");
+            Catssearch.getStyleClass().add("filled-button");
+
 
             Catssearch.setOnAction(e -> {
                 SearchResult.getChildren().clear();
@@ -225,6 +232,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(root);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 800, 300);
+            scene.getStylesheets().add(showEvent.class.getResource("/styles.css").toExternalForm());
+
 
             stage.setScene(scene);
 
@@ -246,6 +255,8 @@ public class AdminInterface {
             Hpane1.setAlignment(Pos.CENTER);
 
             Button backBtn = new Button("Back");
+            backBtn.getStyleClass().add("filled-button");
+
             HBox Hpane2 = new HBox(10, backBtn);
             Hpane2.setAlignment(Pos.BOTTOM_LEFT);
             VBox attendeeHbox = new VBox(10);
@@ -270,6 +281,8 @@ public class AdminInterface {
             scrollPane.setFitToWidth(true);
             Vpane.setPadding(new Insets(20));
             Scene scene = new Scene(scrollPane, 500, 300);
+            scene.getStylesheets().add(showUsers.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
 
@@ -286,6 +299,8 @@ public class AdminInterface {
             ToggleGroup group = new ToggleGroup();
             RadioButton roomChoice = new RadioButton("Room");
             Button CRUDRoom = new Button("Show Rooms");
+            CRUDRoom.getStyleClass().add("filled-button");
+
 
 
             RadioButton catChoice = new RadioButton("Category");
@@ -356,6 +371,8 @@ public class AdminInterface {
             scrollPane.setFitToWidth(true);
 
             Scene scene = new Scene(scrollPane, 500, 200);
+            scene.getStylesheets().add(manageData.class.getResource("/styles.css").toExternalForm());
+
             Vpane.setPadding(new Insets(20));
             stage.setScene(scene);
             stage.show();
@@ -401,6 +418,8 @@ public class AdminInterface {
             Vpane.setPadding(new Insets(10));
 
             Scene scene = new Scene(Vpane, 275, 350);
+            scene.getStylesheets().add(myAccount.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
@@ -451,6 +470,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 600, 400);
+            scene.getStylesheets().add(roomCRUD.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
 
@@ -492,6 +513,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 600, 400);
+            scene.getStylesheets().add(catCRUD.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
 
@@ -531,6 +554,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 600, 300);
+            scene.getStylesheets().add(createRooms.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
@@ -570,6 +595,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 600, 300);
+            scene.getStylesheets().add(createCats.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
 
@@ -603,6 +630,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 800, 450);
+            scene.getStylesheets().add(roomAfterButtonClickRoom.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
         }
@@ -618,6 +647,8 @@ public class AdminInterface {
             VBox Vpane = new VBox(20, newlabel, hb1);
             Vpane.setAlignment(Pos.CENTER);
             Scene sets = new Scene(Vpane, 200, 100);
+            sets.getStylesheets().add(roomDeleteRoomConfirmationUI.class.getResource("/styles.css").toExternalForm());
+
             hb1.setAlignment(Pos.CENTER);
             Vpane.setAlignment(Pos.CENTER);
             st.setResizable(false);
@@ -667,6 +698,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 800, 450);
+            scene.getStylesheets().add(roomEditRoomUI.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
@@ -694,6 +727,7 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 800, 450);
+            scene.getStylesheets().add(catAfterButtonClickCat.class.getResource("/styles.css").toExternalForm());
 
             delete.setOnAction(e -> {
                 catDeleteRoomConfirmationUI.show(category);
@@ -717,6 +751,8 @@ public class AdminInterface {
             VBox Vpane = new VBox(20, newlabel, hb1);
             Vpane.setAlignment(Pos.CENTER);
             Scene sets = new Scene(Vpane, 200, 100);
+            sets.getStylesheets().add(catDeleteRoomConfirmationUI.class.getResource("/styles.css").toExternalForm());
+
             hb1.setAlignment(Pos.CENTER);
             Vpane.setAlignment(Pos.CENTER);
             st.setResizable(false);
@@ -763,6 +799,8 @@ public class AdminInterface {
             ScrollPane scrollPane = new ScrollPane(Vpane);
             scrollPane.setFitToWidth(true);
             Scene scene = new Scene(scrollPane, 800, 450);
+            scene.getStylesheets().add(catEditRoomUI.class.getResource("/styles.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
             backBtn.setOnAction(e -> {
