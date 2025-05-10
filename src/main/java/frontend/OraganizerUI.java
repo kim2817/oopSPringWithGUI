@@ -136,6 +136,7 @@ class ViewEventsUI {
 
 
         TextField searchField = new TextField();
+        searchField.getStyleClass().add("filled-textfield");
         searchField.setPromptText("Search for an event");
         Button searchBtn = new Button("Search");
         searchBtn.getStyleClass().add("filled-button");
@@ -166,6 +167,7 @@ class ViewEventsUI {
         Label or = new Label("OR");
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.getStyleClass().add("custom-combo");
         CatsCombo.setPromptText("Select a Category");
         CatsCombo.getItems().addAll(items);
         VBox otherOption = new VBox(20,or,CatsCombo);
@@ -240,6 +242,7 @@ class MyEventsUI {
         VBox layout = new VBox(20);
         layout.getChildren().addAll(layouty1,layoutx2,emptySpace);
         Scene s = new Scene(layout,800,450);
+        s.getStylesheets().add(MyEventsUI.class.getResource("/styles.css").toExternalForm());
         stage.setScene(s);
         FoundCond = new Label();
         layout.setPadding(new Insets(20));
@@ -314,6 +317,7 @@ class CreateNewEventUI {
         Label or = new Label("OR");
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.getStyleClass().add("custom-combo");
         CatsCombo.setPromptText("Select a Category");
         CatsCombo.getItems().addAll(items);
         VBox otherOption = new VBox(20,or,CatsCombo);
@@ -344,14 +348,17 @@ class CreateNewEventUI {
 
         VBox layout = new VBox(layoutx1,layoutx2,layouty3,layouty4);
         Scene s = new Scene(layout , 800,450);
+        s.getStylesheets().add(CreateNewEventUI.class.getResource("/styles.css").toExternalForm());
         stage.setScene(s);
 
         layout.setPadding(new Insets(20));
 
         TextField nameField = new TextField();
+        nameField.getStyleClass().add("filled-textfield");
         layoutx1.getChildren().addAll(new Label("Name     "),nameField);
         layoutx1.setAlignment(Pos.TOP_LEFT);
         TextField ticketPrice = new TextField();
+        ticketPrice.getStyleClass().add("filled-textfield");
         layoutx2.getChildren().addAll(new Label("Ticket Price"),ticketPrice,new Label("\n\nCategory"),CatsCombo,new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
         layoutx2.setAlignment(Pos.TOP_LEFT);
 
@@ -409,7 +416,7 @@ class RentRoomUI {
         times.add("AFTERNOON");
 
         ComboBox<String> timeSlot = new ComboBox<>(FXCollections.observableArrayList(times));
-
+        timeSlot.getStyleClass().add("custom-combo");
         layoutx2.getChildren().addAll(new Label("Time   "),timeSlot);
         layoutx2.setAlignment(Pos.TOP_LEFT);
         FlowPane flowPane = new FlowPane();
@@ -442,6 +449,7 @@ class RentRoomUI {
         });
         VBox layout = new VBox(layoutx1,layoutx2,new Label("\nBalance "+u.getBalance().getBalance()),new Label("\n\n\n\n\n\n\n\n\n\n\n\n"),back,rentRoom,flowPane,layoutx3,layoutx4);
         Scene s = new Scene(layout , 800,450);
+        s.getStylesheets().add(RentRoomUI.class.getResource("/styles.css").toExternalForm());
         layout.setPadding(new Insets(20));
         stage.setScene(s);
 
@@ -527,17 +535,21 @@ class EditEventDetailsUI {
 
         HBox layout = new HBox(50,names,fields,btn);
         TextField name = new TextField(event.getEventName());
+        name.getStyleClass().add("filled-textfield");
         ObservableList<String> items = FXCollections.observableArrayList(Category.listAllCategories());
         ComboBox<String> CatsCombo = new ComboBox<>();
+        CatsCombo.getStyleClass().add("custom-combo");
         CatsCombo.setPromptText("Select a Category");
         CatsCombo.getItems().addAll(items);
         TextField price = new TextField();
+        price.getStyleClass().add("filled-textfield");
         DatePicker date = new DatePicker();
         ArrayList<String> times = new ArrayList<>();
         times.add("MORNING");
         times.add("EVENING");
         times.add("AFTERNOON");
         ComboBox<String> timeSlot = new ComboBox<>(FXCollections.observableArrayList(times));
+        timeSlot.getStyleClass().add("custom-combo");
         Button upname = new Button("Update Name");
         Button upcat = new Button("Update Category");
         Button upprice = new Button("Update Price");
