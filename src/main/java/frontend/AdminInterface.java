@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import javax.net.ssl.SNIHostName;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Flow;
 
 import static BackEnd.DateTime.displayTime;
 
@@ -31,7 +32,7 @@ import static BackEnd.DateTime.displayTime;
 public class AdminInterface {
     public static Button tempback = new Button("Back");
     public static Label categories = new Label();
-    public static Label rooms = new Label();
+    public static FlowPane roomsVBox = new FlowPane();
     public static Admin tempAdmin;
     public static void show(Admin q) {
         tempAdmin = q;
@@ -401,10 +402,17 @@ public class AdminInterface {
             textHbox.setAlignment(Pos.CENTER);
 
             EventDetailsAdmin.displayrooms();
-            VBox roomsVpane = new VBox(20, rooms);
+            FlowPane roomsVpane = new FlowPane(20,20);
+            AdminInterface.roomsVBox = roomsVpane;
             VBox Vpane = new VBox(20, createHBox,roomsVpane, textHbox, tempback);
             Vpane.setAlignment(Pos.TOP_CENTER);
             Vpane.setPadding(new Insets(20));
+
+
+            createRoom.setOnAction(e->{
+                createRooms.show();
+            });
+
 
             tempback.setOnAction(e -> {
                 stage.close();
@@ -418,6 +426,7 @@ public class AdminInterface {
             stage.setScene(scene);
             stage.show();
 
+
         }
     }
     public static class catCRUD {
@@ -425,8 +434,8 @@ public class AdminInterface {
             Stage stage = new Stage();
             stage.setTitle("Categories");
             Label text = new Label("Categories");
-            Button createRoom = new Button("Create Category");
-            HBox createHBox = new HBox(10, createRoom);
+            Button createCat = new Button("Create Category");
+            HBox createHBox = new HBox(10, createCat);
             createHBox.setAlignment(Pos.TOP_LEFT);
             HBox textHbox = new HBox(10, text);
             textHbox.setAlignment(Pos.CENTER);
@@ -438,6 +447,9 @@ public class AdminInterface {
 
             CategoryDetailsAdmin.displayrooms();
 
+            createCat.setOnAction(e->{
+                createCats.show();
+            });
             tempback.setOnAction(e -> {
                 stage.close();
                 AdminInterface.show(tempAdmin);
@@ -447,15 +459,78 @@ public class AdminInterface {
 
 
             Scene scene = new Scene(Vpane, 600, 400);
-            stage.setScene(scene);
+            stage.setScene(scene);;
             stage.show();
         }
+
+
     }
-public static class createRoom{
+    public static class createRooms{
         public static void show(){
             Stage stage = new Stage();
+            stage.setTitle("Create Room");
+            Label title = new Label("CREATE ROOM");
+            HBox titleHpane = new HBox(10, title);
+            titleHpane.setAlignment(Pos.CENTER);
 
+            Button create = new Button("Create");
+            TextField roomName = new TextField("Name");
+            roomName.setMaxWidth(200);
+            TextField roomCapacity = new TextField("Room Capacity");
+            roomCapacity.setMaxWidth(200);
+            TextField rentPrice = new TextField("Rent Price");
+            rentPrice.setMaxWidth(200);
+            Button backBtn = new Button("Back");
+            HBox backHpane = new HBox(10, backBtn);
+            backHpane.setAlignment(Pos.BOTTOM_LEFT);
+
+            Label response = new Label();
+            create.setOnAction(e->{
+                Admin.addRooms(roomName.getText(), Integer.parseInt(roomCapacity.getText()), Double.parseDouble(rentPrice.getText()));
+                response.setText("Room "+ roomName.getText() + " Created!");
+            });
+            VBox Vfield = new VBox(20, roomName, roomCapacity, rentPrice, create, response);
+            Vfield.setAlignment(Pos.CENTER);
+            VBox Vpane = new VBox(20, titleHpane,Vfield);
+            Vpane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(Vpane, 600, 300);
+            stage.setScene(scene);
+            stage.show();
+            backBtn.setOnAction(e -> {
+                stage.close();
+                roomCRUD.show();
+            });
+        }
+    }
+    public static class createCats {
+        public static void show() {
+            Stage stage = new Stage();
+            stage.setTitle("Create Categories");
+            Label title = new Label("CREATE CATEGORY");
+            HBox titleHpane = new HBox(10, title);
+            titleHpane.setAlignment(Pos.CENTER);
+
+            Button create = new Button("Create");
+            TextField catName = new TextField("Category Name");
+            catName.setMaxWidth(200);
+            Label response = new Label();
+
+
+            create.setOnAction(e -> {
+                Admin.addCat(catName.getText());
+                response.setText("Category " + catName.getText() + " is created!");
+            });
+
+
+
+            VBox Vfield = new VBox(20, catName, create, response);
+            Vfield.setAlignment(Pos.CENTER);
+            VBox Vpane = new VBox(20, titleHpane, Vfield);
+            Vpane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(Vpane, 600, 300);
+            stage.setScene(scene);
+            stage.show();
 
         }
-}
+    }
 }

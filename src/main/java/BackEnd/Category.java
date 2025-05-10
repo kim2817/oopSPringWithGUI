@@ -39,6 +39,12 @@ public class Category implements HasID,Runnable {
         return catName;
     }
     public ArrayList<Event> getEvents() {
+        Object[] objects = Database.readAll(new Event());
+        events.clear();
+        for(Object o:objects){
+            Event cur = (Event)o;
+            if(cur.getEventCat() == this) events.add(cur);
+        }
         return events;
     }
 
@@ -148,12 +154,14 @@ public class Category implements HasID,Runnable {
     }
     static public void listCat(){
         Object[] T = Database.readAll(new Category());
+
         Category[] options = new Category[T.length];
         for (int i = 0; i < T.length; i++) {
             options[i] = (Category) T[i];
         }
+
         catList.clear();
-        for(Category  e : options){
+        for(Category e : options){
             catList.add(e);
         }
     }
@@ -166,7 +174,7 @@ public class Category implements HasID,Runnable {
         while (true){
             try{
                 listCat();
-                Thread.sleep(50000);
+                Thread.sleep(200);
             }catch (InterruptedException e){
                 System.out.println("thread was intruppted");
                 break;
