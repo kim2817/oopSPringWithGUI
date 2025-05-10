@@ -240,4 +240,9 @@
     -fx-background-color: transparent;
     -fx-padding: 10;
 }
-
+.account-details {
+    -fx-font-family: "Champagne";
+    -fx-font-size: 13px;
+    -fx-text-fill: #47276d;
+    -fx-line-spacing: 5px;
+}
